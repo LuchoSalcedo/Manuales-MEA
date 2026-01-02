@@ -1,0 +1,39 @@
+# FastAPI y servidor
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+python-multipart>=0.0.6
+
+# Base de datos
+sqlalchemy>=2.0.0
+asyncpg>=0.29.0
+alembic>=1.13.0
+
+# Autenticación
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+
+# Validación y configuración
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+python-dotenv>=1.0.0
+
+# Procesamiento de PDFs
+pypdf2>=3.0.0
+pdfplumber>=0.10.0
+pymupdf>=1.23.0
+
+# IA y embeddings
+openai>=1.10.0
+anthropic>=0.18.0
+langchain>=0.1.0
+tiktoken>=0.5.0
+
+# Vectores y búsqueda
+chromadb>=0.4.0
+
+# Supabase
+supabase>=2.0.0
+
+# Utilidades
+httpx>=0.26.0
+aiofiles>=23.2.0

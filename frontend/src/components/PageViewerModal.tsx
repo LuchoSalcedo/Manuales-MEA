@@ -1,0 +1,158 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+
+interface PageViewerModalProps {
+  isOpen: boolean
+  onClose: () => void
+  manualId: string
+  pageNumber: number
+  section?: string | null
+}
+
+export default function PageViewerModal({
+  isOpen,
+  onClose,
+  manualId,
+  pageNumber,
+  section,
+}: PageViewerModalProps) {
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [zoom, setZoom] = useState(50)
+
+  const imageUrl = `${API_URL}/api/pages/${manualId}/${pageNumber}`
+
+  useEffect(() => {
+    if (isOpen) {
+      setLoading(true)
+      setError(null)
+      setZoom(50)
+    }
+  }, [isOpen, pageNumber])
+
+  if (!isOpen) return null
+
+  const handleZoomIn = () => setZoom((z) => Math.min(z + 25, 200))
+  const handleZoomOut = () => setZoom((z) => Math.max(z - 25, 50))
+
+  return (
+    <div className="fixed inset-0 z-50 overflow-hidden">
+      {/* Overlay */}
+      <div
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onClick={onClose}
+      />
+
+      {/* Modal */}
+      <div className="absolute inset-4 md:inset-8 lg:inset-12 bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden">
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 py-4 border-b bg-gray-50">
+          <div>
+            <h2 className="text-lg font-semibold text-gray-900">
+              Página {pageNumber}
+            </h2>
+            {section && (
+              <p className="text-sm text-gray-500">{section}</p>
+            )}
+          </div>
+
+          <div className="flex items-center gap-4">
+            {/* Zoom controls */}
+            <div className="flex items-center gap-2 bg-white rounded-lg border px-2 py-1">
+              <button
+                onClick={handleZoomOut}
+                className="p-1 hover:bg-gray-100 rounded"
+                title="Reducir"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+                </svg>
+              </button>
+              <span className="text-sm font-medium w-12 text-center">{zoom}%</span>
+              <button
+                onClick={handleZoomIn}
+                className="p-1 hover:bg-gray-100 rounded"
+                title="Ampliar"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Open in new tab */}
+            <a
+              href={imageUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
+              title="Abrir en nueva pestaña"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+
+            {/* Close button */}
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
+              title="Cerrar"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="flex-1 overflow-auto bg-gray-100 p-4">
+          <div className="flex justify-center min-h-full">
+            {loading && (
+              <div className="flex items-center justify-center py-20">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+              </div>
+            )}
+
+            {error && (
+              <div className="flex items-center justify-center py-20">
+                <div className="text-center">
+                  <p className="text-red-600 mb-2">{error}</p>
+                  <button
+                    onClick={() => {
+                      setLoading(true)
+                      setError(null)
+                    }}
+                    className="text-blue-600 hover:underline"
+                  >
+                    Reintentar
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <img
+              src={imageUrl}
+              alt={`Página ${pageNumber}`}
+              className="shadow-lg rounded-lg transition-transform duration-200"
+              style={{
+                transform: `scale(${zoom / 100})`,
+                transformOrigin: 'top center',
+                display: loading ? 'none' : 'block',
+              }}
+              onLoad={() => setLoading(false)}
+              onError={() => {
+                setLoading(false)
+                setError('No se pudo cargar la página')
+              }}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
