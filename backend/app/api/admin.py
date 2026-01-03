@@ -14,13 +14,14 @@ from app.services.processing_service import (
 )
 from app.middleware.auth import require_admin, get_current_user
 from app.models.schemas import CurrentUser
+from app.api.settings import get_setting_value
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
 UPLOAD_DIR = Path(__file__).parent.parent.parent.parent / "uploads"
 UPLOAD_DIR.mkdir(exist_ok=True)
 
-MAX_FILE_SIZE = 50 * 1024 * 1024  # 50MB
+DEFAULT_MAX_FILE_SIZE_MB = 50  # Default 50MB
 
 
 class UpdateManualRequest(BaseModel):
@@ -42,8 +43,12 @@ async def upload_and_process_manual(
 
     content = await file.read()
 
-    if len(content) > MAX_FILE_SIZE:
-        raise HTTPException(status_code=400, detail="El archivo excede 50MB")
+    # Get dynamic max file size from settings
+    max_size_mb = get_setting_value("max_upload_size_mb", DEFAULT_MAX_FILE_SIZE_MB)
+    max_file_size = max_size_mb * 1024 * 1024
+
+    if len(content) > max_file_size:
+        raise HTTPException(status_code=400, detail=f"El archivo excede {max_size_mb}MB")
 
     # Guardar archivo
     file_path = UPLOAD_DIR / file.filename

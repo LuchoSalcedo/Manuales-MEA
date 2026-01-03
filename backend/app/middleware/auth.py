@@ -125,13 +125,13 @@ def can_manage_user(manager: CurrentUser, target_role: UserRole) -> bool:
 
     Rules:
     - Master Admin can manage anyone
-    - Admin can only manage Usuario
+    - Admin can manage Usuario and other Admins (but not Master Admin)
     - Usuario cannot manage anyone
     """
     if manager.role == UserRole.ADMINISTRADOR_MAESTRO:
         return True
     if manager.role == UserRole.ADMINISTRADOR:
-        return target_role == UserRole.USUARIO
+        return target_role in [UserRole.USUARIO, UserRole.ADMINISTRADOR]
     return False
 
 

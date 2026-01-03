@@ -50,8 +50,8 @@ async def list_users(
     if role:
         query = query.eq("role", role.value)
     elif current_user.role == UserRole.ADMINISTRADOR:
-        # Regular admins can only see usuarios
-        query = query.eq("role", UserRole.USUARIO.value)
+        # Regular admins can see usuarios and other administradores (but not admin maestro)
+        query = query.in_("role", [UserRole.USUARIO.value, UserRole.ADMINISTRADOR.value])
 
     response = query.order("created_at", desc=True).execute()
 
@@ -214,6 +214,77 @@ async def update_user(
         raise HTTPException(status_code=500, detail="Error actualizando usuario")
 
     return UserResponse(**response.data[0])
+
+
+@router.post("/delegate-master/{user_id}")
+async def delegate_master_admin(
+    user_id: UUID,
+    current_user: CurrentUser = Depends(require_admin)
+):
+    """
+    Transfiere el rol de Administrador Maestro a otro usuario.
+    Solo el Administrador Maestro puede ejecutar esta accion.
+    El usuario destino debe ser un Administrador activo.
+    """
+    supabase = get_supabase_client()
+
+    # Verify current user is master admin
+    if current_user.role != UserRole.ADMINISTRADOR_MAESTRO:
+        raise HTTPException(
+            status_code=403,
+            detail="Solo el Administrador Maestro puede delegar este rol"
+        )
+
+    # Cannot delegate to yourself
+    if str(user_id) == str(current_user.id):
+        raise HTTPException(
+            status_code=400,
+            detail="No puedes delegarte el rol a ti mismo"
+        )
+
+    # Get target user
+    target = supabase.table("profiles").select("*").eq("id", str(user_id)).single().execute()
+
+    if not target.data:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+
+    target_role = UserRole(target.data["role"])
+
+    # Target must be an administrator
+    if target_role != UserRole.ADMINISTRADOR:
+        raise HTTPException(
+            status_code=400,
+            detail="Solo puedes delegar el rol a un Administrador"
+        )
+
+    # Target must be active
+    if not target.data.get("is_active", True):
+        raise HTTPException(
+            status_code=400,
+            detail="El usuario debe estar activo"
+        )
+
+    try:
+        # Update target to master admin
+        supabase.table("profiles").update({
+            "role": UserRole.ADMINISTRADOR_MAESTRO.value
+        }).eq("id", str(user_id)).execute()
+
+        # Demote current user to regular admin
+        supabase.table("profiles").update({
+            "role": UserRole.ADMINISTRADOR.value
+        }).eq("id", str(current_user.id)).execute()
+
+        return {
+            "message": "Rol de Administrador Maestro delegado exitosamente",
+            "new_master_admin_id": str(user_id)
+        }
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error al delegar rol: {str(e)}"
+        )
 
 
 @router.delete("/{user_id}")

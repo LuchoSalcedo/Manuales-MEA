@@ -7,12 +7,13 @@ import Header from '@/components/Header'
 import AdminGuard from '@/components/AdminGuard'
 import { useAuth } from '@/components/AuthProvider'
 import { useProcessing } from '@/components/ProcessingProvider'
+import { useSettings } from '@/contexts/SettingsContext'
 import { Manual, getManuals } from '@/lib/api'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
 export default function AdminPage() {
-  const { session } = useAuth()
+  const { session, isMasterAdmin } = useAuth()
   const {
     activeJob,
     pausedJobs,
@@ -23,6 +24,7 @@ export default function AdminPage() {
     refreshPausedJobs,
     setOnJobComplete
   } = useProcessing()
+  const { settings } = useSettings()
 
   const [manuals, setManuals] = useState<Manual[]>([])
   const [loading, setLoading] = useState(true)
@@ -215,6 +217,14 @@ export default function AdminPage() {
               >
                 Usuarios
               </Link>
+              {isMasterAdmin && (
+                <Link
+                  href="/admin/settings"
+                  className="border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                >
+                  Configuracion
+                </Link>
+              )}
             </nav>
           </div>
 
@@ -257,7 +267,7 @@ export default function AdminPage() {
                 <p className="mt-2 text-sm text-gray-600">
                   {uploading ? 'Subiendo...' : activeJob ? 'Procesando...' : 'Haz clic para seleccionar un PDF'}
                 </p>
-                <p className="text-xs text-gray-500">PDF hasta 50MB</p>
+                <p className="text-xs text-gray-500">PDF hasta {settings.max_upload_size_mb}MB</p>
               </label>
             </div>
 

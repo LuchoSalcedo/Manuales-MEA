@@ -3,6 +3,7 @@
 // =====================================================
 
 export type UserRole = 'usuario' | 'administrador' | 'administrador_maestro'
+export type Theme = 'light' | 'dark'
 
 export interface UserProfile {
   id: string
@@ -12,6 +13,7 @@ export interface UserProfile {
   role: UserRole
   location: string | null
   is_active: boolean
+  theme: Theme
   created_at: string
   updated_at: string
 }

@@ -5,10 +5,11 @@ import { Manual, getManuals } from '@/lib/api'
 import ManualSelector from '@/components/ManualSelector'
 import Chat from '@/components/Chat'
 import Header from '@/components/Header'
+import { useChat } from '@/contexts/ChatContext'
 
 export default function Home() {
   const [manuals, setManuals] = useState<Manual[]>([])
-  const [selectedManual, setSelectedManual] = useState<Manual | null>(null)
+  const { selectedManual, setSelectedManual } = useChat()
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -69,7 +70,7 @@ export default function Home() {
             <div className="lg:col-span-3">
               <div className="bg-white rounded-lg shadow h-[calc(100vh-200px)] min-h-[500px]">
                 {selectedManual ? (
-                  <Chat manual={selectedManual} />
+                  <Chat />
                 ) : (
                   <div className="flex items-center justify-center h-full text-gray-500">
                     <div className="text-center">

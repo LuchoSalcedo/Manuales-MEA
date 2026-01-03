@@ -29,15 +29,25 @@ async def get_page_image(manual_id: UUID, page_number: int):
 
         manual = response.data
         manual_name = manual.get("name", "")
+        original_filename = manual.get("original_filename", "")
 
         # Buscar el PDF correspondiente
         pdf_path = None
-        for pdf_file in UPLOAD_DIR.glob("*.pdf"):
-            if manual_name in pdf_file.stem or pdf_file.stem in manual_name:
-                pdf_path = pdf_file
-                break
 
-        # Si no se encuentra por nombre, intentar buscar por descripción
+        # 1. Primero intentar con original_filename (más confiable)
+        if original_filename:
+            candidate = UPLOAD_DIR / original_filename
+            if candidate.exists():
+                pdf_path = candidate
+
+        # 2. Si no, buscar por coincidencia de nombre
+        if not pdf_path:
+            for pdf_file in UPLOAD_DIR.glob("*.pdf"):
+                if manual_name in pdf_file.stem or pdf_file.stem in manual_name:
+                    pdf_path = pdf_file
+                    break
+
+        # 3. Si no se encuentra por nombre, intentar buscar por descripción
         if not pdf_path:
             description = manual.get("description", "")
             for pdf_file in UPLOAD_DIR.glob("*.pdf"):

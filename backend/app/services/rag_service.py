@@ -31,6 +31,9 @@ class RAGService:
 
     def search_similar_chunks(self, query_embedding: list[float], manual_id: UUID) -> list[dict]:
         """Busca chunks similares en Supabase usando pgvector."""
+        chunks = []
+        use_fallback = False
+
         try:
             # Intentar usar la función RPC (más eficiente)
             response = self.supabase.rpc(
@@ -44,13 +47,20 @@ class RAGService:
 
             chunks = response.data
 
+            # Si RPC devuelve vacío, usar fallback
+            if not chunks:
+                use_fallback = True
+
         except Exception as e:
-            # Fallback: búsqueda directa sin función RPC
-            print(f"RPC no disponible, usando búsqueda directa: {e}")
+            print(f"RPC no disponible: {e}")
+            use_fallback = True
+
+        # Fallback: búsqueda directa con cálculo manual de similitud
+        if use_fallback:
+            print("Usando búsqueda directa con cálculo manual de similitud")
             response = self.supabase.table("chunks") \
                 .select("id, manual_id, content, page_number, section, embedding") \
                 .eq("manual_id", str(manual_id)) \
-                .limit(self.top_k * 2) \
                 .execute()
 
             # Calcular similitud manualmente (cosine similarity)
@@ -188,25 +198,40 @@ Pregunta del usuario: {question}"""
         # 5. Extraer páginas citadas en la respuesta
         cited_pages = self._extract_cited_pages(answer)
 
-        # 6. Preparar referencias - mostrar TODAS las fuentes usadas
+        # 6. Preparar referencias - mostrar SOLO las páginas citadas en la respuesta
         references = []
         seen_pages = set()  # Evitar duplicados
 
+        # Crear un mapa de página -> chunk para acceso rápido
+        page_to_chunk = {}
         for chunk in chunks:
             page_number = chunk.get("page_number", 0)
+            if page_number not in page_to_chunk:
+                page_to_chunk[page_number] = chunk
 
-            # Evitar duplicados de la misma página
+        # Solo incluir referencias de páginas que Claude citó en su respuesta
+        for page_number in cited_pages:
             if page_number in seen_pages:
                 continue
             seen_pages.add(page_number)
 
-            content = chunk.get("content", "")
-            excerpt = content[:150] + "..." if len(content) > 150 else content
+            # Buscar el chunk correspondiente
+            chunk = page_to_chunk.get(page_number)
+            if chunk:
+                content = chunk.get("content", "")
+                excerpt = content[:150] + "..." if len(content) > 150 else content
+                section = chunk.get("section")
+                similarity = round(chunk.get("similarity", 0), 3)
+            else:
+                # Página citada pero no está en los chunks recuperados
+                excerpt = ""
+                section = None
+                similarity = 0.0
 
             references.append(ChunkReference(
                 page_number=page_number,
-                section=chunk.get("section"),
-                similarity=round(chunk.get("similarity", 0), 3),
+                section=section,
+                similarity=similarity,
                 excerpt=excerpt
             ))
 

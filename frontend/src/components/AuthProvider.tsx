@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { User, Session } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase'
-import { UserProfile } from '@/types'
+import { UserProfile, Theme } from '@/types'
 
 interface AuthContextType {
   user: User | null
@@ -12,8 +12,10 @@ interface AuthContextType {
   loading: boolean
   isAdmin: boolean
   isMasterAdmin: boolean
+  theme: Theme
   signOut: () => Promise<void>
   refreshProfile: () => Promise<void>
+  setTheme: (theme: Theme) => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -23,8 +25,10 @@ const AuthContext = createContext<AuthContextType>({
   loading: true,
   isAdmin: false,
   isMasterAdmin: false,
+  theme: 'light',
   signOut: async () => {},
   refreshProfile: async () => {},
+  setTheme: async () => {},
 })
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -32,7 +36,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null)
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [loading, setLoading] = useState(true)
+  const [theme, setThemeState] = useState<Theme>('light')
   const supabase = createClient()
+
+  // Apply theme to document
+  const applyTheme = (newTheme: Theme) => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.classList.remove('light', 'dark')
+      document.documentElement.classList.add(newTheme)
+      localStorage.setItem('theme', newTheme)
+    }
+  }
+
+  // Initialize theme from localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme') as Theme | null
+      if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
+        setThemeState(savedTheme)
+        applyTheme(savedTheme)
+      }
+    }
+  }, [])
 
   const fetchProfile = async (userId: string) => {
     try {
@@ -48,7 +73,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (data && !error) {
         console.log('Profile loaded successfully:', data)
-        setProfile(data as UserProfile)
+        const profileData = data as UserProfile
+        setProfile(profileData)
+        // Sync theme from profile
+        if (profileData.theme) {
+          setThemeState(profileData.theme)
+          applyTheme(profileData.theme)
+        }
       } else {
         console.error('Error fetching profile:', {
           error,
@@ -107,6 +138,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     window.location.href = '/login'
   }
 
+  const setTheme = async (newTheme: Theme) => {
+    // Apply immediately for instant feedback
+    setThemeState(newTheme)
+    applyTheme(newTheme)
+
+    // Update in database if logged in
+    if (user?.id) {
+      try {
+        await supabase
+          .from('profiles')
+          .update({ theme: newTheme })
+          .eq('id', user.id)
+
+        // Update local profile
+        if (profile) {
+          setProfile({ ...profile, theme: newTheme })
+        }
+      } catch (error) {
+        console.error('Error updating theme:', error)
+      }
+    }
+  }
+
   const isAdmin = profile?.role === 'administrador' || profile?.role === 'administrador_maestro'
   const isMasterAdmin = profile?.role === 'administrador_maestro'
 
@@ -119,8 +173,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         loading,
         isAdmin,
         isMasterAdmin,
+        theme,
         signOut,
         refreshProfile,
+        setTheme,
       }}
     >
       {children}

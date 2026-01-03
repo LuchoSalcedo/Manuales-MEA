@@ -421,12 +421,14 @@ def process_pdf_background(job_id: str, pdf_path: str, manual_name: str, resume_
         # Crear registro del manual (solo si no es resume)
         if not resume_data:
             manual_id = str(uuid.uuid4())
+            original_filename = Path(pdf_path).name
             supabase.table("manuals").insert({
                 "id": manual_id,
                 "name": manual_name,
                 "description": f"Procesado automáticamente ({pdf_type})",
                 "total_pages": total_pages,
-                "processed": False
+                "processed": False,
+                "original_filename": original_filename
             }).execute()
 
             # Actualizar job con manual_id

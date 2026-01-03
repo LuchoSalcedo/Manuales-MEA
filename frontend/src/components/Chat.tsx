@@ -2,16 +2,13 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { Message } from '@/types'
-import { Manual, sendMessage } from '@/lib/api'
+import { sendMessage } from '@/lib/api'
 import ChatMessage from './ChatMessage'
 import ChatInput from './ChatInput'
+import { useChat } from '@/contexts/ChatContext'
 
-interface ChatProps {
-  manual: Manual
-}
-
-export default function Chat({ manual }: ChatProps) {
-  const [messages, setMessages] = useState<Message[]>([])
+export default function Chat() {
+  const { selectedManual, messages, addMessage } = useChat()
   const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
@@ -23,10 +20,10 @@ export default function Chat({ manual }: ChatProps) {
     scrollToBottom()
   }, [messages])
 
-  // Reset chat when manual changes
-  useEffect(() => {
-    setMessages([])
-  }, [manual.id])
+  // Guard: si no hay manual seleccionado, no renderizar
+  if (!selectedManual) {
+    return null
+  }
 
   const handleSend = async (content: string) => {
     const userMessage: Message = {
@@ -36,11 +33,11 @@ export default function Chat({ manual }: ChatProps) {
       timestamp: new Date(),
     }
 
-    setMessages((prev) => [...prev, userMessage])
+    addMessage(userMessage)
     setIsLoading(true)
 
     try {
-      const response = await sendMessage(content, manual.id)
+      const response = await sendMessage(content, selectedManual.id)
 
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -54,7 +51,7 @@ export default function Chat({ manual }: ChatProps) {
         timestamp: new Date(),
       }
 
-      setMessages((prev) => [...prev, assistantMessage])
+      addMessage(assistantMessage)
     } catch (error) {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -62,7 +59,7 @@ export default function Chat({ manual }: ChatProps) {
         content: 'Error al procesar tu pregunta. Por favor intenta de nuevo.',
         timestamp: new Date(),
       }
-      setMessages((prev) => [...prev, errorMessage])
+      addMessage(errorMessage)
     } finally {
       setIsLoading(false)
     }
@@ -72,8 +69,8 @@ export default function Chat({ manual }: ChatProps) {
     <div className="flex flex-col h-full">
       {/* Header */}
       <div className="bg-blue-600 text-white px-4 py-3 rounded-t-lg">
-        <h2 className="font-semibold">{manual.name}</h2>
-        <p className="text-sm opacity-75">{manual.total_pages} páginas</p>
+        <h2 className="font-semibold">{selectedManual.name}</h2>
+        <p className="text-sm opacity-75">{selectedManual.total_pages} páginas</p>
       </div>
 
       {/* Messages */}
@@ -87,7 +84,7 @@ export default function Chat({ manual }: ChatProps) {
           </div>
         ) : (
           messages.map((message) => (
-            <ChatMessage key={message.id} message={message} manualId={manual.id} />
+            <ChatMessage key={message.id} message={message} manualId={selectedManual.id} />
           ))
         )}
 
