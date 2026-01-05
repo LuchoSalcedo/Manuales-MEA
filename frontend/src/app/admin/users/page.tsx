@@ -221,28 +221,28 @@ export default function UsersPage() {
 
   return (
     <AdminGuard>
-      <div className="min-h-screen bg-gray-100">
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
         <Header />
 
-        <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+        <main className="max-w-7xl mx-auto px-3 py-4 sm:px-4 sm:py-6 lg:px-8">
           {/* Tabs */}
-          <div className="mb-6 border-b border-gray-200">
-            <nav className="-mb-px flex space-x-8">
+          <div className="mb-4 sm:mb-6 border-b border-gray-200 dark:border-gray-700 overflow-x-auto">
+            <nav className="-mb-px flex space-x-4 sm:space-x-8 min-w-max">
               <Link
                 href="/admin"
-                className="border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                className="border-b-2 border-transparent py-2 px-1 text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 whitespace-nowrap"
               >
                 Manuales
               </Link>
               <Link
                 href="/admin/users"
-                className="border-b-2 border-blue-500 py-2 px-1 text-sm font-medium text-blue-600"
+                className="border-b-2 border-blue-500 py-2 px-1 text-xs sm:text-sm font-medium text-blue-600 whitespace-nowrap"
               >
                 Usuarios
               </Link>
               <Link
                 href="/admin/settings"
-                className="border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                className="border-b-2 border-transparent py-2 px-1 text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 whitespace-nowrap"
               >
                 Configuracion
               </Link>
@@ -250,134 +250,203 @@ export default function UsersPage() {
           </div>
 
           {/* Header */}
-          <div className="flex justify-between items-center mb-8">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6 sm:mb-8">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">Gestion de Usuarios</h2>
-              <p className="text-gray-600">Administra los usuarios del sistema</p>
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Gestion de Usuarios</h2>
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Administra los usuarios del sistema</p>
             </div>
             <button
               onClick={() => setShowCreateModal(true)}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2"
+              className="bg-blue-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2 text-sm sm:text-base w-full sm:w-auto"
             >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
               Nuevo Usuario
             </button>
           </div>
 
-          {/* Users Table */}
-          <div className="bg-white rounded-lg shadow overflow-hidden">
+          {/* Users List */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
             {loading ? (
-              <div className="p-8 text-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-                <p className="mt-2 text-gray-500">Cargando usuarios...</p>
+              <div className="p-6 sm:p-8 text-center">
+                <div className="animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-b-2 border-blue-600 mx-auto"></div>
+                <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">Cargando usuarios...</p>
               </div>
             ) : users.length === 0 ? (
-              <div className="p-8 text-center text-gray-500">
+              <div className="p-6 sm:p-8 text-center text-gray-500 dark:text-gray-400">
                 No hay usuarios registrados
               </div>
             ) : (
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Usuario
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Rol
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Ubicacion
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Estado
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Acciones
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+              <>
+                {/* Desktop Table */}
+                <div className="hidden md:block overflow-x-auto">
+                  <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead className="bg-gray-50 dark:bg-gray-900">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                          Usuario
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                          Rol
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                          Ubicacion
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                          Estado
+                        </th>
+                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                          Acciones
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                      {users.map((user) => (
+                        <tr key={user.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div>
+                              <div className="font-medium text-gray-900 dark:text-white">
+                                {user.name} {user.surname}
+                              </div>
+                              <div className="text-sm text-gray-500 dark:text-gray-400">{user.email}</div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span
+                              className={`px-2 py-1 text-xs rounded-full ${roleBadgeColors[user.role]}`}
+                            >
+                              {roleLabels[user.role]}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                            {user.location || '-'}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span
+                              className={`px-2 py-1 text-xs rounded-full ${
+                                user.is_active
+                                  ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
+                                  : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
+                              }`}
+                            >
+                              {user.is_active ? 'Activo' : 'Inactivo'}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
+                            {canManageUser(user.role) && user.id !== profile?.id && (
+                              <div className="flex justify-end gap-3">
+                                {isMasterAdmin && user.role === 'administrador' && user.is_active && (
+                                  <button
+                                    onClick={() =>
+                                      handleDelegateMaster(user.id, `${user.name} ${user.surname}`)
+                                    }
+                                    className="text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300"
+                                    disabled={saving}
+                                  >
+                                    Delegar
+                                  </button>
+                                )}
+                                <button
+                                  onClick={() => openEditModal(user)}
+                                  className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                                >
+                                  Editar
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    handleDeleteUser(user.id, `${user.name} ${user.surname}`)
+                                  }
+                                  className="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+                                >
+                                  Eliminar
+                                </button>
+                              </div>
+                            )}
+                            {user.id === profile?.id && (
+                              <span className="text-gray-400 text-xs">(Tu cuenta)</span>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Mobile Cards */}
+                <div className="md:hidden divide-y divide-gray-200 dark:divide-gray-700">
                   {users.map((user) => (
-                    <tr key={user.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div>
-                          <div className="font-medium text-gray-900">
+                    <div key={user.id} className="p-4">
+                      <div className="flex justify-between items-start mb-2">
+                        <div className="min-w-0 flex-1">
+                          <p className="font-medium text-sm text-gray-900 dark:text-white truncate">
                             {user.name} {user.surname}
-                          </div>
-                          <div className="text-sm text-gray-500">{user.email}</div>
+                          </p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{user.email}</p>
                         </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span
-                          className={`px-2 py-1 text-xs rounded-full ${roleBadgeColors[user.role]}`}
-                        >
+                        {user.id === profile?.id && (
+                          <span className="text-gray-400 text-xs ml-2">(Tu)</span>
+                        )}
+                      </div>
+                      <div className="flex flex-wrap gap-2 mb-3">
+                        <span className={`px-2 py-0.5 text-xs rounded-full ${roleBadgeColors[user.role]}`}>
                           {roleLabels[user.role]}
                         </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {user.location || '-'}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
                         <span
-                          className={`px-2 py-1 text-xs rounded-full ${
+                          className={`px-2 py-0.5 text-xs rounded-full ${
                             user.is_active
-                              ? 'bg-green-100 text-green-800'
-                              : 'bg-red-100 text-red-800'
+                              ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
+                              : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
                           }`}
                         >
                           {user.is_active ? 'Activo' : 'Inactivo'}
                         </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
-                        {canManageUser(user.role) && user.id !== profile?.id && (
-                          <div className="flex justify-end gap-3">
-                            {/* Delegate Master button - only for master admin, only for active admins */}
-                            {isMasterAdmin && user.role === 'administrador' && user.is_active && (
-                              <button
-                                onClick={() =>
-                                  handleDelegateMaster(user.id, `${user.name} ${user.surname}`)
-                                }
-                                className="text-purple-600 hover:text-purple-800"
-                                disabled={saving}
-                              >
-                                Delegar
-                              </button>
-                            )}
-                            <button
-                              onClick={() => openEditModal(user)}
-                              className="text-blue-600 hover:text-blue-800"
-                            >
-                              Editar
-                            </button>
+                      </div>
+                      {user.location && (
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">{user.location}</p>
+                      )}
+                      {canManageUser(user.role) && user.id !== profile?.id && (
+                        <div className="flex gap-3 pt-2 border-t border-gray-100 dark:border-gray-700">
+                          {isMasterAdmin && user.role === 'administrador' && user.is_active && (
                             <button
                               onClick={() =>
-                                handleDeleteUser(user.id, `${user.name} ${user.surname}`)
+                                handleDelegateMaster(user.id, `${user.name} ${user.surname}`)
                               }
-                              className="text-red-600 hover:text-red-800"
+                              className="text-purple-600 hover:text-purple-800 dark:text-purple-400 text-xs"
+                              disabled={saving}
                             >
-                              Eliminar
+                              Delegar
                             </button>
-                          </div>
-                        )}
-                        {user.id === profile?.id && (
-                          <span className="text-gray-400 text-xs">(Tu cuenta)</span>
-                        )}
-                      </td>
-                    </tr>
+                          )}
+                          <button
+                            onClick={() => openEditModal(user)}
+                            className="text-blue-600 hover:text-blue-800 dark:text-blue-400 text-xs"
+                          >
+                            Editar
+                          </button>
+                          <button
+                            onClick={() =>
+                              handleDeleteUser(user.id, `${user.name} ${user.surname}`)
+                            }
+                            className="text-red-600 hover:text-red-800 dark:text-red-400 text-xs"
+                          >
+                            Eliminar
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   ))}
-                </tbody>
-              </table>
+                </div>
+              </>
             )}
           </div>
         </main>
 
         {/* Create User Modal */}
         {showCreateModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
-              <h3 className="text-lg font-semibold mb-4">Crear Nuevo Usuario</h3>
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 sm:p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+              <h3 className="text-base sm:text-lg font-semibold mb-4 text-gray-900 dark:text-white">Crear Nuevo Usuario</h3>
               <form onSubmit={handleCreateUser} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700">Nombre *</label>
@@ -486,10 +555,10 @@ export default function UsersPage() {
 
         {/* Edit User Modal */}
         {editingUser && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 w-full max-w-md">
-              <h3 className="text-lg font-semibold mb-4">
-                Editar Usuario: {editingUser.name} {editingUser.surname}
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 sm:p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+              <h3 className="text-base sm:text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+                Editar: {editingUser.name} {editingUser.surname}
               </h3>
               <form onSubmit={handleUpdateUser} className="space-y-4">
                 <div>

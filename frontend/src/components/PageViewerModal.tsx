@@ -47,37 +47,37 @@ export default function PageViewerModal({
       />
 
       {/* Modal */}
-      <div className="absolute inset-4 md:inset-8 lg:inset-12 bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden">
+      <div className="absolute inset-2 sm:inset-4 md:inset-8 lg:inset-12 bg-white dark:bg-gray-800 rounded-xl shadow-2xl flex flex-col overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b bg-gray-50">
-          <div>
-            <h2 className="text-lg font-semibold text-gray-900">
+        <div className="flex items-center justify-between px-3 sm:px-6 py-2 sm:py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+          <div className="min-w-0 flex-1">
+            <h2 className="text-sm sm:text-lg font-semibold text-gray-900 dark:text-white truncate">
               Página {pageNumber}
             </h2>
             {section && (
-              <p className="text-sm text-gray-500">{section}</p>
+              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 truncate">{section}</p>
             )}
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1 sm:gap-4 flex-shrink-0 ml-2">
             {/* Zoom controls */}
-            <div className="flex items-center gap-2 bg-white rounded-lg border px-2 py-1">
+            <div className="flex items-center gap-1 sm:gap-2 bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 px-1 sm:px-2 py-0.5 sm:py-1">
               <button
                 onClick={handleZoomOut}
-                className="p-1 hover:bg-gray-100 rounded"
+                className="p-1 hover:bg-gray-100 dark:hover:bg-gray-600 rounded"
                 title="Reducir"
               >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
                 </svg>
               </button>
-              <span className="text-sm font-medium w-12 text-center">{zoom}%</span>
+              <span className="text-xs sm:text-sm font-medium w-8 sm:w-12 text-center text-gray-700 dark:text-gray-300">{zoom}%</span>
               <button
                 onClick={handleZoomIn}
-                className="p-1 hover:bg-gray-100 rounded"
+                className="p-1 hover:bg-gray-100 dark:hover:bg-gray-600 rounded"
                 title="Ampliar"
               >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
               </button>
@@ -88,10 +88,10 @@ export default function PageViewerModal({
               href={imageUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
+              className="p-1.5 sm:p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors hidden sm:block"
               title="Abrir en nueva pestaña"
             >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
             </a>
@@ -99,10 +99,10 @@ export default function PageViewerModal({
             {/* Close button */}
             <button
               onClick={onClose}
-              className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
+              className="p-1.5 sm:p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
               title="Cerrar"
             >
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -110,24 +110,24 @@ export default function PageViewerModal({
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-auto bg-gray-100 p-4">
+        <div className="flex-1 overflow-auto bg-gray-100 dark:bg-gray-900 p-2 sm:p-4">
           <div className="flex justify-center min-h-full">
             {loading && (
-              <div className="flex items-center justify-center py-20">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+              <div className="flex items-center justify-center py-10 sm:py-20">
+                <div className="animate-spin rounded-full h-8 w-8 sm:h-12 sm:w-12 border-b-2 border-blue-600"></div>
               </div>
             )}
 
             {error && (
-              <div className="flex items-center justify-center py-20">
-                <div className="text-center">
-                  <p className="text-red-600 mb-2">{error}</p>
+              <div className="flex items-center justify-center py-10 sm:py-20">
+                <div className="text-center px-4">
+                  <p className="text-red-600 mb-2 text-sm sm:text-base">{error}</p>
                   <button
                     onClick={() => {
                       setLoading(true)
                       setError(null)
                     }}
-                    className="text-blue-600 hover:underline"
+                    className="text-blue-600 hover:underline text-sm sm:text-base"
                   >
                     Reintentar
                   </button>
@@ -138,7 +138,7 @@ export default function PageViewerModal({
             <img
               src={imageUrl}
               alt={`Página ${pageNumber}`}
-              className="shadow-lg rounded-lg transition-transform duration-200"
+              className="shadow-lg rounded-lg transition-transform duration-200 max-w-full"
               style={{
                 transform: `scale(${zoom / 100})`,
                 transformOrigin: 'top center',
