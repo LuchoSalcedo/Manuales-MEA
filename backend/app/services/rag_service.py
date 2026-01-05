@@ -181,6 +181,155 @@ Pregunta del usuario: {question}"""
 
         return cited_pages
 
+    def generate_answer_with_model(self, question: str, context: str, model: str) -> tuple[str, dict]:
+        """
+        Genera respuesta usando un modelo específico de Claude.
+        Retorna la respuesta y métricas de uso.
+        """
+        import time
+
+        system_prompt = """Eres un asistente técnico especializado en manuales de equipos de ground handling para aeropuertos.
+
+Tu trabajo es responder preguntas basándote ÚNICAMENTE en la información proporcionada en el contexto.
+
+Reglas CRÍTICAS:
+1. Responde SOLO con información del contexto que sea DIRECTAMENTE relevante a la pregunta
+2. Si la información no está en el contexto, di "No encontré esa información en el manual"
+3. PRESERVA LA ESTRUCTURA ORIGINAL del manual:
+   - Si el manual usa letras (A, B, C), usa las mismas letras
+   - Si usa números (1, 2, 3), usa los mismos números
+   - Si tiene sub-items ((1), (2), (3)), mantén esa jerarquía
+   - NO reorganices ni parafrasees la información - preséntala como aparece
+4. IMPORTANTE: En tablas de troubleshooting, responde SOLO sobre el síntoma/problema específico preguntado
+   - NO incluyas causas o remedios de otros problemas aunque aparezcan en el contexto
+   - Cada problema tiene sus propias causas (A, B, C...) - no mezcles con otros problemas
+5. Cita SOLO las páginas donde encontraste la información de la respuesta
+6. Sé preciso - los técnicos necesitan información EXACTA como aparece en el manual
+7. Si hay especificaciones técnicas (voltajes, presiones, medidas), cópialas exactamente
+8. Responde en español pero mantén términos técnicos en inglés si así aparecen
+
+Formato de respuesta:
+- Presenta la información COMPLETA respetando la estructura del manual original
+- NO cortes la respuesta - incluye TODOS los pasos, procedimientos o información relevante
+- OBLIGATORIO al final: (Ver páginas X, Y, Z) - lista TODAS las páginas de donde sacaste información"""
+
+        user_prompt = f"""Contexto del manual:
+{context}
+
+---
+
+Pregunta del usuario: {question}"""
+
+        start_time = time.time()
+
+        message = self.anthropic.messages.create(
+            model=model,
+            max_tokens=4096,
+            system=system_prompt,
+            messages=[
+                {"role": "user", "content": user_prompt}
+            ]
+        )
+
+        latency_ms = int((time.time() - start_time) * 1000)
+
+        metrics = {
+            "model": model,
+            "latency_ms": latency_ms,
+            "input_tokens": message.usage.input_tokens,
+            "output_tokens": message.usage.output_tokens,
+        }
+
+        return message.content[0].text, metrics
+
+    def query_with_model(self, question: str, manual_id: UUID, model: str) -> tuple[ChatResponse, dict]:
+        """
+        Ejecuta el pipeline RAG completo con un modelo específico.
+        Retorna la respuesta y métricas detalladas.
+        """
+        import time
+
+        total_start = time.time()
+
+        # 1. Generar embedding de la pregunta
+        embed_start = time.time()
+        query_embedding = self.get_embedding(question)
+        embed_time = int((time.time() - embed_start) * 1000)
+
+        # 2. Buscar chunks similares
+        search_start = time.time()
+        chunks = self.search_similar_chunks(query_embedding, manual_id)
+        search_time = int((time.time() - search_start) * 1000)
+
+        # 3. Construir contexto
+        context = self.build_context(chunks)
+
+        # 4. Generar respuesta con Claude (modelo específico)
+        answer, model_metrics = self.generate_answer_with_model(question, context, model)
+
+        # 5. Extraer páginas citadas en la respuesta
+        cited_pages = self._extract_cited_pages(answer)
+
+        # 6. Preparar referencias
+        references = []
+        seen_pages = set()
+        page_to_chunk = {}
+        for chunk in chunks:
+            page_number = chunk.get("page_number", 0)
+            if page_number not in page_to_chunk:
+                page_to_chunk[page_number] = chunk
+
+        for page_number in cited_pages:
+            if page_number in seen_pages:
+                continue
+            seen_pages.add(page_number)
+
+            chunk = page_to_chunk.get(page_number)
+            if chunk:
+                content = chunk.get("content", "")
+                excerpt = content[:150] + "..." if len(content) > 150 else content
+                section = chunk.get("section")
+                similarity = round(chunk.get("similarity", 0), 3)
+            else:
+                excerpt = ""
+                section = None
+                similarity = 0.0
+
+            references.append(ChunkReference(
+                page_number=page_number,
+                section=section,
+                similarity=similarity,
+                excerpt=excerpt
+            ))
+
+        references.sort(key=lambda r: r.page_number)
+
+        total_time = int((time.time() - total_start) * 1000)
+
+        # Calcular similitud promedio
+        avg_similarity = 0.0
+        if chunks:
+            avg_similarity = sum(c.get("similarity", 0) for c in chunks) / len(chunks)
+
+        # Métricas completas
+        metrics = {
+            **model_metrics,
+            "total_latency_ms": total_time,
+            "embedding_time_ms": embed_time,
+            "search_time_ms": search_time,
+            "chunks_retrieved": len(chunks),
+            "avg_similarity": round(avg_similarity, 4),
+            "pages_cited": len(cited_pages),
+        }
+
+        response = ChatResponse(
+            answer=answer,
+            references=references,
+            manual_id=manual_id
+        )
+
+        return response, metrics
+
     def query(self, question: str, manual_id: UUID) -> ChatResponse:
         """Ejecuta el pipeline RAG completo."""
         # 1. Generar embedding de la pregunta

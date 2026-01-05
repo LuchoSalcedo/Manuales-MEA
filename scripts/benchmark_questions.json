@@ -1,0 +1,72 @@
+{
+  "manual_id": "5b76b498-3d71-4849-b9b6-99c37efee71a",
+  "manual_name": "Motores Perkins",
+  "questions": [
+    {
+      "id": "D1",
+      "category": "directa",
+      "question": "What is the recommended engine oil pressure?",
+      "description": "Pregunta directa sobre especificación técnica"
+    },
+    {
+      "id": "D2",
+      "category": "directa",
+      "question": "What type of coolant is recommended for this engine?",
+      "description": "Pregunta directa sobre fluidos"
+    },
+    {
+      "id": "D3",
+      "category": "directa",
+      "question": "What is the engine firing order?",
+      "description": "Pregunta directa sobre especificación del motor"
+    },
+    {
+      "id": "D4",
+      "category": "directa",
+      "question": "What is the valve lash clearance specification?",
+      "description": "Pregunta directa sobre ajustes"
+    },
+    {
+      "id": "I1",
+      "category": "ilustracion",
+      "question": "Where is the water inlet located according to illustration 17?",
+      "description": "Pregunta que requiere interpretar una ilustración específica"
+    },
+    {
+      "id": "I2",
+      "category": "ilustracion",
+      "question": "What components are shown in the fuel system diagram?",
+      "description": "Pregunta sobre componentes en diagrama"
+    },
+    {
+      "id": "I3",
+      "category": "ilustracion",
+      "question": "Describe the numbered components in the engine view illustration",
+      "description": "Pregunta que requiere listar componentes de una figura"
+    },
+    {
+      "id": "C1",
+      "category": "compleja",
+      "question": "What is the complete troubleshooting procedure when the engine fails to start?",
+      "description": "Pregunta compleja que requiere sintetizar procedimiento de diagnóstico"
+    },
+    {
+      "id": "C2",
+      "category": "compleja",
+      "question": "What are all the maintenance intervals and what does each one include?",
+      "description": "Pregunta compleja sobre múltiples intervalos de mantenimiento"
+    },
+    {
+      "id": "C3",
+      "category": "compleja",
+      "question": "Compare the cold start procedure vs the warm start procedure",
+      "description": "Pregunta compleja que requiere comparar dos procedimientos"
+    },
+    {
+      "id": "C4",
+      "category": "compleja",
+      "question": "What are all the causes and remedies for low oil pressure?",
+      "description": "Pregunta compleja de troubleshooting con múltiples causas"
+    }
+  ]
+}

@@ -1,0 +1,1278 @@
+{
+  "timestamp": "2026-01-02T20:16:43.015569",
+  "manual_id": "5b76b498-3d71-4849-b9b6-99c37efee71a",
+  "manual_name": "Motores Perkins",
+  "models": [
+    "Haiku 3.5",
+    "Sonnet 4",
+    "Opus 4"
+  ],
+  "questions": [
+    {
+      "id": "D1",
+      "category": "directa",
+      "question": "What is the recommended engine oil pressure?",
+      "description": "Pregunta directa sobre especificación técnica",
+      "responses": [
+        {
+          "model": "Haiku 3.5",
+          "model_id": "claude-3-5-haiku-20241022",
+          "answer": "Lo siento, pero en los fragmentos del manual proporcionados no encuentro información específica sobre la presión recomendada del aceite del motor. \n\nPara obtener ese dato preciso, le sugiero:\n1. Consultar las secciones específicas de especificaciones técnicas del manual completo\n2. Contactar directamente con un distribuidor de Perkins\n3. Verificar en la sección de \"Specifications\" que no ha sido incluida en estos fragmentos\n\nLo que sí puedo ver en el manual son recomendaciones generales sobre el mantenimiento del sistema de lubricación, pero no el valor exacto de presión de aceite.\n\n(Ver páginas 68, 88, 89 sobre mantenimiento del sistema de lubricación)",
+          "references": [
+            {
+              "page": 68,
+              "section": "Maintenance Recommendations"
+            },
+            {
+              "page": 88,
+              "section": "Engine Oil and Filter - Change"
+            },
+            {
+              "page": 89,
+              "section": "Engine Valve Lash - Check"
+            }
+          ],
+          "metrics": {
+            "model": "claude-3-5-haiku-20241022",
+            "latency_ms": 5065,
+            "input_tokens": 6251,
+            "output_tokens": 182,
+            "total_latency_ms": 6677,
+            "embedding_time_ms": 761,
+            "search_time_ms": 850,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.8042,
+            "pages_cited": 3,
+            "cost_usd": 0.005729
+          }
+        },
+        {
+          "model": "Sonnet 4",
+          "model_id": "claude-sonnet-4-20250514",
+          "answer": "No encontré esa información en el manual. Los fragmentos proporcionados no incluyen especificaciones sobre la presión recomendada del aceite de motor.",
+          "references": [],
+          "metrics": {
+            "model": "claude-sonnet-4-20250514",
+            "latency_ms": 2610,
+            "input_tokens": 6251,
+            "output_tokens": 39,
+            "total_latency_ms": 3201,
+            "embedding_time_ms": 242,
+            "search_time_ms": 348,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.8042,
+            "pages_cited": 0,
+            "cost_usd": 0.019338
+          }
+        },
+        {
+          "model": "Opus 4",
+          "model_id": "claude-opus-4-20250514",
+          "answer": "No encontré esa información en el manual.\n\nLa información proporcionada en el contexto del manual incluye procedimientos de cambio de aceite, capacidades de llenado, liberación de presión del sistema y ubicación del interruptor de presión de aceite, pero no especifica cuál es la presión de aceite recomendada para el motor.",
+          "references": [],
+          "metrics": {
+            "model": "claude-opus-4-20250514",
+            "latency_ms": 4632,
+            "input_tokens": 6251,
+            "output_tokens": 85,
+            "total_latency_ms": 5270,
+            "embedding_time_ms": 457,
+            "search_time_ms": 180,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.8042,
+            "pages_cited": 0,
+            "cost_usd": 0.10014
+          }
+        }
+      ]
+    },
+    {
+      "id": "D2",
+      "category": "directa",
+      "question": "What type of coolant is recommended for this engine?",
+      "description": "Pregunta directa sobre fluidos",
+      "responses": [
+        {
+          "model": "Haiku 3.5",
+          "model_id": "claude-3-5-haiku-20241022",
+          "answer": "Según el manual, los tipos de refrigerante recomendados para los motores Perkins son:\n\nPreferido:\n• ELC (Extended Life Coolant) de Perkins\n\nAceptable:\n• Un anticongelante comercial para uso pesado que cumpla con las especificaciones \"ASTM D6210\"\n\nNotas importantes:\n1. Los motores industriales Perkins DEBEN operarse con una mezcla 1:1 de agua y glicol\n2. NO usar refrigerante/anticongelante comercial que solo cumpla la especificación ASTM D3306, que está diseñado para aplicaciones automotrices ligeras\n\nRecomendaciones adicionales:\n• Para protección óptima, Perkins recomienda una mezcla de 1:1 de agua/glicol\n• Se recomienda usar una concentración que proporcione protección contra la temperatura ambiente más baja\n• Se pueden usar glicoles de etileno o propileno, pero con restricciones de concentración\n\n(Ver páginas 54, 56)",
+          "references": [
+            {
+              "page": 54,
+              "section": "Local water utility company"
+            },
+            {
+              "page": 56,
+              "section": "Changing to Perkins ELC"
+            }
+          ],
+          "metrics": {
+            "model": "claude-3-5-haiku-20241022",
+            "latency_ms": 6742,
+            "input_tokens": 6994,
+            "output_tokens": 265,
+            "total_latency_ms": 7512,
+            "embedding_time_ms": 418,
+            "search_time_ms": 351,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.7891,
+            "pages_cited": 2,
+            "cost_usd": 0.006655
+          }
+        },
+        {
+          "model": "Sonnet 4",
+          "model_id": "claude-sonnet-4-20250514",
+          "answer": "Según el manual, se recomiendan los siguientes tipos de refrigerante para este motor:\n\n**Tipos de refrigerante recomendados:**\n\n**Preferido:** Perkins ELC (Extended Life Coolant)\n\n**Aceptable:** Un anticongelante comercial de servicio pesado que cumpla con las especificaciones \"ASTM D6210\"\n\n**IMPORTANTE - NO usar:** No utilizar anticongelante/refrigerante comercial que solo cumpla con la especificación ASTM D3306. Este tipo de anticongelante/refrigerante está hecho para aplicaciones automotrices ligeras.\n\n**Mezcla requerida:**\n- Los motores industriales Perkins DEBEN operarse con una mezcla 1:1 de agua y glicol\n- Para rendimiento óptimo, Perkins recomienda una mezcla 1:1 de solución agua/glicol\n\n**Tipos de glicol aceptables:**\n- **Etilenglicol** (más común en anticongelantes convencionales)\n- **Propilenglicol** (también puede usarse)\n\n**Limitaciones importantes:**\n- No usar propilenglicol en concentraciones que excedan 50% glicol debido a la capacidad reducida de transferencia de calor del propilenglicol\n- Usar etilenglicol en condiciones que requieran protección adicional contra ebullición o congelación\n\n**Nota:** Usar una mezcla que proporcione protección contra la temperatura ambiente más baja.\n\n(Ver páginas 54, 58)",
+          "references": [
+            {
+              "page": 54,
+              "section": "Local water utility company"
+            },
+            {
+              "page": 58,
+              "section": "Maintenance Section - Fluid Recommendations"
+            }
+          ],
+          "metrics": {
+            "model": "claude-sonnet-4-20250514",
+            "latency_ms": 10100,
+            "input_tokens": 6994,
+            "output_tokens": 394,
+            "total_latency_ms": 10892,
+            "embedding_time_ms": 540,
+            "search_time_ms": 252,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.7891,
+            "pages_cited": 2,
+            "cost_usd": 0.026892
+          }
+        },
+        {
+          "model": "Opus 4",
+          "model_id": "claude-opus-4-20250514",
+          "answer": "Basado en el manual, las recomendaciones de refrigerante para este motor son:\n\n**Coolant Recommendations**\n\nLos siguientes dos refrigerantes se utilizan en los motores diesel Perkins:\n\n**Preferred** – Perkins ELC (Extended Life Coolant)\n\n**Acceptable** – A commercial heavy-duty antifreeze that meets \"ASTM D6210\" specifications\n\n**Información importante sobre la mezcla:**\n- Los motores industriales Perkins deben operarse con una mezcla 1:1 de agua y glicol\n- Para rendimiento óptimo, Perkins recomienda una mezcla 1:1 de solución agua/glicol\n\n**NOTICE**\n- No use refrigerante/anticongelante comercial que solo cumpla con la especificación ASTM D3306. Este tipo de refrigerante/anticongelante está hecho para aplicaciones automotrices ligeras.\n\n**Protección contra congelación:**\n- Con mezcla al 50% de glicol etileno: -36°C (-33°F)\n- Con mezcla al 50% de glicol propileno: -29°C (-20°F)\n\n**Nota:** Use una mezcla que proporcione protección contra la temperatura ambiente más baja.\n\n(Ver página 54)",
+          "references": [
+            {
+              "page": 54,
+              "section": "Local water utility company"
+            }
+          ],
+          "metrics": {
+            "model": "claude-opus-4-20250514",
+            "latency_ms": 13101,
+            "input_tokens": 6994,
+            "output_tokens": 323,
+            "total_latency_ms": 13715,
+            "embedding_time_ms": 380,
+            "search_time_ms": 233,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.7891,
+            "pages_cited": 1,
+            "cost_usd": 0.129135
+          }
+        }
+      ]
+    },
+    {
+      "id": "D3",
+      "category": "directa",
+      "question": "What is the engine firing order?",
+      "description": "Pregunta directa sobre especificación del motor",
+      "responses": [
+        {
+          "model": "Haiku 3.5",
+          "model_id": "claude-3-5-haiku-20241022",
+          "answer": "Basándome en los fragmentos del manual, la orden de encendido (firing order) depende del modelo específico de motor, pero para varios modelos de la serie 403J y 404J es 1-2-3.\n\nEspecíficamente, encontré estos ejemplos:\n\n1. 403J-11 Engine: Firing Order 1-2-3\n2. 403J-11T Engine: Firing Order 1-2-3\n3. 403J-15 Engine: Firing Order 1-2-3\n4. 403J-17 Engine: Firing Order 1-2-3\n5. 403J-17T Engine: Firing Order 1-2-3\n\nLa única excepción es el motor 404J-22, que tiene un Firing Order de 1-3-4-2.\n\n(Ver páginas 30, 31 y 32)",
+          "references": [
+            {
+              "page": 30,
+              "section": "Product Information Section"
+            },
+            {
+              "page": 31,
+              "section": "Product Information Section - Product Description"
+            },
+            {
+              "page": 32,
+              "section": "Product Information Section"
+            }
+          ],
+          "metrics": {
+            "model": "claude-3-5-haiku-20241022",
+            "latency_ms": 5372,
+            "input_tokens": 6887,
+            "output_tokens": 213,
+            "total_latency_ms": 7244,
+            "embedding_time_ms": 418,
+            "search_time_ms": 1453,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.7974,
+            "pages_cited": 3,
+            "cost_usd": 0.006362
+          }
+        },
+        {
+          "model": "Sonnet 4",
+          "model_id": "claude-sonnet-4-20250514",
+          "answer": "Basándome en la información del manual, el firing order (orden de encendido) varía según el modelo de motor:\n\n**Motores de 3 cilindros:**\n- 403J-11 Engine: 1-2-3\n- 403J-11T Engine: 1-2-3  \n- 403J-15 Engine: 1-2-3\n- 403J-17 Engine: 1-2-3\n- 403J-17T Engine: 1-2-3\n\n**Motor de 4 cilindros:**\n- 404J-22 Engine: 1-3-4-2\n\nTodos los motores tienen rotación counterclockwise (contrahoraria) cuando se ve desde el flywheel (volante).\n\n(Ver páginas 30, 31, 32)",
+          "references": [
+            {
+              "page": 30,
+              "section": "Product Information Section"
+            },
+            {
+              "page": 31,
+              "section": "Product Information Section - Product Description"
+            },
+            {
+              "page": 32,
+              "section": "Product Information Section"
+            }
+          ],
+          "metrics": {
+            "model": "claude-sonnet-4-20250514",
+            "latency_ms": 5093,
+            "input_tokens": 7032,
+            "output_tokens": 198,
+            "total_latency_ms": 6476,
+            "embedding_time_ms": 225,
+            "search_time_ms": 1156,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.7974,
+            "pages_cited": 3,
+            "cost_usd": 0.024066
+          }
+        },
+        {
+          "model": "Opus 4",
+          "model_id": "claude-opus-4-20250514",
+          "answer": "Según el manual, el firing order (orden de encendido) varía dependiendo del modelo de motor:\n\n**Para motores de 3 cilindros:**\n- 403J-07 Engine: 1-2-3\n- 403J-11 Engine: 1-2-3\n- 403J-11T Engine: 1-2-3\n- 403J-15 Engine: 1-2-3\n- 403J-17 Engine: 1-2-3\n- 403J-17T Engine: 1-2-3\n\n**Para motores de 4 cilindros:**\n- 404J-22 Engine: 1-3-4-2\n\nEn todos los casos, la rotación vista desde el volante (flywheel) es en sentido contrario a las agujas del reloj (Counterclockwise).\n\n(Ver páginas 30, 31, 32)",
+          "references": [
+            {
+              "page": 30,
+              "section": "Product Information Section"
+            },
+            {
+              "page": 31,
+              "section": "Product Information Section - Product Description"
+            },
+            {
+              "page": 32,
+              "section": "Product Information Section"
+            }
+          ],
+          "metrics": {
+            "model": "claude-opus-4-20250514",
+            "latency_ms": 7545,
+            "input_tokens": 7032,
+            "output_tokens": 220,
+            "total_latency_ms": 8869,
+            "embedding_time_ms": 315,
+            "search_time_ms": 1007,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.7974,
+            "pages_cited": 3,
+            "cost_usd": 0.12198
+          }
+        }
+      ]
+    },
+    {
+      "id": "D4",
+      "category": "directa",
+      "question": "What is the valve lash clearance specification?",
+      "description": "Pregunta directa sobre ajustes",
+      "responses": [
+        {
+          "model": "Haiku 3.5",
+          "model_id": "claude-3-5-haiku-20241022",
+          "answer": "Según los manuales proporcionados, la especificación de válvula lash (holgura de válvula) es idéntica para varios modelos de motores:\n\nValve Lash Setting (Inlet): 0.20 mm (0.008 inch)\nValve Lash Setting (Exhaust): 0.20 mm (0.008 inch)\n\nEsto aplica específicamente para los siguientes modelos de motor:\n- 403J-15 \n- 403J-17\n- 403J-17T\n- 404J-22\n\n(Ver páginas 31 y 32)",
+          "references": [
+            {
+              "page": 31,
+              "section": "Product Information Section - Product Description"
+            },
+            {
+              "page": 32,
+              "section": "Product Information Section"
+            }
+          ],
+          "metrics": {
+            "model": "claude-3-5-haiku-20241022",
+            "latency_ms": 4162,
+            "input_tokens": 4836,
+            "output_tokens": 151,
+            "total_latency_ms": 5580,
+            "embedding_time_ms": 1193,
+            "search_time_ms": 224,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.7647,
+            "pages_cited": 2,
+            "cost_usd": 0.004473
+          }
+        },
+        {
+          "model": "Sonnet 4",
+          "model_id": "claude-sonnet-4-20250514",
+          "answer": "Basándome en la información del manual, las especificaciones de holgura de válvulas (valve lash) son las siguientes:\n\n**Para todos los motores de la serie 400J:**\n\n**Valve Lash Setting (Inlet):** 0.20 mm (0.008 inch)\n**Valve Lash Setting (Exhaust):** 0.20 mm (0.008 inch)\n\nEsta especificación es idéntica para todos los modelos incluidos en el manual:\n- 403J-15 Engine\n- 403J-17 Engine  \n- 403J-17T Engine\n- 404J-22 Engine\n\nTanto las válvulas de admisión (Inlet) como las válvulas de escape (Exhaust) tienen la misma especificación de holgura de 0.20 mm (0.008 inch).\n\n(Ver páginas 31, 32)",
+          "references": [
+            {
+              "page": 31,
+              "section": "Product Information Section - Product Description"
+            },
+            {
+              "page": 32,
+              "section": "Product Information Section"
+            }
+          ],
+          "metrics": {
+            "model": "claude-sonnet-4-20250514",
+            "latency_ms": 5805,
+            "input_tokens": 4836,
+            "output_tokens": 222,
+            "total_latency_ms": 6454,
+            "embedding_time_ms": 348,
+            "search_time_ms": 300,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.7647,
+            "pages_cited": 2,
+            "cost_usd": 0.017838
+          }
+        },
+        {
+          "model": "Opus 4",
+          "model_id": "claude-opus-4-20250514",
+          "answer": "Las especificaciones del ajuste de las válvulas (valve lash) para todos los motores son:\n\n**Valve Lash Setting (Inlet)**: 0.20 mm (0.008 inch)\n**Valve Lash Setting (Exhaust)**: 0.20 mm (0.008 inch)\n\nEstas especificaciones son idénticas para todos los modelos documentados:\n- 403J-15 Engine\n- 403J-17 Engine  \n- 403J-17T Engine\n- 404J-22 Engine\n\n(Ver páginas 31, 32)",
+          "references": [
+            {
+              "page": 31,
+              "section": "Product Information Section - Product Description"
+            },
+            {
+              "page": 32,
+              "section": "Product Information Section"
+            }
+          ],
+          "metrics": {
+            "model": "claude-opus-4-20250514",
+            "latency_ms": 5267,
+            "input_tokens": 4836,
+            "output_tokens": 146,
+            "total_latency_ms": 5896,
+            "embedding_time_ms": 382,
+            "search_time_ms": 245,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.7647,
+            "pages_cited": 2,
+            "cost_usd": 0.08349
+          }
+        }
+      ]
+    },
+    {
+      "id": "I1",
+      "category": "ilustracion",
+      "question": "Where is the water inlet located according to illustration 17?",
+      "description": "Pregunta que requiere interpretar una ilustración específica",
+      "responses": [
+        {
+          "model": "Haiku 3.5",
+          "model_id": "claude-3-5-haiku-20241022",
+          "answer": "Según la Ilustración 17 en la página 20, la ubicación del water inlet (entrada de agua) se indica como el elemento (22) en el diagrama.\n\n(Ver página 20)",
+          "references": [
+            {
+              "page": 20,
+              "section": "Product Information Section"
+            }
+          ],
+          "metrics": {
+            "model": "claude-3-5-haiku-20241022",
+            "latency_ms": 1813,
+            "input_tokens": 3278,
+            "output_tokens": 49,
+            "total_latency_ms": 2378,
+            "embedding_time_ms": 324,
+            "search_time_ms": 240,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.7719,
+            "pages_cited": 1,
+            "cost_usd": 0.002818
+          }
+        },
+        {
+          "model": "Sonnet 4",
+          "model_id": "claude-sonnet-4-20250514",
+          "answer": "Según la Illustration 17, el water inlet está identificado como el componente (22).\n\nEn la Illustration 17 se muestra un ejemplo típico donde:\n- (20) Water temperature sensor\n- (21) Fan belt\n- (22) Water inlet\n- (23) Water temperature regulator housing\n- (24) Water outlet\n\n(Ver página 20)",
+          "references": [
+            {
+              "page": 20,
+              "section": "Product Information Section"
+            }
+          ],
+          "metrics": {
+            "model": "claude-sonnet-4-20250514",
+            "latency_ms": 3307,
+            "input_tokens": 3278,
+            "output_tokens": 87,
+            "total_latency_ms": 3698,
+            "embedding_time_ms": 226,
+            "search_time_ms": 165,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.7719,
+            "pages_cited": 1,
+            "cost_usd": 0.011139
+          }
+        },
+        {
+          "model": "Opus 4",
+          "model_id": "claude-opus-4-20250514",
+          "answer": "Según la ilustración 17, el water inlet (entrada de agua) está identificado como el elemento número (22).\n\nLa ilustración 17 muestra los siguientes componentes:\n- (20) Water temperature sensor\n- (21) Fan belt\n- (22) Water inlet\n- (23) Water temperature regulator housing\n- (24) Water outlet\n\n(Ver página 20)",
+          "references": [
+            {
+              "page": 20,
+              "section": "Product Information Section"
+            }
+          ],
+          "metrics": {
+            "model": "claude-opus-4-20250514",
+            "latency_ms": 4347,
+            "input_tokens": 3278,
+            "output_tokens": 90,
+            "total_latency_ms": 4776,
+            "embedding_time_ms": 259,
+            "search_time_ms": 170,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.7719,
+            "pages_cited": 1,
+            "cost_usd": 0.05592
+          }
+        }
+      ]
+    },
+    {
+      "id": "I2",
+      "category": "ilustracion",
+      "question": "What components are shown in the fuel system diagram?",
+      "description": "Pregunta sobre componentes en diagrama",
+      "responses": [
+        {
+          "model": "Haiku 3.5",
+          "model_id": "claude-3-5-haiku-20241022",
+          "answer": "Basándome en los fragmentos del manual, puedo identificar los siguientes componentes del sistema de combustible:\n\nEn la Ilustración 26 (Página 28), se muestran:\n1. In-line fuel filter (filtro de combustible en línea)\n2. Electric fuel pump (bomba de combustible eléctrica)\n\nEn la Ilustración 15 (Página 18), se muestran componentes adicionales del sistema de combustible:\n12. Fuel lift pump (mechanical) [bomba de alimentación de combustible mecánica]\n13. Secondary fuel filter [filtro de combustible secundario]\n14. Stop solenoid (no mostrado)\n\nEn la Ilustración 77 (Página 95), se muestran diferentes tipos de sistemas de cebado de combustible:\n6. Hand priming pump [bomba de cebado manual]\n7. In-line priming pump [bomba de cebado en línea]\n8. Electrical priming pump [bomba de cebado eléctrica]\n9. Fuel transfer pump with hand priming [bomba de transferencia de combustible con cebado manual]\n\n(Ver páginas 28, 18, 95)",
+          "references": [
+            {
+              "page": 18,
+              "section": "Product Information Section"
+            },
+            {
+              "page": 28,
+              "section": "Product Information Section"
+            },
+            {
+              "page": 95,
+              "section": "Maintenance Section - Fuel System - Prime"
+            }
+          ],
+          "metrics": {
+            "model": "claude-3-5-haiku-20241022",
+            "latency_ms": 6358,
+            "input_tokens": 4778,
+            "output_tokens": 290,
+            "total_latency_ms": 6698,
+            "embedding_time_ms": 173,
+            "search_time_ms": 166,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.8197,
+            "pages_cited": 3,
+            "cost_usd": 0.004982
+          }
+        },
+        {
+          "model": "Sonnet 4",
+          "model_id": "claude-sonnet-4-20250514",
+          "answer": "Según el manual, los componentes del sistema de combustible que se muestran en los diagramas son:\n\n**En la Ilustración 26 (Página 28):**\n(1) In-line fuel filter\n(2) Electric fuel pump\n\n**En las vistas del motor se identifican varios componentes del sistema de combustible:**\n\n**403J-11T Engine View (Ilustración 15, Página 18):**\n(6) Fuel injection pump\n(12) Fuel lift pump (Mechanical)\n(13) Secondary fuel filter\n(14) Stop solenoid (not shown)\n\n**En otra vista del motor (Ilustración 23, Página 26):**\n(20) Fuel pump (Mechanical)\n(21) Secondary fuel filter\n(22) Fuel injector\n\n**Para el sistema de cebado (Priming), Ilustración 77 (Página 95):**\n(6) Hand priming pump\n(7) In-line priming pump\n(8) Electrical priming pump\n(9) Fuel transfer pump with hand priming\n\n**Ilustración 78 (Página 95):**\n(10) Connector bolt\n(11) Fuel return line\n(12) Connector bolt\n\n**En el diagrama del filtro en línea (Ilustración 70, Página 91):**\n(1) In-line filter\n(2) Clamp\n(3) Clamp\n(4) Inlet hose\n(5) Outlet hose\n(6) Clamp\n\n(Ver páginas 18, 26, 28, 91, 95)",
+          "references": [
+            {
+              "page": 18,
+              "section": "Product Information Section"
+            },
+            {
+              "page": 26,
+              "section": "Product Information Section"
+            },
+            {
+              "page": 28,
+              "section": "Product Information Section"
+            },
+            {
+              "page": 91,
+              "section": "Maintenance Section"
+            },
+            {
+              "page": 95,
+              "section": "Maintenance Section - Fuel System - Prime"
+            }
+          ],
+          "metrics": {
+            "model": "claude-sonnet-4-20250514",
+            "latency_ms": 7309,
+            "input_tokens": 4778,
+            "output_tokens": 381,
+            "total_latency_ms": 7985,
+            "embedding_time_ms": 452,
+            "search_time_ms": 223,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.8197,
+            "pages_cited": 5,
+            "cost_usd": 0.020049
+          }
+        },
+        {
+          "model": "Opus 4",
+          "model_id": "claude-opus-4-20250514",
+          "answer": "Basándome en el contexto del manual, encontré información sobre los componentes del sistema de combustible en diferentes ilustraciones:\n\n**Fuel System Components (Página 28, Ilustración 26):**\n- (1) In-line fuel filter\n- (2) Electric fuel pump\n\n**Componentes adicionales del sistema de combustible mostrados en otras ilustraciones:**\n\nEn las vistas del motor 403J-11T (Página 18, Ilustración 15):\n- (12) Fuel lift pump (Mechanical)\n- (13) Secondary fuel filter\n- (14) Stop solenoid (not shown)\n\nEn otra vista del motor (Página 26, Ilustración 23):\n- (20) Fuel pump (Mechanical)\n- (21) Secondary fuel filter\n- (22) Fuel injector\n\n**Componentes relacionados con el cebado del sistema (Páginas 94-95):**\n- (2) Fuel valve\n- (3) Vent screw (en filtros con elemento)\n- (4) Vent screw (en filtros con canister)\n- (5) Vent screw (en filtros spin-on)\n- (6) Hand priming pump\n- (7) In-line priming pump\n- (8) Electrical priming pump\n- (9) Fuel transfer pump with hand priming\n\n(Ver páginas 18, 26, 28, 94, 95)",
+          "references": [
+            {
+              "page": 18,
+              "section": "Product Information Section"
+            },
+            {
+              "page": 26,
+              "section": "Product Information Section"
+            },
+            {
+              "page": 28,
+              "section": "Product Information Section"
+            },
+            {
+              "page": 94,
+              "section": "Fuel System - Prime"
+            },
+            {
+              "page": 95,
+              "section": "Maintenance Section - Fuel System - Prime"
+            }
+          ],
+          "metrics": {
+            "model": "claude-opus-4-20250514",
+            "latency_ms": 12033,
+            "input_tokens": 4778,
+            "output_tokens": 343,
+            "total_latency_ms": 12518,
+            "embedding_time_ms": 251,
+            "search_time_ms": 233,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.8197,
+            "pages_cited": 5,
+            "cost_usd": 0.097395
+          }
+        }
+      ]
+    },
+    {
+      "id": "I3",
+      "category": "ilustracion",
+      "question": "Describe the numbered components in the engine view illustration",
+      "description": "Pregunta que requiere listar componentes de una figura",
+      "responses": [
+        {
+          "model": "Haiku 3.5",
+          "model_id": "claude-3-5-haiku-20241022",
+          "answer": "Basándome en los diferentes fragmentos del manual, puedo describir los componentes numerados en las ilustraciones de vistas de motor Perkins. Sin embargo, los componentes varían ligeramente entre diferentes modelos de motor (403J-11T, 403J-15, 403J-17, 403J-17T, etc.).\n\nTomaré como ejemplo la ilustración de la página 18 (403J-11T Engine View):\n\n(1) Top oil filler cap - Tapa superior de llenado de aceite\n(2) Oil pressure switch - Interruptor de presión de aceite\n(3) Front lifting eye - Punto de elevación frontal\n(4) Water pump - Bomba de agua\n(5) Low mounted oil filter cap - Tapa del filtro de aceite montada en la parte baja\n(6) Fuel injection pump - Bomba de inyección de combustible\n(7) Oil gauge (Dipstick) - Indicador de nivel de aceite (varilla medidora)\n(8) Engine oil cooler - Enfriador de aceite del motor\n(9) Oil drain plug - Tapón de drenaje de aceite\n(10) Oil filter - Filtro de aceite\n(11) Flywheel speed sensor - Sensor de velocidad del volante\n(12) Fuel lift pump (Mechanical) - Bomba de combustible de elevación (mecánica)\n(13) Secondary fuel filter - Filtro de combustible secundario\n(14) Stop solenoid (not shown) - Solenoide de parada (no mostrado)\n(15) Crankcase breather - Respiradero del cárter\n\n(Ver páginas 18, 16, 21, 23, 25, 26)",
+          "references": [
+            {
+              "page": 16,
+              "section": "Product Information Section - General Information"
+            },
+            {
+              "page": 18,
+              "section": "Product Information Section"
+            },
+            {
+              "page": 21,
+              "section": "Product Information Section - Model View Illustrations"
+            },
+            {
+              "page": 23,
+              "section": "Product Information Section - Model View Illustrations"
+            },
+            {
+              "page": 25,
+              "section": "Product Information Section - Model View Illustrations"
+            },
+            {
+              "page": 26,
+              "section": "Product Information Section"
+            }
+          ],
+          "metrics": {
+            "model": "claude-3-5-haiku-20241022",
+            "latency_ms": 7458,
+            "input_tokens": 2448,
+            "output_tokens": 426,
+            "total_latency_ms": 8941,
+            "embedding_time_ms": 421,
+            "search_time_ms": 1061,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.8329,
+            "pages_cited": 6,
+            "cost_usd": 0.003662
+          }
+        },
+        {
+          "model": "Sonnet 4",
+          "model_id": "claude-sonnet-4-20250514",
+          "answer": "Basándome en las ilustraciones de los diferentes modelos de motor, aquí están los componentes numerados según aparecen en cada vista del motor:\n\n**402J-05 Engine View (Illustration 13):**\n(1) Oil Pressure Sensor\n(2) Water Temperature Sensor\n(3) Water Pump\n(4) Oil gauge (Dipstick)\n(5) Oil Filter\n(6) Mechanical Fuel Pump (Low Pressure)\n(7) Stop Solenoid\n(8) Secondary Fuel Filter\n(9) Oil Filler Cap\n\n**403J-11T Engine View (Illustration 15):**\n(1) Top oil filler cap\n(2) Oil pressure switch\n(3) Front lifting eye\n(4) Water pump\n(5) Low mounted oil filter cap\n(6) Fuel injection pump\n(7) Oil gauge (Dipstick)\n(8) Engine oil cooler\n(9) Oil drain plug\n(10) Oil filter\n(11) Flywheel speed sensor\n(12) Fuel lift pump (Mechanical)\n(13) Secondary fuel filter\n(14) Stop solenoid (not shown)\n(15) Crankcase breather\n\n**403J-15 Engine View (Illustration 18):**\n(1) Top oil filler cap\n(2) Front lifting eye\n(3) Low mounted oil filler cap\n(4) Fuel injection pump\n(5) Oil gauge (Dipstick)\n(6) Oil drain plug\n(7) Oil filter\n(8) Coolant drain\n(9) Stop solenoid\n(10) Fuel injector\n(11) Glow plug\n\n**403J-17 Engine View (Illustration 20):**\n(1) Rear lifting eye\n(2) Top oil filler cap\n(3) Front lifting eye\n(4) Water pump\n(5) Low mounted oil filler cap\n(6) Fuel injection pump\n(7) Oil gauge (Dipstick)\n(8) Oil drain plug\n(9) Oil filter\n(10) Stop solenoid\n(11) Injector\n\n**403J-17T Engine View (Illustration 22):**\n(1) Front lifting eye\n(2) Coolant outlet\n(3) Rear lifting eye\n(4) Exhaust elbow\n(5) Turbocharger\n(6) Starting motor\n(7) Alternator\n(8) Fan belt\n(9) Oil drain plug\n(10) Coolant intake\n(11) Water temperature regulator housing (Thermostat housing)\n\n**Additional views include components numbered up to (23) such as:**\n- Air intake\n- Coolant temperature sensors and switches\n- Starting motor and alternator\n- Exhaust manifold\n- Crankcase breather\n- Fuel system components\n\n(Ver páginas 16, 17, 18, 19, 21, 22, 23, 24, 25, 26, 27, 28)",
+          "references": [
+            {
+              "page": 16,
+              "section": "Product Information Section - General Information"
+            },
+            {
+              "page": 17,
+              "section": "Product Information Section - Model View Illustrations"
+            },
+            {
+              "page": 18,
+              "section": "Product Information Section"
+            },
+            {
+              "page": 19,
+              "section": "Product Information Section - Model View Illustrations"
+            },
+            {
+              "page": 21,
+              "section": "Product Information Section - Model View Illustrations"
+            },
+            {
+              "page": 22,
+              "section": "Product Information Section"
+            },
+            {
+              "page": 23,
+              "section": "Product Information Section - Model View Illustrations"
+            },
+            {
+              "page": 24,
+              "section": "Product Information Section"
+            },
+            {
+              "page": 25,
+              "section": "Product Information Section - Model View Illustrations"
+            },
+            {
+              "page": 26,
+              "section": "Product Information Section"
+            },
+            {
+              "page": 27,
+              "section": "Product Information Section - Model View Illustrations"
+            },
+            {
+              "page": 28,
+              "section": "Product Information Section"
+            }
+          ],
+          "metrics": {
+            "model": "claude-sonnet-4-20250514",
+            "latency_ms": 9127,
+            "input_tokens": 2448,
+            "output_tokens": 698,
+            "total_latency_ms": 10361,
+            "embedding_time_ms": 234,
+            "search_time_ms": 998,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.8329,
+            "pages_cited": 12,
+            "cost_usd": 0.017814
+          }
+        },
+        {
+          "model": "Opus 4",
+          "model_id": "claude-opus-4-20250514",
+          "answer": "No encontré esa información en el manual. \n\nLa pregunta solicita una descripción general de los componentes numerados en una ilustración de vista del motor, pero sin especificar cuál modelo de motor. El manual contiene múltiples vistas de diferentes modelos de motor (402J-05, 403J-11T, 403J-15, 403J-17, 403J-17T, y 403J-11G), cada uno con sus propios componentes numerados.\n\nPara proporcionar la información correcta, necesitaría saber específicamente a cuál modelo de motor e ilustración se refiere la pregunta.",
+          "references": [],
+          "metrics": {
+            "model": "claude-opus-4-20250514",
+            "latency_ms": 5694,
+            "input_tokens": 2448,
+            "output_tokens": 150,
+            "total_latency_ms": 6992,
+            "embedding_time_ms": 318,
+            "search_time_ms": 978,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.8329,
+            "pages_cited": 0,
+            "cost_usd": 0.04797
+          }
+        }
+      ]
+    },
+    {
+      "id": "C1",
+      "category": "compleja",
+      "question": "What is the complete troubleshooting procedure when the engine fails to start?",
+      "description": "Pregunta compleja que requiere sintetizar procedimiento de diagnóstico",
+      "responses": [
+        {
+          "model": "Haiku 3.5",
+          "model_id": "claude-3-5-haiku-20241022",
+          "answer": "Basándome en los fragmentos del manual, aquí está el procedimiento completo de troubleshooting cuando el motor no arranca:\n\nA. Pasos previos de verificación:\n\n1. Verificar suministro de combustible\n• Asegúrese de que el motor tenga un suministro de combustible adecuado\n• Abrir la válvula de suministro de combustible (si está equipada)\n\n2. Primar el sistema de combustible\nSi el motor no ha arrancado en varias semanas:\n• Puede haber aire en el sistema de combustible\n• Será necesario primar el sistema de combustible\n• Consultar sección \"Fuel System - Prime\" del manual\n\n3. Verificaciones iniciales\n• No hay etiquetas de \"NO OPERAR\" en los controles\n• Restablecer todos los componentes de apagado o alarma\n• Desconectar cualquier equipo accionado\n• Minimizar cargas eléctricas\n\nB. Procedimiento de arranque:\n\n1. Colocar la palanca del acelerador en posición de ralentí bajo\n\n2. Activar bujías de precalentamiento\n• Girar interruptor de arranque a posición HEAT\n• Mantener según tiempo mostrado en tabla de temperatura ambiente\n• NO operar bujías más de 60 segundos\n\n3. Cranking del motor\n• Girar interruptor a posición START\n• NO cranear más de 30 segundos\n• Esperar 2 minutos entre intentos\n\nC. Si el motor no arranca:\n\n1. Verificar indicador de bujías de precalentamiento\n• Si parpadea rápidamente: Falla en sistema de arranque en frío\n• NO usar éter ni líquidos de arranque\n\n2. Primar sistema de combustible\nMétodos de primado:\n• Bomba de mano mecánica\n• Bomba de primado en línea\n• Bomba de primado eléctrica\n\n3. Revisar sistema eléctrico\n• Verificar conexiones de cables\n• Comprobar estado de la batería\n\nD. Precauciones adicionales:\n\n• No usar aerosoles de arranque como éter\n• Asegurar ventilación adecuada\n• Seguir procedimiento del fabricante de equipos originales (OEM)\n\n(Ver páginas 40, 41, 92, 96)",
+          "references": [
+            {
+              "page": 40,
+              "section": "Engine Starting"
+            },
+            {
+              "page": 41,
+              "section": "Operation Section - Starting with Jump Start Cables"
+            },
+            {
+              "page": 92,
+              "section": "Fuel System - Prime"
+            },
+            {
+              "page": 96,
+              "section": "from air flows from the vent screw tighten the vent"
+            }
+          ],
+          "metrics": {
+            "model": "claude-3-5-haiku-20241022",
+            "latency_ms": 12792,
+            "input_tokens": 8674,
+            "output_tokens": 593,
+            "total_latency_ms": 14328,
+            "embedding_time_ms": 521,
+            "search_time_ms": 1015,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.8063,
+            "pages_cited": 4,
+            "cost_usd": 0.009311
+          }
+        },
+        {
+          "model": "Sonnet 4",
+          "model_id": "claude-sonnet-4-20250514",
+          "answer": "No encontré esa información en el manual. Los fragmentos proporcionados incluyen procedimientos para arrancar el motor, usar cables de puente, y cebado del sistema de combustible, pero no contienen una tabla de troubleshooting específica o procedimientos completos de diagnóstico para cuando el motor falla en arrancar.\n\nPara obtener información completa sobre troubleshooting cuando el motor no arranca, necesitaría acceso a las secciones de diagnóstico o troubleshooting del manual que no están incluidas en estos fragmentos.",
+          "references": [],
+          "metrics": {
+            "model": "claude-sonnet-4-20250514",
+            "latency_ms": 4999,
+            "input_tokens": 8674,
+            "output_tokens": 128,
+            "total_latency_ms": 6275,
+            "embedding_time_ms": 281,
+            "search_time_ms": 994,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.8058,
+            "pages_cited": 0,
+            "cost_usd": 0.027942
+          }
+        },
+        {
+          "model": "Opus 4",
+          "model_id": "claude-opus-4-20250514",
+          "answer": "No encontré esa información en el manual. Los fragmentos proporcionados contienen información sobre procedimientos de arranque del motor, arranque con cables auxiliares, y cebado del sistema de combustible, pero no incluyen una tabla o procedimiento completo de troubleshooting específicamente para cuando el motor falla en arrancar.\n\nLos fragmentos mencionan algunos aspectos relacionados como:\n- Procedimientos de arranque normal (páginas 40-41)\n- Arranque con cables auxiliares (página 41)\n- Cebado del sistema de combustible (páginas 92, 96)\n- Precauciones y límites de tiempo para el motor de arranque\n\nSin embargo, no hay una sección dedicada de troubleshooting con causas y soluciones sistemáticas para fallas de arranque.",
+          "references": [
+            {
+              "page": 40,
+              "section": "Engine Starting"
+            },
+            {
+              "page": 41,
+              "section": "Operation Section - Starting with Jump Start Cables"
+            },
+            {
+              "page": 92,
+              "section": "Fuel System - Prime"
+            },
+            {
+              "page": 96,
+              "section": "from air flows from the vent screw tighten the vent"
+            }
+          ],
+          "metrics": {
+            "model": "claude-opus-4-20250514",
+            "latency_ms": 7800,
+            "input_tokens": 8674,
+            "output_tokens": 191,
+            "total_latency_ms": 9021,
+            "embedding_time_ms": 199,
+            "search_time_ms": 1021,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.8063,
+            "pages_cited": 4,
+            "cost_usd": 0.144435
+          }
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "category": "compleja",
+      "question": "What are all the maintenance intervals and what does each one include?",
+      "description": "Pregunta compleja sobre múltiples intervalos de mantenimiento",
+      "responses": [
+        {
+          "model": "Haiku 3.5",
+          "model_id": "claude-3-5-haiku-20241022",
+          "answer": "Basándome en el manual, aquí están los intervalos de mantenimiento:\n\nCuando Sea Necesario:\n- Batería - Reemplazar\n- Motor - Limpiar\n- Elemento del Filtro de Aire del Motor - Reemplazar\n- Sistema de Combustible - Cebar\n\nDiariamente:\n- Nivel de Refrigerante - Verificar\n- Equipo Impulsado - Verificar\n- Indicador de Servicio del Filtro de Aire del Motor - Inspeccionar\n- Precleaner de Aire del Motor - Verificar/Limpiar\n- Nivel de Aceite del Motor - Verificar\n- Filtro Primario del Sistema de Combustible/Separador de Agua - Drenar\n- Inspección Alrededor del Equipo\n\nCada 50 Horas de Servicio o Semanalmente:\n- Filtro Primario del Sistema de Combustible/Separador de Agua - Drenar\n\nCada 250 Horas de Servicio o 6 Meses:\n- Correas del Alternador y Ventilador - Inspeccionar/Ajustar\n\nCada 500 Horas de Servicio:\n- Aditivo Suplementario del Sistema de Refrigeración (SCA) - Probar/Agregar\n- Aceite y Filtro del Motor - Cambiar\n- Holgura del Ventilador - Verificar\n\nCada 500 Horas de Servicio o 1 Año:\n- Nivel de Electrolito de Batería - Verificar\n- Elemento del Filtro de Aire del Motor - Reemplazar\n- Filtro de Combustible (En Línea) - Reemplazar\n- Filtro Primario del Sistema de Combustible - Reemplazar\n- Filtro Secundario del Sistema de Combustible - Reemplazar\n- Mangueras y Abrazaderas - Inspeccionar/Reemplazar\n- Radiador - Limpiar\n\nCada 1000 Horas de Servicio:\n- Correas del Alternador y Ventilador - Reemplazar\n- Holgura de Válvulas del Motor - Verificar\n- Turbocompresor - Inspeccionar\n\nCada 2000 Horas de Servicio:\n- Alternador - Inspeccionar\n- Respiradero del Cárter del Motor - Reemplazar\n- Soportes del Motor - Inspeccionar\n- Soportes del Radiador - Inspeccionar\n- Motor de Arranque - Inspeccionar\n\nCada 3000 Horas de Servicio:\n- Termostato de Temperatura del Refrigerante - Reemplazar\n- Inyector de Combustible - Probar/Cambiar\n- Inspección Alrededor del Equipo\n\nCada 3000 Horas de Servicio o 2 Años:\n- Refrigerante (Comercial Pesado) - Cambiar\n\nCada 6000 Horas de Servicio o 3 Años:\n- Refrigerante (ELC) - Cambiar\n\n(Ver páginas 70)",
+          "references": [
+            {
+              "page": 70,
+              "section": "Maintenance Interval Schedule"
+            }
+          ],
+          "metrics": {
+            "model": "claude-3-5-haiku-20241022",
+            "latency_ms": 13755,
+            "input_tokens": 7278,
+            "output_tokens": 805,
+            "total_latency_ms": 15077,
+            "embedding_time_ms": 350,
+            "search_time_ms": 971,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.786,
+            "pages_cited": 1,
+            "cost_usd": 0.009042
+          }
+        },
+        {
+          "model": "Sonnet 4",
+          "model_id": "claude-sonnet-4-20250514",
+          "answer": "Basándome en el manual, aquí están todos los intervalos de mantenimiento y lo que incluye cada uno:\n\n**When Required**\n- Battery - Replace (página 74)\n- Engine - Clean (página 82)\n- Engine Air Cleaner Element - Replace (página 82)\n- Fuel System - Prime (página 92)\n\n**Daily**\n- Coolant Level - Check (página 79)\n- Driven Equipment - Check (página 81)\n- Engine Air Cleaner Service Indicator - Inspect (página 83)\n- Engine Air Precleaner - Check/Clean (página 84)\n- Engine Oil Level - Check (página 86)\n- Fuel System Primary Filter/Water Separator - Drain (página 98)\n- Walk-Around Inspection (página 104)\n\n**Every 50 Service Hours or Weekly**\n- Fuel System Primary Filter/Water Separator - Drain (página 98)\n\n**Every 250 Service Hours or 6 Months**\n- Alternator and Fan Belts - Inspect/Adjust (página 71)\n\n**Every 500 Service Hours**\n- Cooling System Supplemental Coolant Additive (SCA) - Test/Add (página 81)\n- Engine Oil and Filter - Change (página 87)\n- Fan Clearance - Check (página 90)\n\n**Every 500 Service Hours or 1 Year**\n- Battery Electrolyte Level - Check (página 75)\n- Engine Air Cleaner Element - Replace (página 82)\n- Fuel Filter (In-Line) - Replace (página 91)\n- Fuel System Primary Filter - Replace (página 97)\n- Fuel System Secondary Filter - Replace (página 99)\n- Hoses and Clamps - Inspect/Replace (página 101)\n- Radiator - Clean (página 102)\n\n**Every 1000 Service Hours**\n- Alternator and Fan Belts - Replace (página 73)\n- Engine Valve Lash - Check (página 89)\n- Turbocharger - Inspect (página 103)\n\n**Every 2000 Service Hours**\n- Alternator - Inspect (página 71)\n- Engine Crankcase Breather - Replace (página 84)\n- Engine Mounts - Inspect (página 86)\n- Radiator Mounts - Inspect (página 102)\n- Starting Motor - Inspect (página 103)\n\n**Every 3000 Service Hours**\n- Coolant Temperature Regulator - Replace (página 80)\n- Fuel Injector - Test/Change (página 91)\n- Walk-Around Inspection (página 104)\n\n**Every 3000 Service Hours or 2 Years**\n- Coolant (Commercial Heavy-Duty) - Change (página 75)\n\n**Every 6000 Service Hours or 3 Years**\n- Coolant (ELC) - Change (página 77)\n\n**Commissioning**\n- Fan Clearance - Check (página 90)\n\n(Ver páginas 70)",
+          "references": [
+            {
+              "page": 70,
+              "section": "Maintenance Interval Schedule"
+            },
+            {
+              "page": 71,
+              "section": "Maintenance Section"
+            },
+            {
+              "page": 73,
+              "section": null
+            },
+            {
+              "page": 74,
+              "section": null
+            },
+            {
+              "page": 75,
+              "section": null
+            },
+            {
+              "page": 77,
+              "section": null
+            },
+            {
+              "page": 79,
+              "section": null
+            },
+            {
+              "page": 80,
+              "section": null
+            },
+            {
+              "page": 81,
+              "section": null
+            },
+            {
+              "page": 82,
+              "section": null
+            },
+            {
+              "page": 83,
+              "section": null
+            },
+            {
+              "page": 84,
+              "section": null
+            },
+            {
+              "page": 86,
+              "section": null
+            },
+            {
+              "page": 87,
+              "section": null
+            },
+            {
+              "page": 89,
+              "section": null
+            },
+            {
+              "page": 90,
+              "section": null
+            },
+            {
+              "page": 91,
+              "section": null
+            },
+            {
+              "page": 92,
+              "section": null
+            },
+            {
+              "page": 97,
+              "section": null
+            },
+            {
+              "page": 98,
+              "section": null
+            },
+            {
+              "page": 99,
+              "section": null
+            },
+            {
+              "page": 101,
+              "section": null
+            },
+            {
+              "page": 102,
+              "section": null
+            },
+            {
+              "page": 103,
+              "section": null
+            },
+            {
+              "page": 104,
+              "section": null
+            }
+          ],
+          "metrics": {
+            "model": "claude-sonnet-4-20250514",
+            "latency_ms": 13473,
+            "input_tokens": 7278,
+            "output_tokens": 722,
+            "total_latency_ms": 14829,
+            "embedding_time_ms": 343,
+            "search_time_ms": 1012,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.786,
+            "pages_cited": 25,
+            "cost_usd": 0.032664
+          }
+        },
+        {
+          "model": "Opus 4",
+          "model_id": "claude-opus-4-20250514",
+          "answer": "Basándome en el manual, aquí están todos los intervalos de mantenimiento y lo que incluye cada uno:\n\n**When Required (Cuando sea necesario)**\n- Battery - Replace\n- Engine - Clean\n- Engine Air Cleaner Element - Replace\n- Fuel System - Prime\n\n**Daily (Diario)**\n- Coolant Level - Check\n- Driven Equipment - Check\n- Engine Air Cleaner Service Indicator - Inspect\n- Engine Air Precleaner - Check/Clean\n- Engine Oil Level - Check\n- Fuel System Primary Filter/Water Separator - Drain\n- Walk-Around Inspection\n\n**Every 50 Service Hours or Weekly (Cada 50 horas de servicio o semanalmente)**\n- Fuel System Primary Filter/Water Separator - Drain\n\n**Every 250 Service Hours or 6 Months (Cada 250 horas de servicio o 6 meses)**\n- Alternator and Fan Belts - Inspect/Adjust\n\n**Every 500 Service Hours (Cada 500 horas de servicio)**\n- Cooling System Supplemental Coolant Additive (SCA) - Test/Add\n- Engine Oil and Filter - Change\n- Fan Clearance - Check\n\n**Every 500 Service Hours or 1 Year (Cada 500 horas de servicio o 1 año)**\n- Battery Electrolyte Level - Check\n- Engine Air Cleaner Element - Replace\n- Fuel Filter (In-Line) - Replace\n- Fuel System Primary Filter - Replace\n- Fuel System Secondary Filter - Replace\n- Hoses and Clamps - Inspect/Replace\n- Radiator - Clean\n\n**Every 1000 Service Hours (Cada 1000 horas de servicio)**\n- Alternator and Fan Belts - Replace\n- Engine Valve Lash - Check\n- Turbocharger - Inspect\n\n**Every 2000 Service Hours (Cada 2000 horas de servicio)**\n- Alternator - Inspect\n- Engine Crankcase Breather - Replace\n- Engine Mounts - Inspect\n- Radiator Mounts - Inspect\n- Starting Motor - Inspect\n\n**Every 3000 Service Hours (Cada 3000 horas de servicio)**\n- Coolant Temperature Regulator - Replace\n- Fuel Injector - Test/Change\n- Walk-Around Inspection\n\n**Every 3000 Service Hours or 2 Years (Cada 3000 horas de servicio o 2 años)**\n- Coolant (Commercial Heavy-Duty) - Change\n\n**Every 6000 Service Hours or 3 Years (Cada 6000 horas de servicio o 3 años)**\n- Coolant (ELC) - Change\n\n**Commissioning (Puesta en servicio)**\n- Fan Clearance - Check\n\n(Ver página 70)",
+          "references": [
+            {
+              "page": 70,
+              "section": "Maintenance Interval Schedule"
+            }
+          ],
+          "metrics": {
+            "model": "claude-opus-4-20250514",
+            "latency_ms": 18146,
+            "input_tokens": 7278,
+            "output_tokens": 682,
+            "total_latency_ms": 19426,
+            "embedding_time_ms": 270,
+            "search_time_ms": 1009,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.786,
+            "pages_cited": 1,
+            "cost_usd": 0.16032
+          }
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "category": "compleja",
+      "question": "Compare the cold start procedure vs the warm start procedure",
+      "description": "Pregunta compleja que requiere comparar dos procedimientos",
+      "responses": [
+        {
+          "model": "Haiku 3.5",
+          "model_id": "claude-3-5-haiku-20241022",
+          "answer": "Después de revisar cuidadosamente los fragmentos del manual, no encontré una descripción explícita de procedimientos separados para arranque en frío vs arranque en caliente. Sin embargo, puedo destacar algunos detalles importantes relacionados con el arranque en frío:\n\nProcedimiento de Arranque en Frío:\n\n1. Uso de Glow Plugs (Enchufes de Calentamiento)\n• La duración del precalentamiento varía según la temperatura ambiente\n• En temperaturas entre -15°C y +15°C, el tiempo de precalentamiento con glow plugs cambia\n• No operar glow plugs por más de 60 segundos\n\nPasos específicos (Página 40):\n1. Mover la palanca del acelerador a posición de ralentí bajo\n2. Girar el interruptor de arranque a posición HEAT\n3. Mantener en HEAT por el tiempo mostrado en la ilustración según temperatura\n4. Cuando la luz indicadora de glow plugs se ilumine, girar a posición START\n5. Soltar interruptor cuando el motor arranque\n\nConsideraciones Especiales para Arranque en Frío (Página 45):\n• Depende de:\n- Tipo de combustible\n- Viscosidad del aceite de motor\n- Operación de glow plugs\n- Condición de la batería\n\nRecomendaciones Adicionales:\n• Operar el motor hasta alcanzar temperatura mínima de 80°C (176°F)\n• Usar tiempo extra de calentamiento bajo 0°C\n• En temperaturas de 0°C a 60°C, tiempo de calentamiento es ~3 minutos\n\n(Ver páginas 40, 45, 46)",
+          "references": [
+            {
+              "page": 40,
+              "section": "Engine Starting"
+            },
+            {
+              "page": 45,
+              "section": "Cold Weather Operation"
+            },
+            {
+              "page": 46,
+              "section": "correct glycol concentration to ensure adequate"
+            }
+          ],
+          "metrics": {
+            "model": "claude-3-5-haiku-20241022",
+            "latency_ms": 10398,
+            "input_tokens": 8112,
+            "output_tokens": 433,
+            "total_latency_ms": 11764,
+            "embedding_time_ms": 245,
+            "search_time_ms": 1120,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.7881,
+            "pages_cited": 3,
+            "cost_usd": 0.008222
+          }
+        },
+        {
+          "model": "Sonnet 4",
+          "model_id": "claude-sonnet-4-20250514",
+          "answer": "No encontré esa información en el manual.\n\nEl manual proporciona procedimientos detallados para el arranque del motor que incluyen el uso de bujías de precalentamiento (glow plugs) para condiciones frías, pero no establece una comparación específica entre procedimientos de arranque en frío versus arranque en caliente, ni define procedimientos separados y distintos para cada condición.\n\nLa información disponible se centra en un procedimiento general de arranque que incorpora elementos para facilitar el arranque en condiciones frías (como el tiempo de precalentamiento con glow plugs según la temperatura ambiente), pero no diferencia explícitamente entre arranque en frío y en caliente.\n\n(Ver páginas 40, 41)",
+          "references": [
+            {
+              "page": 40,
+              "section": "Engine Starting"
+            },
+            {
+              "page": 41,
+              "section": "Operation Section - Starting with Jump Start Cables"
+            }
+          ],
+          "metrics": {
+            "model": "claude-sonnet-4-20250514",
+            "latency_ms": 5859,
+            "input_tokens": 8112,
+            "output_tokens": 175,
+            "total_latency_ms": 7062,
+            "embedding_time_ms": 217,
+            "search_time_ms": 985,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.7881,
+            "pages_cited": 2,
+            "cost_usd": 0.026961
+          }
+        },
+        {
+          "model": "Opus 4",
+          "model_id": "claude-opus-4-20250514",
+          "answer": "Basándome en el contexto del manual proporcionado, puedo comparar los procedimientos de arranque en frío vs arranque en caliente:\n\n## Procedimiento de Arranque en Frío:\n\n1. **Uso de bujías de precalentamiento (glow plugs)**:\n   - Girar el interruptor de arranque a la posición HEAT\n   - Mantener en posición HEAT según el tiempo indicado en la tabla (varía de 0-12 segundos dependiendo de la temperatura ambiente)\n   - Las bujías de precalentamiento calientan el aire de admisión para mejorar el arranque\n   - NO operar las bujías por más de 60 segundos\n\n2. **Consideraciones especiales para clima frío**:\n   - En temperaturas de 0°C a -40°C, se requieren precauciones adicionales\n   - Puede requerirse ayuda de arranque en frío adicional en condiciones muy frías\n   - Los calentadores de bloque (si están equipados) pueden activarse una vez detenido el motor\n\n3. **Después del arranque en frío**:\n   - Aumentar las rpm del motor de 1000 a 1200 rpm al ralentí\n   - Operar el motor hasta alcanzar temperatura mínima de 80°C (176°F)\n   - El tiempo de calentamiento es aproximadamente 3 minutos (0°C a 60°C)\n   - Por debajo de 0°C puede requerirse tiempo adicional de calentamiento\n\n## Procedimiento de Arranque Normal/Caliente:\n\n1. **Sin precalentamiento**:\n   - No se menciona específicamente un procedimiento distinto para arranque en caliente\n   - Se aplica el procedimiento estándar sin necesidad de usar las bujías de precalentamiento por tiempo prolongado\n\n2. **Procedimiento estándar**:\n   - Mover la palanca del acelerador a posición de ralentí bajo\n   - Girar el interruptor a START y arrancar el motor\n   - NO arrancar por más de 30 segundos\n   - Si no arranca, esperar 2 minutos antes de intentar nuevamente\n\n## Diferencias Clave:\n\n- **Arranque en frío**: Requiere uso obligatorio de bujías de precalentamiento y tiempo de calentamiento extendido\n- **Arranque caliente**: Procedimiento más simple sin precalentamiento extenso\n- **Tiempo de operación**: El motor frío debe operar hasta 80°C antes de aplicar carga completa\n\n(Ver páginas 40, 41, 45, 46)",
+          "references": [
+            {
+              "page": 40,
+              "section": "Engine Starting"
+            },
+            {
+              "page": 41,
+              "section": "Operation Section - Starting with Jump Start Cables"
+            },
+            {
+              "page": 45,
+              "section": "Cold Weather Operation"
+            },
+            {
+              "page": 46,
+              "section": "correct glycol concentration to ensure adequate"
+            }
+          ],
+          "metrics": {
+            "model": "claude-opus-4-20250514",
+            "latency_ms": 20468,
+            "input_tokens": 8112,
+            "output_tokens": 650,
+            "total_latency_ms": 21795,
+            "embedding_time_ms": 320,
+            "search_time_ms": 1006,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.7881,
+            "pages_cited": 4,
+            "cost_usd": 0.17043
+          }
+        }
+      ]
+    },
+    {
+      "id": "C4",
+      "category": "compleja",
+      "question": "What are all the causes and remedies for low oil pressure?",
+      "description": "Pregunta compleja de troubleshooting con múltiples causas",
+      "responses": [
+        {
+          "model": "Haiku 3.5",
+          "model_id": "claude-3-5-haiku-20241022",
+          "answer": "Lo siento, pero en el contexto proporcionado no encontré una tabla de troubleshooting específica para causas de baja presión de aceite. \n\nSin embargo, puedo compartir algunos datos relevantes sobre presión de aceite del motor según el manual:\n\nEn la página 37 (Features and Controls), se menciona que:\n\nPresión de Aceite del Motor:\n- La presión de aceite típica con SAE10W30 es 207 a 413 kPa (30 a 60 psi) a rpm nominal\n- Una presión más baja es normal en ralentí bajo\n\nProcedimiento si cambia la lectura del indicador:\n1. Quitar la carga\n2. Reducir velocidad del motor a ralentí bajo\n3. Revisar y mantener el nivel de aceite\n\nAdvertencia IMPORTANTE: \n\"Si no hay presión de aceite indicada, DETENER el motor. Puede resultar en daño al motor.\"\n\nPara un diagnóstico completo de causas específicas de baja presión de aceite, recomendaría consultar directamente con un técnico de Perkins o revisar la sección completa de troubleshooting.\n\n(Ver páginas 37)",
+          "references": [
+            {
+              "page": 37,
+              "section": "Features and Controls"
+            }
+          ],
+          "metrics": {
+            "model": "claude-3-5-haiku-20241022",
+            "latency_ms": 7702,
+            "input_tokens": 6705,
+            "output_tokens": 297,
+            "total_latency_ms": 8901,
+            "embedding_time_ms": 963,
+            "search_time_ms": 235,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.7625,
+            "pages_cited": 1,
+            "cost_usd": 0.006552
+          }
+        },
+        {
+          "model": "Sonnet 4",
+          "model_id": "claude-sonnet-4-20250514",
+          "answer": "No encontré esa información en el manual. El contexto proporcionado menciona información sobre la presión de aceite del motor y sus rangos normales de operación, pero no incluye una tabla de troubleshooting o sección específica que liste las causas y remedios para baja presión de aceite.\n\nLa única información relacionada con presión de aceite que aparece en el manual es:\n\n- La presión típica de aceite del motor con SAE10W30 es de 207 a 413 kPa (30 a 60 psi) a rpm nominal\n- Una presión de aceite más baja es normal en ralentí bajo\n- Si la carga es estable y la lectura del medidor cambia, se debe: 1) Remover la carga, 2) Reducir la velocidad del motor a ralentí bajo, 3) Verificar y mantener el nivel de aceite\n- Si no se indica presión de aceite, DETENER el motor para evitar daño al motor\n\nPara obtener información completa sobre las causas y remedios específicos para baja presión de aceite, sería necesario consultar la sección de troubleshooting del manual completo.\n\n(Ver página 37)",
+          "references": [
+            {
+              "page": 37,
+              "section": "Features and Controls"
+            }
+          ],
+          "metrics": {
+            "model": "claude-sonnet-4-20250514",
+            "latency_ms": 8671,
+            "input_tokens": 6705,
+            "output_tokens": 294,
+            "total_latency_ms": 9271,
+            "embedding_time_ms": 347,
+            "search_time_ms": 252,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.7625,
+            "pages_cited": 1,
+            "cost_usd": 0.024525
+          }
+        },
+        {
+          "model": "Opus 4",
+          "model_id": "claude-opus-4-20250514",
+          "answer": "Basándome en el contexto proporcionado, encontré información sobre la presión de aceite en la sección de \"Gauges and Indicators\":\n\n**Presión de Aceite del Motor (Engine Oil Pressure)**\n\nEl manual indica que:\n- La presión de aceite debe ser mayor después de arrancar un motor frío\n- La presión típica de aceite del motor con SAE10W30 es 207 a 413 kPa (30 to 60 psi) a rpm nominal\n- Una presión de aceite menor es normal en ralentí bajo\n\n**Si no hay indicación de presión de aceite:**\n- PARE el motor (STOP the engine)\n- Puede resultar en daño al motor\n\n**Si la carga es estable y la lectura del indicador cambia:**\n1. Remove the load (Retire la carga)\n2. Reduce engine speed to low idle (Reduzca la velocidad del motor a ralentí bajo)\n3. Check and maintain the oil level (Revise y mantenga el nivel de aceite)\n\nSin embargo, **no encontré en el manual una tabla completa de troubleshooting con todas las causas y remedios específicos para baja presión de aceite**. El manual solo proporciona el procedimiento básico mencionado arriba y las advertencias sobre qué hacer si no hay presión de aceite.\n\n(Ver página 37)",
+          "references": [
+            {
+              "page": 37,
+              "section": "Features and Controls"
+            }
+          ],
+          "metrics": {
+            "model": "claude-opus-4-20250514",
+            "latency_ms": 12907,
+            "input_tokens": 6705,
+            "output_tokens": 337,
+            "total_latency_ms": 13504,
+            "embedding_time_ms": 239,
+            "search_time_ms": 357,
+            "chunks_retrieved": 12,
+            "avg_similarity": 0.7625,
+            "pages_cited": 1,
+            "cost_usd": 0.12585
+          }
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "by_model": {
+      "Haiku 3.5": {
+        "total_queries": 11,
+        "total_latency_ms": 81617,
+        "total_input_tokens": 66241,
+        "total_output_tokens": 3704,
+        "total_cost_usd": 0.06780800000000001,
+        "errors": 0,
+        "avg_latency_ms": 7419,
+        "avg_cost_usd": 0.006164
+      },
+      "Sonnet 4": {
+        "total_queries": 11,
+        "total_latency_ms": 76353,
+        "total_input_tokens": 66386,
+        "total_output_tokens": 3338,
+        "total_cost_usd": 0.24922799999999998,
+        "errors": 0,
+        "avg_latency_ms": 6941,
+        "avg_cost_usd": 0.022657
+      },
+      "Opus 4": {
+        "total_queries": 11,
+        "total_latency_ms": 111940,
+        "total_input_tokens": 66386,
+        "total_output_tokens": 3217,
+        "total_cost_usd": 1.237065,
+        "errors": 0,
+        "avg_latency_ms": 10176,
+        "avg_cost_usd": 0.11246
+      }
+    },
+    "by_category": {
+      "compleja": {
+        "Haiku 3.5": {
+          "queries": 4,
+          "avg_latency_ms": 11161,
+          "total_latency_ms": 44647,
+          "avg_cost_usd": 0.008282,
+          "total_cost_usd": 0.033127000000000004
+        },
+        "Sonnet 4": {
+          "queries": 4,
+          "avg_latency_ms": 8250,
+          "total_latency_ms": 33002,
+          "avg_cost_usd": 0.028023,
+          "total_cost_usd": 0.11209200000000001
+        },
+        "Opus 4": {
+          "queries": 4,
+          "avg_latency_ms": 14830,
+          "total_latency_ms": 59321,
+          "avg_cost_usd": 0.150259,
+          "total_cost_usd": 0.601035
+        }
+      },
+      "ilustracion": {
+        "Haiku 3.5": {
+          "queries": 3,
+          "avg_latency_ms": 5209,
+          "total_latency_ms": 15629,
+          "avg_cost_usd": 0.003821,
+          "total_cost_usd": 0.011462
+        },
+        "Sonnet 4": {
+          "queries": 3,
+          "avg_latency_ms": 6581,
+          "total_latency_ms": 19743,
+          "avg_cost_usd": 0.016334,
+          "total_cost_usd": 0.049002000000000004
+        },
+        "Opus 4": {
+          "queries": 3,
+          "avg_latency_ms": 7358,
+          "total_latency_ms": 22074,
+          "avg_cost_usd": 0.067095,
+          "total_cost_usd": 0.201285
+        }
+      },
+      "directa": {
+        "Haiku 3.5": {
+          "queries": 4,
+          "avg_latency_ms": 5335,
+          "total_latency_ms": 21341,
+          "avg_cost_usd": 0.005805,
+          "total_cost_usd": 0.023219
+        },
+        "Sonnet 4": {
+          "queries": 4,
+          "avg_latency_ms": 5902,
+          "total_latency_ms": 23608,
+          "avg_cost_usd": 0.022033,
+          "total_cost_usd": 0.08813399999999999
+        },
+        "Opus 4": {
+          "queries": 4,
+          "avg_latency_ms": 7636,
+          "total_latency_ms": 30545,
+          "avg_cost_usd": 0.108686,
+          "total_cost_usd": 0.434745
+        }
+      }
+    },
+    "by_model_category": {}
+  }
+}

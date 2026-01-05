@@ -50,6 +50,13 @@ class UserUpdate(BaseModel):
     is_active: Optional[bool] = None
 
 
+class UserSelfUpdate(BaseModel):
+    """Request para que un usuario actualice su propio perfil."""
+    name: Optional[str] = Field(None, min_length=1, max_length=100)
+    surname: Optional[str] = Field(None, min_length=1, max_length=100)
+    location: Optional[str] = Field(None, max_length=200)
+
+
 class UserResponse(BaseModel):
     """Response con información de usuario."""
     id: UUID

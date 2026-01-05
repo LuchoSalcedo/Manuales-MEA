@@ -1,0 +1,48 @@
+# Git
+.git
+.gitignore
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Node
+node_modules/
+.next/
+
+# Environment files
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Test
+tests/
+*.test.*
+
+# Documentation
+*.md
+!README.md
+
+# Scripts de desarrollo
+scripts/
+
+# Uploads locales
+uploads/

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import AdminGuard from '@/components/AdminGuard'
@@ -30,8 +30,16 @@ export default function SettingsPage() {
   const { settings, loading, updateSetting } = useSettings()
   const [saving, setSaving] = useState<string | null>(null)
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
+  const [localUploadSize, setLocalUploadSize] = useState(settings.max_upload_size_mb)
+
+  // Sync local state when settings load
+  useEffect(() => {
+    setLocalUploadSize(settings.max_upload_size_mb)
+  }, [settings.max_upload_size_mb])
 
   const handleModelChange = async (modelId: string) => {
+    if (!isMasterAdmin) return
+
     setSaving('model')
     setMessage(null)
 
@@ -47,11 +55,14 @@ export default function SettingsPage() {
     setTimeout(() => setMessage(null), 3000)
   }
 
-  const handleUploadSizeChange = async (size: number) => {
+  const handleUploadSizeCommit = async () => {
+    if (!isMasterAdmin) return
+    if (localUploadSize === settings.max_upload_size_mb) return
+
     setSaving('upload')
     setMessage(null)
 
-    const success = await updateSetting('max_upload_size_mb', size)
+    const success = await updateSetting('max_upload_size_mb', localUploadSize)
 
     if (success) {
       setMessage({ type: 'success', text: 'Limite de upload actualizado correctamente' })
@@ -63,8 +74,10 @@ export default function SettingsPage() {
     setTimeout(() => setMessage(null), 3000)
   }
 
+  const canEdit = isMasterAdmin
+
   return (
-    <AdminGuard requireMaster>
+    <AdminGuard>
       <div className="min-h-screen bg-gray-100">
         <Header />
 
@@ -97,6 +110,13 @@ export default function SettingsPage() {
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900">Configuracion del Sistema</h2>
             <p className="text-gray-600">Ajusta la configuracion global de la aplicacion</p>
+            {!isMasterAdmin && (
+              <div className="mt-2 px-3 py-2 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <p className="text-sm text-yellow-700">
+                  Solo el Administrador Maestro puede modificar la configuracion. Modo de solo lectura.
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Message */}
@@ -130,7 +150,9 @@ export default function SettingsPage() {
                     {ANTHROPIC_MODELS.map((model) => (
                       <label
                         key={model.id}
-                        className={`flex items-start p-4 border rounded-lg cursor-pointer transition-colors ${
+                        className={`flex items-start p-4 border rounded-lg transition-colors ${
+                          canEdit ? 'cursor-pointer' : 'cursor-not-allowed opacity-75'
+                        } ${
                           settings.anthropic_model === model.id
                             ? 'border-blue-500 bg-blue-50'
                             : 'border-gray-200 hover:border-gray-300'
@@ -142,7 +164,7 @@ export default function SettingsPage() {
                           value={model.id}
                           checked={settings.anthropic_model === model.id}
                           onChange={() => handleModelChange(model.id)}
-                          disabled={saving === 'model'}
+                          disabled={!canEdit || saving === 'model'}
                           className="mt-1 h-4 w-4 text-blue-600"
                         />
                         <div className="ml-3">
@@ -175,14 +197,18 @@ export default function SettingsPage() {
                       min="10"
                       max="200"
                       step="10"
-                      value={settings.max_upload_size_mb}
-                      onChange={(e) => handleUploadSizeChange(parseInt(e.target.value))}
-                      disabled={saving === 'upload'}
-                      className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                      value={localUploadSize}
+                      onChange={(e) => setLocalUploadSize(parseInt(e.target.value))}
+                      onMouseUp={handleUploadSizeCommit}
+                      onTouchEnd={handleUploadSizeCommit}
+                      disabled={!canEdit || saving === 'upload'}
+                      className={`flex-1 h-2 bg-gray-200 rounded-lg appearance-none ${
+                        canEdit ? 'cursor-pointer' : 'cursor-not-allowed opacity-75'
+                      }`}
                     />
                     <div className="w-20 text-center">
                       <span className="text-2xl font-bold text-gray-900">
-                        {settings.max_upload_size_mb}
+                        {localUploadSize}
                       </span>
                       <span className="text-sm text-gray-500 ml-1">MB</span>
                     </div>

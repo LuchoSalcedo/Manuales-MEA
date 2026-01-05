@@ -35,6 +35,12 @@ export interface UpdateUserData {
   is_active?: boolean
 }
 
+export interface UpdateSelfProfileData {
+  name?: string
+  surname?: string
+  location?: string
+}
+
 export interface User {
   id: string
   email: string

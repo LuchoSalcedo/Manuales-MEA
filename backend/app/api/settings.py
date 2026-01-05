@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 
 from app.models.schemas import CurrentUser
-from app.middleware.auth import get_current_user, require_master_admin
+from app.middleware.auth import require_admin, require_master_admin
 from app.services.supabase_client import get_supabase_client
 
 router = APIRouter(prefix="/settings", tags=["settings"])
@@ -43,7 +43,7 @@ VALID_SETTINGS = {
 
 @router.get("/", response_model=List[SettingResponse])
 async def get_all_settings(
-    current_user: CurrentUser = Depends(get_current_user)
+    current_user: CurrentUser = Depends(require_admin)
 ):
     """Obtiene todas las configuraciones."""
     supabase = get_supabase_client()
@@ -63,7 +63,7 @@ async def get_all_settings(
 @router.get("/{key}", response_model=SettingResponse)
 async def get_setting(
     key: str,
-    current_user: CurrentUser = Depends(get_current_user)
+    current_user: CurrentUser = Depends(require_admin)
 ):
     """Obtiene una configuracion especifica."""
     supabase = get_supabase_client()

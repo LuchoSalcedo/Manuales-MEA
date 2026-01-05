@@ -5,10 +5,10 @@ from typing import List, Optional
 from fastapi import APIRouter, HTTPException, Depends, Query
 
 from app.models.schemas import (
-    UserCreate, UserUpdate, UserResponse, UserRole, CurrentUser
+    UserCreate, UserUpdate, UserSelfUpdate, UserResponse, UserRole, CurrentUser
 )
 from app.middleware.auth import (
-    get_current_user, require_admin, can_manage_user, can_create_role
+    get_current_user, require_admin, can_manage_user, can_create_role, can_change_role
 )
 from app.services.supabase_client import get_supabase_client
 from app.config import get_settings
@@ -30,6 +30,32 @@ async def get_current_user_profile(
         raise HTTPException(status_code=404, detail="Perfil no encontrado")
 
     return UserResponse(**profile.data)
+
+
+@router.put("/me", response_model=UserResponse)
+async def update_own_profile(
+    user_data: UserSelfUpdate,
+    current_user: CurrentUser = Depends(get_current_user)
+):
+    """
+    Actualiza el perfil del usuario autenticado.
+    Solo puede modificar: name, surname, location.
+    No puede modificar: role, is_active, email.
+    """
+    supabase = get_supabase_client()
+
+    # Build update data (solo campos permitidos)
+    update_dict = user_data.model_dump(exclude_unset=True)
+
+    if not update_dict:
+        raise HTTPException(status_code=400, detail="No hay datos para actualizar")
+
+    response = supabase.table("profiles").update(update_dict).eq("id", str(current_user.id)).execute()
+
+    if not response.data:
+        raise HTTPException(status_code=500, detail="Error actualizando perfil")
+
+    return UserResponse(**response.data[0])
 
 
 @router.get("/", response_model=List[UserResponse])
@@ -190,9 +216,10 @@ async def update_user(
     if not can_manage_user(current_user, target_role):
         raise HTTPException(status_code=403, detail="No tienes permiso para editar este usuario")
 
-    # Regular admins cannot change role
-    if current_user.role == UserRole.ADMINISTRADOR and user_data.role is not None:
-        raise HTTPException(status_code=403, detail="No tienes permiso para cambiar el rol")
+    # Check role change permissions
+    if user_data.role is not None and user_data.role != target_role:
+        if not can_change_role(current_user, target_role, user_data.role):
+            raise HTTPException(status_code=403, detail="No tienes permiso para cambiar este rol")
 
     # Check administrador_maestro uniqueness if changing to that role
     if user_data.role == UserRole.ADMINISTRADOR_MAESTRO:

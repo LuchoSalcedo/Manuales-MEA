@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+venv/
+.venv/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+
+# Tests
+tests/
+pytest_cache/
+.pytest_cache/
+
+# Coverage
+htmlcov/
+.coverage
+
+# OS
+.DS_Store
+
+# Logs
+*.log
+
+# Uploads (se montan como volumen)
+uploads/

@@ -240,14 +240,12 @@ export default function UsersPage() {
               >
                 Usuarios
               </Link>
-              {isMasterAdmin && (
-                <Link
-                  href="/admin/settings"
-                  className="border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                >
-                  Configuracion
-                </Link>
-              )}
+              <Link
+                href="/admin/settings"
+                className="border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300"
+              >
+                Configuracion
+              </Link>
             </nav>
           </div>
 
@@ -448,15 +446,8 @@ export default function UsersPage() {
                     className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   >
                     <option value="usuario">Usuario</option>
-                    {isMasterAdmin && (
-                      <option value="administrador">Administrador</option>
-                    )}
+                    <option value="administrador">Administrador</option>
                   </select>
-                  {!isMasterAdmin && (
-                    <p className="mt-1 text-xs text-gray-500">
-                      Solo el Administrador Maestro puede crear otros administradores
-                    </p>
-                  )}
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700">Ubicacion</label>
@@ -528,13 +519,11 @@ export default function UsersPage() {
                     disabled={!isMasterAdmin && editingUser?.role !== 'usuario'}
                   >
                     <option value="usuario">Usuario</option>
-                    {isMasterAdmin && (
-                      <option value="administrador">Administrador</option>
-                    )}
+                    <option value="administrador">Administrador</option>
                   </select>
-                  {!isMasterAdmin && (
+                  {!isMasterAdmin && editingUser?.role !== 'usuario' && (
                     <p className="mt-1 text-xs text-gray-500">
-                      Solo el Administrador Maestro puede cambiar roles
+                      Solo el Administrador Maestro puede cambiar roles de otros Administradores
                     </p>
                   )}
                 </div>

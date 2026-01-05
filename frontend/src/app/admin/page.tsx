@@ -217,14 +217,12 @@ export default function AdminPage() {
               >
                 Usuarios
               </Link>
-              {isMasterAdmin && (
-                <Link
-                  href="/admin/settings"
-                  className="border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                >
-                  Configuracion
-                </Link>
-              )}
+              <Link
+                href="/admin/settings"
+                className="border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300"
+              >
+                Configuracion
+              </Link>
             </nav>
           </div>
 

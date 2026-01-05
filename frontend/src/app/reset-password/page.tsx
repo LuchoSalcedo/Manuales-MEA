@@ -36,9 +36,9 @@ export default function ResetPasswordPage() {
         <div className="max-w-md w-full space-y-8">
           <div className="flex flex-col items-center">
             <img
-              src="/Logo_MEA.png"
+              src="/Logo_MEAv2.png"
               alt="Logo MEA"
-              className="w-20 h-20 object-contain mb-4"
+              className="w-48 h-24 object-contain mb-4"
             />
             <h1 className="text-center text-3xl font-bold text-gray-900">
               Manuales MEA
@@ -71,9 +71,9 @@ export default function ResetPasswordPage() {
       <div className="max-w-md w-full space-y-8">
         <div className="flex flex-col items-center">
           <img
-            src="/Logo_MEA.png"
+            src="/Logo_MEAv2.png"
             alt="Logo MEA"
-            className="w-20 h-20 object-contain mb-4"
+            className="w-48 h-24 object-contain mb-4"
           />
           <h1 className="text-center text-3xl font-bold text-gray-900">
             Manuales MEA

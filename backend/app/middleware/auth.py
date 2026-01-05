@@ -141,10 +141,29 @@ def can_create_role(manager: CurrentUser, target_role: UserRole) -> bool:
 
     Rules:
     - Master Admin can create any role
-    - Admin can only create Usuario
+    - Admin can create Usuario or Administrador (not Master Admin)
     """
     if manager.role == UserRole.ADMINISTRADOR_MAESTRO:
         return True
     if manager.role == UserRole.ADMINISTRADOR:
-        return target_role == UserRole.USUARIO
+        return target_role in [UserRole.USUARIO, UserRole.ADMINISTRADOR]
+    return False
+
+
+def can_change_role(manager: CurrentUser, current_role: UserRole, new_role: UserRole) -> bool:
+    """
+    Check if manager can change user's role.
+
+    Rules:
+    - Master Admin can change any role
+    - Admin can change Usuario → Administrador
+    - Admin cannot change roles of other Administradores
+    """
+    if manager.role == UserRole.ADMINISTRADOR_MAESTRO:
+        return True
+    if manager.role == UserRole.ADMINISTRADOR:
+        # Admin solo puede cambiar roles de Usuarios
+        if current_role == UserRole.USUARIO:
+            # Solo puede promover a Administrador (no a Master)
+            return new_role in [UserRole.USUARIO, UserRole.ADMINISTRADOR]
     return False
