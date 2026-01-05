@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 
 from app.models.schemas import CurrentUser
-from app.middleware.auth import require_admin, require_master_admin
+from app.middleware.auth import require_admin
 from app.services.supabase_client import get_supabase_client
 
 router = APIRouter(prefix="/settings", tags=["settings"])
@@ -37,6 +37,18 @@ VALID_SETTINGS = {
         "min": 1,
         "max": 200,
         "description": "Tamano maximo de archivo para upload en MB"
+    },
+    "page_zoom_web": {
+        "type": "number",
+        "min": 25,
+        "max": 200,
+        "description": "Zoom por defecto para visualizar paginas (web)"
+    },
+    "page_zoom_mobile": {
+        "type": "number",
+        "min": 25,
+        "max": 200,
+        "description": "Zoom por defecto para visualizar paginas (mobile)"
     }
 }
 
@@ -84,10 +96,10 @@ async def get_setting(
 async def update_setting(
     key: str,
     setting: SettingUpdate,
-    current_user: CurrentUser = Depends(require_master_admin)
+    current_user: CurrentUser = Depends(require_admin)
 ):
     """
-    Actualiza una configuracion (solo Administrador Maestro).
+    Actualiza una configuracion (solo Administradores).
     """
     supabase = get_supabase_client()
 

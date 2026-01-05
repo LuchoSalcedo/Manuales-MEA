@@ -8,6 +8,8 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 interface AppSettings {
   anthropic_model: string
   max_upload_size_mb: number
+  page_zoom_web: number
+  page_zoom_mobile: number
 }
 
 interface SettingsContextType {
@@ -19,7 +21,9 @@ interface SettingsContextType {
 
 const defaultSettings: AppSettings = {
   anthropic_model: 'claude-sonnet-4-20250514',
-  max_upload_size_mb: 50
+  max_upload_size_mb: 50,
+  page_zoom_web: 50,
+  page_zoom_mobile: 100
 }
 
 const SettingsContext = createContext<SettingsContextType>({
@@ -61,6 +65,10 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
             newSettings.anthropic_model = item.value
           } else if (item.key === 'max_upload_size_mb') {
             newSettings.max_upload_size_mb = item.value
+          } else if (item.key === 'page_zoom_web') {
+            newSettings.page_zoom_web = item.value
+          } else if (item.key === 'page_zoom_mobile') {
+            newSettings.page_zoom_mobile = item.value
           }
         }
 

@@ -8,10 +8,8 @@ export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const [isSignUp, setIsSignUp] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [message, setMessage] = useState<string | null>(null)
   const router = useRouter()
   const supabase = createClient()
 
@@ -19,28 +17,15 @@ export default function LoginPage() {
     e.preventDefault()
     setLoading(true)
     setError(null)
-    setMessage(null)
 
     try {
-      if (isSignUp) {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback`,
-          },
-        })
-        if (error) throw error
-        setMessage('Revisa tu correo para confirmar tu cuenta')
-      } else {
-        const { error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        })
-        if (error) throw error
-        router.push('/')
-        router.refresh()
-      }
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+      if (error) throw error
+      router.push('/')
+      router.refresh()
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error de autenticación')
     } finally {
@@ -61,7 +46,7 @@ export default function LoginPage() {
             Manuales MEA
           </h1>
           <h2 className="mt-2 text-center text-xl text-gray-600">
-            {isSignUp ? 'Crear cuenta' : 'Iniciar sesión'}
+            Iniciar sesión
           </h2>
         </div>
 
@@ -92,7 +77,7 @@ export default function LoginPage() {
                   id="password"
                   name="password"
                   type={showPassword ? 'text' : 'password'}
-                  autoComplete={isSignUp ? 'new-password' : 'current-password'}
+                  autoComplete="current-password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -120,26 +105,18 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {!isSignUp && (
-            <div className="text-right">
-              <a
-                href="/reset-password"
-                className="text-sm text-blue-600 hover:text-blue-500"
-              >
-                ¿Olvidaste tu contraseña?
-              </a>
-            </div>
-          )}
+          <div className="text-right">
+            <a
+              href="/reset-password"
+              className="text-sm text-blue-600 hover:text-blue-500"
+            >
+              ¿Olvidaste tu contraseña?
+            </a>
+          </div>
 
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
               {error}
-            </div>
-          )}
-
-          {message && (
-            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
-              {message}
             </div>
           )}
 
@@ -149,23 +126,7 @@ export default function LoginPage() {
               disabled={loading}
               className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
             >
-              {loading ? 'Cargando...' : isSignUp ? 'Crear cuenta' : 'Iniciar sesión'}
-            </button>
-          </div>
-
-          <div className="text-center">
-            <button
-              type="button"
-              onClick={() => {
-                setIsSignUp(!isSignUp)
-                setError(null)
-                setMessage(null)
-              }}
-              className="text-sm text-blue-600 hover:text-blue-500"
-            >
-              {isSignUp
-                ? '¿Ya tienes cuenta? Inicia sesión'
-                : '¿No tienes cuenta? Regístrate'}
+              {loading ? 'Cargando...' : 'Iniciar sesión'}
             </button>
           </div>
         </form>

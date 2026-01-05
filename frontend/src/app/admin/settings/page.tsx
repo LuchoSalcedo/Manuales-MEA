@@ -26,19 +26,23 @@ const ANTHROPIC_MODELS = [
 ]
 
 export default function SettingsPage() {
-  const { isMasterAdmin } = useAuth()
+  const { isAdmin } = useAuth()
   const { settings, loading, updateSetting } = useSettings()
   const [saving, setSaving] = useState<string | null>(null)
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
   const [localUploadSize, setLocalUploadSize] = useState(settings.max_upload_size_mb)
+  const [localZoomWeb, setLocalZoomWeb] = useState(settings.page_zoom_web)
+  const [localZoomMobile, setLocalZoomMobile] = useState(settings.page_zoom_mobile)
 
   // Sync local state when settings load
   useEffect(() => {
     setLocalUploadSize(settings.max_upload_size_mb)
-  }, [settings.max_upload_size_mb])
+    setLocalZoomWeb(settings.page_zoom_web)
+    setLocalZoomMobile(settings.page_zoom_mobile)
+  }, [settings.max_upload_size_mb, settings.page_zoom_web, settings.page_zoom_mobile])
 
   const handleModelChange = async (modelId: string) => {
-    if (!isMasterAdmin) return
+    if (!isAdmin) return
 
     setSaving('model')
     setMessage(null)
@@ -56,7 +60,7 @@ export default function SettingsPage() {
   }
 
   const handleUploadSizeCommit = async () => {
-    if (!isMasterAdmin) return
+    if (!isAdmin) return
     if (localUploadSize === settings.max_upload_size_mb) return
 
     setSaving('upload')
@@ -74,7 +78,45 @@ export default function SettingsPage() {
     setTimeout(() => setMessage(null), 3000)
   }
 
-  const canEdit = isMasterAdmin
+  const handleZoomWebCommit = async () => {
+    if (!isAdmin) return
+    if (localZoomWeb === settings.page_zoom_web) return
+
+    setSaving('zoom_web')
+    setMessage(null)
+
+    const success = await updateSetting('page_zoom_web', localZoomWeb)
+
+    if (success) {
+      setMessage({ type: 'success', text: 'Zoom web actualizado correctamente' })
+    } else {
+      setMessage({ type: 'error', text: 'Error al actualizar el zoom web' })
+    }
+
+    setSaving(null)
+    setTimeout(() => setMessage(null), 3000)
+  }
+
+  const handleZoomMobileCommit = async () => {
+    if (!isAdmin) return
+    if (localZoomMobile === settings.page_zoom_mobile) return
+
+    setSaving('zoom_mobile')
+    setMessage(null)
+
+    const success = await updateSetting('page_zoom_mobile', localZoomMobile)
+
+    if (success) {
+      setMessage({ type: 'success', text: 'Zoom mobile actualizado correctamente' })
+    } else {
+      setMessage({ type: 'error', text: 'Error al actualizar el zoom mobile' })
+    }
+
+    setSaving(null)
+    setTimeout(() => setMessage(null), 3000)
+  }
+
+  const canEdit = isAdmin
 
   return (
     <AdminGuard>
@@ -110,10 +152,10 @@ export default function SettingsPage() {
           <div className="mb-6 sm:mb-8">
             <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Configuracion del Sistema</h2>
             <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">Ajusta la configuracion global de la aplicacion</p>
-            {!isMasterAdmin && (
+            {!isAdmin && (
               <div className="mt-2 px-3 py-2 bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-800 rounded-lg">
                 <p className="text-xs sm:text-sm text-yellow-700 dark:text-yellow-400">
-                  Solo el Administrador Maestro puede modificar la configuracion. Modo de solo lectura.
+                  Solo los Administradores pueden modificar la configuracion. Modo de solo lectura.
                 </p>
               </div>
             )}
@@ -219,6 +261,89 @@ export default function SettingsPage() {
                   <div className="mt-2 flex justify-between text-xs text-gray-500 dark:text-gray-400">
                     <span>10 MB</span>
                     <span>200 MB</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Zoom de Paginas */}
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+                <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200 dark:border-gray-700">
+                  <h3 className="text-base sm:text-lg font-medium text-gray-900 dark:text-white">Zoom de Paginas</h3>
+                  <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                    Zoom por defecto al visualizar paginas de manuales
+                  </p>
+                </div>
+                <div className="p-4 sm:p-6 space-y-6">
+                  {/* Zoom Web */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Version Web (escritorio)
+                    </label>
+                    <div className="flex items-center gap-3 sm:gap-4">
+                      <input
+                        type="range"
+                        min="25"
+                        max="200"
+                        step="25"
+                        value={localZoomWeb}
+                        onChange={(e) => setLocalZoomWeb(parseInt(e.target.value))}
+                        onMouseUp={handleZoomWebCommit}
+                        onTouchEnd={handleZoomWebCommit}
+                        disabled={!canEdit || saving === 'zoom_web'}
+                        className={`flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none ${
+                          canEdit ? 'cursor-pointer' : 'cursor-not-allowed opacity-75'
+                        }`}
+                      />
+                      <div className="w-16 sm:w-20 text-center">
+                        <span className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+                          {localZoomWeb}
+                        </span>
+                        <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 ml-1">%</span>
+                      </div>
+                      {saving === 'zoom_web' && (
+                        <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-b-2 border-blue-600"></div>
+                      )}
+                    </div>
+                    <div className="mt-2 flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                      <span>25%</span>
+                      <span>200%</span>
+                    </div>
+                  </div>
+
+                  {/* Zoom Mobile */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Version Mobile (celular/tablet)
+                    </label>
+                    <div className="flex items-center gap-3 sm:gap-4">
+                      <input
+                        type="range"
+                        min="25"
+                        max="200"
+                        step="25"
+                        value={localZoomMobile}
+                        onChange={(e) => setLocalZoomMobile(parseInt(e.target.value))}
+                        onMouseUp={handleZoomMobileCommit}
+                        onTouchEnd={handleZoomMobileCommit}
+                        disabled={!canEdit || saving === 'zoom_mobile'}
+                        className={`flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none ${
+                          canEdit ? 'cursor-pointer' : 'cursor-not-allowed opacity-75'
+                        }`}
+                      />
+                      <div className="w-16 sm:w-20 text-center">
+                        <span className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+                          {localZoomMobile}
+                        </span>
+                        <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 ml-1">%</span>
+                      </div>
+                      {saving === 'zoom_mobile' && (
+                        <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-b-2 border-blue-600"></div>
+                      )}
+                    </div>
+                    <div className="mt-2 flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                      <span>25%</span>
+                      <span>200%</span>
+                    </div>
                   </div>
                 </div>
               </div>

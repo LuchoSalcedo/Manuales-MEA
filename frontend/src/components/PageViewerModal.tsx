@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useSettings } from '@/contexts/SettingsContext'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
@@ -19,24 +20,38 @@ export default function PageViewerModal({
   pageNumber,
   section,
 }: PageViewerModalProps) {
+  const { settings } = useSettings()
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
   const [zoom, setZoom] = useState(50)
 
   const imageUrl = `${API_URL}/api/pages/${manualId}/${pageNumber}`
 
+  // Detect mobile on mount
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // Set initial zoom based on device and settings
   useEffect(() => {
     if (isOpen) {
       setLoading(true)
       setError(null)
-      setZoom(50)
+      const defaultZoom = isMobile ? settings.page_zoom_mobile : settings.page_zoom_web
+      setZoom(defaultZoom)
     }
-  }, [isOpen, pageNumber])
+  }, [isOpen, pageNumber, isMobile, settings.page_zoom_mobile, settings.page_zoom_web])
 
   if (!isOpen) return null
 
   const handleZoomIn = () => setZoom((z) => Math.min(z + 25, 200))
-  const handleZoomOut = () => setZoom((z) => Math.max(z - 25, 50))
+  const handleZoomOut = () => setZoom((z) => Math.max(z - 25, 25))
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
