@@ -26,7 +26,8 @@ def get_manual_content() -> str:
 
     # Buscar el archivo MANUAL_USUARIO.md
     possible_paths = [
-        Path(__file__).parent.parent.parent.parent / "MANUAL_USUARIO.md",
+        Path("/app/MANUAL_USUARIO.md"),  # Docker container
+        Path(__file__).parent.parent.parent.parent / "MANUAL_USUARIO.md",  # Local dev
         Path("/opt/manuales-gse/MANUAL_USUARIO.md"),
         Path.cwd() / "MANUAL_USUARIO.md",
     ]

@@ -11,6 +11,7 @@ services:
       - .env.production
     volumes:
       - ./uploads:/app/uploads
+      - ./MANUAL_USUARIO.md:/app/MANUAL_USUARIO.md:ro
     ports:
       - "8000:8000"
     healthcheck:
