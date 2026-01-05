@@ -34,7 +34,7 @@ class Settings(BaseSettings):
 
     # RAG Settings
     rag_top_k: int = 20  # Número de chunks a recuperar
-    rag_similarity_threshold: float = 0.55  # Umbral mínimo de score combinado
+    rag_similarity_threshold: float = 0.40  # Umbral mínimo de score combinado
     rag_semantic_weight: float = 0.6  # Peso semántico (0.6 = 60% semántico, 40% keywords)
     rag_use_hybrid_search: bool = True  # Usar búsqueda híbrida (semántica + keywords)
 
