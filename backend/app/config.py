@@ -33,8 +33,8 @@ class Settings(BaseSettings):
     allowed_origins: str = "http://localhost:3000"
 
     # RAG Settings
-    rag_top_k: int = 12  # Número de chunks a recuperar (12 para procedimientos largos multi-página)
-    rag_similarity_threshold: float = 0.60  # Umbral mínimo de similitud (bajado para mejor cobertura)
+    rag_top_k: int = 20  # Número de chunks a recuperar (aumentado para mejor cobertura)
+    rag_similarity_threshold: float = 0.55  # Umbral mínimo de similitud (bajado para mejor cobertura)
 
     class Config:
         env_file = str(env_path)
