@@ -20,6 +20,8 @@ class RAGService:
         self.supabase = get_supabase_client()
         self.top_k = settings.rag_top_k
         self.similarity_threshold = settings.rag_similarity_threshold
+        self.semantic_weight = settings.rag_semantic_weight
+        self.use_hybrid_search = settings.rag_use_hybrid_search
 
     def get_embedding(self, text: str) -> list[float]:
         """Genera embedding para un texto usando OpenAI."""
@@ -28,6 +30,41 @@ class RAGService:
             input=text
         )
         return response.data[0].embedding
+
+    def search_chunks_hybrid(
+        self,
+        query_embedding: list[float],
+        query_text: str,
+        manual_id: UUID
+    ) -> list[dict]:
+        """Búsqueda híbrida: semántica + keywords usando Full-Text Search."""
+        try:
+            response = self.supabase.rpc(
+                "search_chunks_hybrid",
+                {
+                    "query_embedding": query_embedding,
+                    "query_text": query_text,
+                    "match_count": self.top_k,
+                    "filter_manual_id": str(manual_id),
+                    "semantic_weight": self.semantic_weight
+                }
+            ).execute()
+
+            # Filtrar por umbral de similitud (usando combined_score)
+            chunks = [
+                chunk for chunk in response.data
+                if chunk.get("combined_score", 0) >= self.similarity_threshold
+            ]
+
+            # Mapear combined_score a similarity para compatibilidad
+            for chunk in chunks:
+                chunk["similarity"] = chunk.get("combined_score", 0)
+
+            return chunks
+
+        except Exception as e:
+            print(f"Hybrid search failed, falling back to semantic: {e}")
+            return self.search_similar_chunks(query_embedding, manual_id)
 
     def search_similar_chunks(self, query_embedding: list[float], manual_id: UUID) -> list[dict]:
         """Busca chunks similares en Supabase usando pgvector."""
@@ -274,9 +311,12 @@ Pregunta del usuario: {question}"""
         query_embedding = self.get_embedding(question)
         embed_time = int((time.time() - embed_start) * 1000)
 
-        # 2. Buscar chunks similares
+        # 2. Buscar chunks (híbrido o semántico según configuración)
         search_start = time.time()
-        chunks = self.search_similar_chunks(query_embedding, manual_id)
+        if self.use_hybrid_search:
+            chunks = self.search_chunks_hybrid(query_embedding, question, manual_id)
+        else:
+            chunks = self.search_similar_chunks(query_embedding, manual_id)
         search_time = int((time.time() - search_start) * 1000)
 
         # 3. Construir contexto
@@ -353,8 +393,11 @@ Pregunta del usuario: {question}"""
         # 1. Generar embedding de la pregunta
         query_embedding = self.get_embedding(question)
 
-        # 2. Buscar chunks similares
-        chunks = self.search_similar_chunks(query_embedding, manual_id)
+        # 2. Buscar chunks (híbrido o semántico según configuración)
+        if self.use_hybrid_search:
+            chunks = self.search_chunks_hybrid(query_embedding, question, manual_id)
+        else:
+            chunks = self.search_similar_chunks(query_embedding, manual_id)
 
         # 3. Construir contexto
         context = self.build_context(chunks)
