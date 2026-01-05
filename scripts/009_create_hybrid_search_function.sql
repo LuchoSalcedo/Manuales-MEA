@@ -55,25 +55,36 @@ BEGIN
         c.content,
         c.page_number,
         c.section,
-        -- Score semántico (similitud coseno)
-        (1 - (c.embedding <=> query_embedding))::float AS semantic_similarity,
+        -- Score semántico (similitud coseno) - maneja NULL embedding
+        CASE
+            WHEN query_embedding IS NOT NULL THEN (1 - (c.embedding <=> query_embedding))::float
+            ELSE 0.0
+        END AS semantic_similarity,
         -- Score de keywords (normalizado 0-1)
         (CASE
             WHEN c.search_vector @@ plainto_tsquery('english', query_text)
             THEN ts_rank_cd(c.search_vector, plainto_tsquery('english', query_text)) / max_keyword_score
             ELSE 0.0
         END)::float AS keyword_score,
-        -- Score combinado
-        (
-            semantic_weight * (1 - (c.embedding <=> query_embedding)) +
-            keyword_weight * (
-                CASE
+        -- Score combinado (maneja NULL embedding)
+        (CASE
+            WHEN query_embedding IS NOT NULL THEN
+                semantic_weight * (1 - (c.embedding <=> query_embedding)) +
+                keyword_weight * (
+                    CASE
+                        WHEN c.search_vector @@ plainto_tsquery('english', query_text)
+                        THEN ts_rank_cd(c.search_vector, plainto_tsquery('english', query_text)) / max_keyword_score
+                        ELSE 0.0
+                    END
+                )
+            ELSE
+                -- Sin embedding, usar solo keyword score
+                (CASE
                     WHEN c.search_vector @@ plainto_tsquery('english', query_text)
                     THEN ts_rank_cd(c.search_vector, plainto_tsquery('english', query_text)) / max_keyword_score
                     ELSE 0.0
-                END
-            )
-        )::float AS combined_score
+                END)
+        END)::float AS combined_score
     FROM chunks c
     WHERE filter_manual_id IS NULL OR c.manual_id = filter_manual_id
     ORDER BY combined_score DESC
