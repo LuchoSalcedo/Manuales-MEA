@@ -12,6 +12,18 @@ from app.services.supabase_client import get_supabase_client
 router = APIRouter(prefix="/pages", tags=["pages"])
 
 UPLOAD_DIR = Path(__file__).parent.parent.parent.parent / "uploads"
+UPLOAD_DIR.mkdir(exist_ok=True)
+
+
+def get_pdf_from_storage(supabase, filename: str) -> bytes | None:
+    """Descarga un PDF de Supabase Storage."""
+    try:
+        storage_path = f"pdfs/{filename}"
+        response = supabase.storage.from_("manuals").download(storage_path)
+        return response
+    except Exception as e:
+        print(f"Error descargando de Storage: {e}")
+        return None
 
 
 @router.get("/{manual_id}/{page_number}")
@@ -31,35 +43,40 @@ async def get_page_image(manual_id: UUID, page_number: int):
         manual_name = manual.get("name", "")
         original_filename = manual.get("original_filename", "")
 
-        # Buscar el PDF correspondiente
+        # Variable para almacenar el contenido del PDF
+        pdf_content = None
         pdf_path = None
 
-        # 1. Primero intentar con original_filename (más confiable)
+        # 1. Primero intentar con archivo local (original_filename)
         if original_filename:
             candidate = UPLOAD_DIR / original_filename
             if candidate.exists():
                 pdf_path = candidate
 
-        # 2. Si no, buscar por coincidencia de nombre
+        # 2. Si no está local, buscar por coincidencia de nombre
         if not pdf_path:
             for pdf_file in UPLOAD_DIR.glob("*.pdf"):
                 if manual_name in pdf_file.stem or pdf_file.stem in manual_name:
                     pdf_path = pdf_file
                     break
 
-        # 3. Si no se encuentra por nombre, intentar buscar por descripción
-        if not pdf_path:
-            description = manual.get("description", "")
-            for pdf_file in UPLOAD_DIR.glob("*.pdf"):
-                if pdf_file.stem in description:
-                    pdf_path = pdf_file
-                    break
-
+        # 3. Si no está local, descargar de Supabase Storage
         if not pdf_path or not pdf_path.exists():
+            if original_filename:
+                pdf_content = get_pdf_from_storage(supabase, original_filename)
+
+            # Intentar con nombre del manual si no funcionó
+            if not pdf_content:
+                pdf_content = get_pdf_from_storage(supabase, f"{manual_name}.pdf")
+
+        if not pdf_path and not pdf_content:
             raise HTTPException(status_code=404, detail="PDF no encontrado")
 
-        # Abrir PDF y extraer página
-        doc = fitz.open(str(pdf_path))
+        # Abrir PDF (desde archivo local o desde bytes descargados)
+        if pdf_path and pdf_path.exists():
+            doc = fitz.open(str(pdf_path))
+        else:
+            doc = fitz.open(stream=pdf_content, filetype="pdf")
 
         if page_number < 1 or page_number > len(doc):
             doc.close()

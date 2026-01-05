@@ -50,10 +50,23 @@ async def upload_and_process_manual(
     if len(content) > max_file_size:
         raise HTTPException(status_code=400, detail=f"El archivo excede {max_size_mb}MB")
 
-    # Guardar archivo
+    # Guardar archivo localmente (temporal para procesamiento)
     file_path = UPLOAD_DIR / file.filename
     with open(file_path, "wb") as f:
         f.write(content)
+
+    # Subir a Supabase Storage para persistencia
+    try:
+        supabase = get_supabase_client()
+        storage_path = f"pdfs/{file.filename}"
+        supabase.storage.from_("manuals").upload(
+            storage_path,
+            content,
+            {"content-type": "application/pdf", "upsert": "true"}
+        )
+    except Exception as e:
+        # Si falla el storage, continuar con local (para desarrollo)
+        print(f"Warning: No se pudo subir a Storage: {e}")
 
     # Nombre del manual (sin extensión)
     manual_name = Path(file.filename).stem
