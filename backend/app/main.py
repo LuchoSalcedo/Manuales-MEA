@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import get_settings
 from app.models.schemas import HealthResponse
-from app.api import chat, manuals, admin, pages, users
+from app.api import chat, manuals, admin, pages, users, help
 from app.api import settings as settings_api
 
 settings = get_settings()
@@ -32,6 +32,7 @@ app.include_router(admin.router, prefix="/api")
 app.include_router(pages.router, prefix="/api")
 app.include_router(users.router, prefix="/api")
 app.include_router(settings_api.router, prefix="/api")
+app.include_router(help.router, prefix="/api")
 
 
 @app.get("/", response_model=HealthResponse)

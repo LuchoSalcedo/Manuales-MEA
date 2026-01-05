@@ -64,3 +64,15 @@ export interface Message {
   }[]
   timestamp: Date
 }
+
+// =====================================================
+// Help Chat Types
+// =====================================================
+
+export interface HelpMessage {
+  id: string
+  role: 'user' | 'assistant'
+  content: string
+  sections?: string[]
+  timestamp: Date
+}

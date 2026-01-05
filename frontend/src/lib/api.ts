@@ -52,3 +52,43 @@ export async function sendMessage(
 
   return response.json()
 }
+
+// =====================================================
+// Help Chat API
+// =====================================================
+
+export interface HelpResponse {
+  answer: string
+  sections: string[]
+}
+
+export async function sendHelpMessage(question: string): Promise<HelpResponse> {
+  const response = await fetch(`${API_URL}/api/help/chat`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ question }),
+  })
+
+  if (!response.ok) {
+    throw new Error('Error en el chat de ayuda')
+  }
+
+  return response.json()
+}
+
+export interface SectionResponse {
+  title: string
+  content: string
+}
+
+export async function getHelpSection(sectionName: string): Promise<SectionResponse> {
+  const response = await fetch(`${API_URL}/api/help/section/${encodeURIComponent(sectionName)}`)
+
+  if (!response.ok) {
+    throw new Error('Error al obtener la sección')
+  }
+
+  return response.json()
+}

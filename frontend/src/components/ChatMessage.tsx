@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { Message } from '@/types'
 import PageViewerModal from './PageViewerModal'
 
@@ -20,20 +21,40 @@ export default function ChatMessage({ message, manualId }: ChatMessageProps) {
   return (
     <>
       <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-3 sm:mb-4`}>
-        <div
-          className={`max-w-[90%] sm:max-w-[85%] rounded-lg ${
+        <div className={`flex gap-2 sm:gap-3 max-w-[95%] sm:max-w-[88%] ${isUser ? 'flex-row-reverse' : ''}`}>
+          {/* Avatar */}
+          <div className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center ${
             isUser
-              ? 'bg-blue-600 text-white px-3 sm:px-4 py-2 sm:py-3'
-              : 'bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 shadow-sm'
-          }`}
-        >
-          {isUser ? (
-            <p className="whitespace-pre-wrap text-sm sm:text-base">{message.content}</p>
-          ) : (
-            <div className="p-3 sm:p-4">
+              ? 'bg-blue-600 text-white'
+              : 'bg-gradient-to-br from-blue-500 to-indigo-600 text-white'
+          }`}>
+            {isUser ? (
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            ) : (
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            )}
+          </div>
+
+          {/* Message bubble */}
+          <div
+            className={`rounded-2xl ${
+              isUser
+                ? 'bg-blue-600 text-white px-3 sm:px-4 py-2 sm:py-3 rounded-tr-sm'
+                : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm rounded-tl-sm'
+            }`}
+          >
+            {isUser ? (
+              <p className="whitespace-pre-wrap text-sm sm:text-base">{message.content}</p>
+            ) : (
+              <div className="p-3 sm:p-4">
               {/* Contenido con Markdown */}
               <div className="markdown-content">
                 <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
                   components={{
                     h1: ({ children }) => (
                       <h1 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mt-3 mb-1 first:mt-0">{children}</h1>
@@ -86,6 +107,30 @@ export default function ChatMessage({ message, manualId }: ChatMessageProps) {
                       </blockquote>
                     ),
                     hr: () => <hr className="my-2 border-gray-200 dark:border-gray-600" />,
+                    table: ({ children }) => (
+                      <div className="overflow-x-auto my-3">
+                        <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-600 border border-gray-300 dark:border-gray-600 text-xs sm:text-sm">
+                          {children}
+                        </table>
+                      </div>
+                    ),
+                    thead: ({ children }) => (
+                      <thead className="bg-gray-100 dark:bg-gray-700">{children}</thead>
+                    ),
+                    tbody: ({ children }) => (
+                      <tbody className="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-800">{children}</tbody>
+                    ),
+                    tr: ({ children }) => <tr>{children}</tr>,
+                    th: ({ children }) => (
+                      <th className="px-2 sm:px-3 py-1.5 sm:py-2 text-left font-semibold text-gray-900 dark:text-white border-r border-gray-300 dark:border-gray-600 last:border-r-0">
+                        {children}
+                      </th>
+                    ),
+                    td: ({ children }) => (
+                      <td className="px-2 sm:px-3 py-1.5 sm:py-2 text-gray-700 dark:text-gray-300 border-r border-gray-200 dark:border-gray-700 last:border-r-0">
+                        {children}
+                      </td>
+                    ),
                   }}
                 >
                   {message.content}
@@ -153,6 +198,7 @@ export default function ChatMessage({ message, manualId }: ChatMessageProps) {
               )}
             </div>
           )}
+          </div>
         </div>
       </div>
 

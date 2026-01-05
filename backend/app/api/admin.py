@@ -125,25 +125,109 @@ async def delete_manual(
     manual_id: UUID,
     current_user: CurrentUser = Depends(require_admin)
 ):
-    """Elimina un manual y sus chunks asociados. Solo admins."""
+    """Elimina un manual y todos sus datos asociados (cascade delete). Solo admins."""
     try:
         supabase = get_supabase_client()
 
-        # Primero eliminar chunks
-        supabase.table("chunks").delete().eq("manual_id", str(manual_id)).execute()
-
-        # Luego eliminar manual
-        response = supabase.table("manuals").delete().eq("id", str(manual_id)).execute()
-
-        if not response.data:
+        # Obtener info del manual primero
+        manual_response = supabase.table("manuals").select("*").eq("id", str(manual_id)).execute()
+        if not manual_response.data:
             raise HTTPException(status_code=404, detail="Manual no encontrado")
 
-        return {"message": "Manual eliminado correctamente"}
+        manual = manual_response.data[0]
+        original_filename = manual.get("original_filename", "")
+
+        # 1. Eliminar chunks y sus embeddings
+        supabase.table("chunks").delete().eq("manual_id", str(manual_id)).execute()
+
+        # 2. Intentar eliminar PDF de Supabase Storage
+        if original_filename:
+            try:
+                storage_path = f"pdfs/{original_filename}"
+                supabase.storage.from_("manuals").remove([storage_path])
+            except Exception as e:
+                print(f"Warning: No se pudo eliminar PDF de storage: {e}")
+
+        # 3. Intentar eliminar imágenes de páginas de Storage
+        try:
+            # Las imágenes están en pages/{manual_id}/
+            pages_path = f"pages/{manual_id}"
+            # Listar y eliminar todos los archivos en esa carpeta
+            files = supabase.storage.from_("manuals").list(pages_path)
+            if files:
+                paths_to_delete = [f"{pages_path}/{f['name']}" for f in files]
+                if paths_to_delete:
+                    supabase.storage.from_("manuals").remove(paths_to_delete)
+        except Exception as e:
+            print(f"Warning: No se pudieron eliminar imágenes de storage: {e}")
+
+        # 4. Eliminar archivo local si existe
+        if original_filename:
+            local_path = UPLOAD_DIR / original_filename
+            if local_path.exists():
+                local_path.unlink()
+
+        # 5. Finalmente eliminar el registro del manual
+        supabase.table("manuals").delete().eq("id", str(manual_id)).execute()
+
+        return {"message": "Manual y todos sus datos eliminados correctamente"}
 
     except HTTPException:
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error eliminando manual: {str(e)}")
+
+
+@router.get("/manuals/duplicates")
+async def get_duplicate_manuals(
+    current_user: CurrentUser = Depends(require_admin)
+):
+    """Detecta manuales duplicados (mismo nombre). Solo admins."""
+    try:
+        supabase = get_supabase_client()
+
+        # Obtener todos los manuales
+        response = supabase.table("manuals").select("id, name, total_pages, created_at").order("name").execute()
+
+        # Agrupar por nombre
+        from collections import defaultdict
+        by_name = defaultdict(list)
+        for m in response.data:
+            by_name[m['name']].append(m)
+
+        duplicates = []
+        for name, entries in by_name.items():
+            if len(entries) > 1:
+                # Obtener chunks de cada entrada
+                entries_info = []
+                for e in entries:
+                    chunks_resp = supabase.table("chunks").select("id", count="exact").eq("manual_id", e['id']).execute()
+                    entries_info.append({
+                        "id": e['id'],
+                        "name": e['name'],
+                        "total_pages": e['total_pages'],
+                        "chunks": chunks_resp.count or 0,
+                        "created_at": e['created_at']
+                    })
+
+                # Ordenar: el que tiene más chunks primero (el "bueno")
+                entries_info.sort(key=lambda x: (-x['chunks'], x['created_at']))
+
+                duplicates.append({
+                    "name": name,
+                    "count": len(entries_info),
+                    "entries": entries_info,
+                    "recommended_keep": entries_info[0]['id'] if entries_info else None
+                })
+
+        return {
+            "has_duplicates": len(duplicates) > 0,
+            "duplicate_groups": duplicates,
+            "total_duplicate_entries": sum(d['count'] - 1 for d in duplicates)
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error detectando duplicados: {str(e)}")
 
 
 @router.get("/stats")

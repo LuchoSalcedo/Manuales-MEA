@@ -141,6 +141,15 @@ Reglas CRÍTICAS:
 Formato de respuesta:
 - Presenta la información COMPLETA respetando la estructura del manual original
 - NO cortes la respuesta - incluye TODOS los pasos, procedimientos o información relevante
+- OBLIGATORIO: Usa formato MARKDOWN para mejor legibilidad:
+  * Para CUALQUIER dato tabular (especificaciones, capacidades, torques, intervalos, troubleshooting, etc.) usa TABLAS markdown:
+    | Columna 1 | Columna 2 | Columna 3 |
+    |-----------|-----------|-----------|
+    | Dato 1 | Dato 2 | Dato 3 |
+  * Para listas de pasos usa números (1. 2. 3.)
+  * Para listas de items usa bullets (- item)
+  * Para énfasis usa **negritas**
+  * Siempre que veas datos tipo "X: valor, Y: valor, Z: valor" conviértelos a tabla
 - OBLIGATORIO al final: (Ver páginas X, Y, Z) - lista TODAS las páginas de donde sacaste información"""
 
         user_prompt = f"""Contexto del manual:
@@ -211,6 +220,15 @@ Reglas CRÍTICAS:
 Formato de respuesta:
 - Presenta la información COMPLETA respetando la estructura del manual original
 - NO cortes la respuesta - incluye TODOS los pasos, procedimientos o información relevante
+- OBLIGATORIO: Usa formato MARKDOWN para mejor legibilidad:
+  * Para CUALQUIER dato tabular (especificaciones, capacidades, torques, intervalos, troubleshooting, etc.) usa TABLAS markdown:
+    | Columna 1 | Columna 2 | Columna 3 |
+    |-----------|-----------|-----------|
+    | Dato 1 | Dato 2 | Dato 3 |
+  * Para listas de pasos usa números (1. 2. 3.)
+  * Para listas de items usa bullets (- item)
+  * Para énfasis usa **negritas**
+  * Siempre que veas datos tipo "X: valor, Y: valor, Z: valor" conviértelos a tabla
 - OBLIGATORIO al final: (Ver páginas X, Y, Z) - lista TODAS las páginas de donde sacaste información"""
 
         user_prompt = f"""Contexto del manual:

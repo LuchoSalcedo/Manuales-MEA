@@ -31,6 +31,17 @@ export default function AdminPage() {
   const [uploading, setUploading] = useState(false)
   const [editingManual, setEditingManual] = useState<{ id: string; name: string } | null>(null)
   const [editName, setEditName] = useState('')
+  const [duplicates, setDuplicates] = useState<{
+    has_duplicates: boolean
+    duplicate_groups: Array<{
+      name: string
+      count: number
+      entries: Array<{ id: string; name: string; chunks: number; created_at: string }>
+      recommended_keep: string
+    }>
+    total_duplicate_entries: number
+  } | null>(null)
+  const [checkingDuplicates, setCheckingDuplicates] = useState(false)
   const router = useRouter()
 
   const getAuthHeaders = (): Record<string, string> => {
@@ -48,6 +59,42 @@ export default function AdminPage() {
       console.error('Error loading manuals:', error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const checkDuplicates = async () => {
+    setCheckingDuplicates(true)
+    try {
+      const response = await fetch(`${API_URL}/api/admin/manuals/duplicates`, {
+        headers: getAuthHeaders(),
+      })
+      if (response.ok) {
+        const data = await response.json()
+        setDuplicates(data)
+      }
+    } catch (error) {
+      console.error('Error checking duplicates:', error)
+    } finally {
+      setCheckingDuplicates(false)
+    }
+  }
+
+  const handleDeleteDuplicate = async (manualId: string, manualName: string) => {
+    if (!confirm(`Eliminar duplicado "${manualName}"?`)) return
+
+    try {
+      const response = await fetch(`${API_URL}/api/admin/manuals/${manualId}`, {
+        method: 'DELETE',
+        headers: getAuthHeaders(),
+      })
+
+      if (response.ok) {
+        await loadManuals()
+        await checkDuplicates()
+      }
+    } catch (error) {
+      console.error('Error deleting duplicate:', error)
+      alert('Error al eliminar el duplicado')
     }
   }
 
@@ -424,6 +471,99 @@ export default function AdminPage() {
               </ul>
             </div>
           )}
+
+          {/* Duplicates Detection */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow mb-4 sm:mb-6">
+            <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                Deteccion de duplicados
+              </h3>
+              <button
+                onClick={checkDuplicates}
+                disabled={checkingDuplicates}
+                className="px-3 py-1.5 text-xs sm:text-sm bg-orange-500 text-white rounded-lg hover:bg-orange-600 disabled:opacity-50 flex items-center gap-1"
+              >
+                {checkingDuplicates ? (
+                  <>
+                    <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Verificando...
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    Buscar duplicados
+                  </>
+                )}
+              </button>
+            </div>
+
+            {duplicates && (
+              <div className="p-4 sm:p-6">
+                {duplicates.has_duplicates ? (
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2 text-orange-600 dark:text-orange-400">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                      </svg>
+                      <span className="font-medium">
+                        Se encontraron {duplicates.total_duplicate_entries} entrada(s) duplicada(s)
+                      </span>
+                    </div>
+
+                    {duplicates.duplicate_groups.map((group) => (
+                      <div key={group.name} className="border border-orange-200 dark:border-orange-800 rounded-lg p-3 bg-orange-50 dark:bg-orange-900/20">
+                        <h4 className="font-medium text-gray-900 dark:text-white mb-2">{group.name}</h4>
+                        <div className="space-y-2">
+                          {group.entries.map((entry, idx) => (
+                            <div
+                              key={entry.id}
+                              className={`flex items-center justify-between p-2 rounded ${
+                                entry.id === group.recommended_keep
+                                  ? 'bg-green-100 dark:bg-green-900/30 border border-green-300 dark:border-green-700'
+                                  : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700'
+                              }`}
+                            >
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-2">
+                                  {entry.id === group.recommended_keep && (
+                                    <span className="px-1.5 py-0.5 text-xs bg-green-500 text-white rounded">Conservar</span>
+                                  )}
+                                  <span className="text-xs text-gray-500 dark:text-gray-400 font-mono">{entry.id.slice(0, 8)}...</span>
+                                </div>
+                                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                                  {entry.chunks} chunks - Creado: {new Date(entry.created_at).toLocaleDateString('es-ES')}
+                                </p>
+                              </div>
+                              {entry.id !== group.recommended_keep && (
+                                <button
+                                  onClick={() => handleDeleteDuplicate(entry.id, entry.name)}
+                                  className="px-2 py-1 text-xs bg-red-500 text-white rounded hover:bg-red-600"
+                                >
+                                  Eliminar
+                                </button>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 text-green-600 dark:text-green-400">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>No se encontraron duplicados</span>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
 
           {/* Manuals List */}
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
