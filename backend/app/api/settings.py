@@ -49,6 +49,10 @@ VALID_SETTINGS = {
         "min": 25,
         "max": 200,
         "description": "Zoom por defecto para visualizar paginas (mobile)"
+    },
+    "rag_allow_general_knowledge": {
+        "type": "boolean",
+        "description": "Permitir respuestas con conocimiento general cuando no hay informacion en el manual"
     }
 }
 
@@ -128,6 +132,9 @@ async def update_setting(
             raise HTTPException(status_code=400, detail=f"El valor minimo es {config['min']}")
         if "max" in config and setting.value > config["max"]:
             raise HTTPException(status_code=400, detail=f"El valor maximo es {config['max']}")
+    elif config["type"] == "boolean":
+        if not isinstance(setting.value, bool):
+            raise HTTPException(status_code=400, detail="El valor debe ser un booleano (true/false)")
 
     # Actualizar
     response = supabase.table("app_settings").update({

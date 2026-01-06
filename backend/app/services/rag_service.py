@@ -6,6 +6,7 @@ import anthropic
 from app.config import get_settings
 from app.services.supabase_client import get_supabase_client
 from app.models.schemas import ChatResponse, ChunkReference
+from app.api.settings import get_setting_value
 
 EMBEDDING_MODEL = "text-embedding-ada-002"
 
@@ -136,10 +137,13 @@ class RAGService:
             return 0.0
         return dot_product / (norm1 * norm2)
 
-    def build_context(self, chunks: list[dict]) -> str:
-        """Construye el contexto para Claude a partir de los chunks."""
+    def build_context(self, chunks: list[dict]) -> tuple[str, bool]:
+        """
+        Construye el contexto para Claude a partir de los chunks.
+        Retorna: (contexto_string, tiene_contexto_del_manual)
+        """
         if not chunks:
-            return "No se encontró información relevante en el manual."
+            return ("No se encontró información relevante en el manual.", False)
 
         context_parts = []
         for i, chunk in enumerate(chunks, 1):
@@ -151,11 +155,16 @@ class RAGService:
                 f"[Fragmento {i} - Página {page}, {section}]\n{content}"
             )
 
-        return "\n\n---\n\n".join(context_parts)
+        return ("\n\n---\n\n".join(context_parts), True)
 
-    def generate_answer(self, question: str, context: str) -> str:
-        """Genera respuesta usando Claude con el contexto proporcionado."""
-        system_prompt = """Eres un asistente técnico especializado en manuales de equipos de ground handling para aeropuertos.
+    def generate_answer(self, question: str, context: str, has_manual_context: bool = True) -> str:
+        """
+        Genera respuesta usando Claude con el contexto proporcionado.
+        Si has_manual_context es False, usa un prompt que permite conocimiento general.
+        """
+        if has_manual_context:
+            # Prompt para respuestas basadas en el manual
+            system_prompt = """Eres un asistente técnico especializado en manuales de equipos de ground handling para aeropuertos.
 
 Tu trabajo es responder preguntas basándote ÚNICAMENTE en la información proporcionada en el contexto.
 
@@ -188,6 +197,26 @@ Formato de respuesta:
   * Para énfasis usa **negritas**
   * Siempre que veas datos tipo "X: valor, Y: valor, Z: valor" conviértelos a tabla
 - OBLIGATORIO al final: (Ver páginas X, Y, Z) - lista TODAS las páginas de donde sacaste información"""
+        else:
+            # Prompt para respuestas con conocimiento general (fallback)
+            system_prompt = """Eres un asistente técnico especializado en equipos industriales y de aeropuertos.
+
+El usuario preguntó sobre un manual específico, pero NO se encontró información relevante en ese manual.
+
+REGLAS CRÍTICAS:
+1. Si tienes conocimiento CONFIABLE sobre el tema de tu entrenamiento, puedes responder
+2. NUNCA inventes información técnica - si no estás seguro, dilo claramente
+3. Si no tienes información confiable sobre el tema, responde: "No tengo información confiable sobre este tema específico."
+
+FORMATO DE RESPUESTA OBLIGATORIO:
+Tu respuesta DEBE comenzar EXACTAMENTE con esta línea:
+⚠️ **Esta información NO proviene del manual seleccionado.**
+
+Luego proporciona tu respuesta basada en conocimiento general, usando formato markdown cuando sea apropiado.
+
+Al final de tu respuesta, SIEMPRE incluye:
+---
+*Nota: Esta respuesta está basada en conocimiento general, no en el manual específico. Te recomiendo verificar con la documentación oficial del fabricante.*"""
 
         user_prompt = f"""Contexto del manual:
 {context}
@@ -320,13 +349,13 @@ Pregunta del usuario: {question}"""
         search_time = int((time.time() - search_start) * 1000)
 
         # 3. Construir contexto
-        context = self.build_context(chunks)
+        context, has_manual_context = self.build_context(chunks)
 
         # 4. Generar respuesta con Claude (modelo específico)
         answer, model_metrics = self.generate_answer_with_model(question, context, model)
 
         # 5. Extraer páginas citadas en la respuesta
-        cited_pages = self._extract_cited_pages(answer)
+        cited_pages = self._extract_cited_pages(answer) if has_manual_context else set()
 
         # 6. Preparar referencias
         references = []
@@ -380,16 +409,28 @@ Pregunta del usuario: {question}"""
             "pages_cited": len(cited_pages),
         }
 
+        # Determinar source_type
+        source_type = "manual" if has_manual_context else "general_knowledge"
+
         response = ChatResponse(
             answer=answer,
             references=references,
-            manual_id=manual_id
+            manual_id=manual_id,
+            source_type=source_type
         )
 
         return response, metrics
 
     def query(self, question: str, manual_id: UUID) -> ChatResponse:
         """Ejecuta el pipeline RAG completo."""
+        settings = get_settings()
+
+        # Leer configuración de conocimiento general desde la BD (fallback al config)
+        allow_general_knowledge = get_setting_value(
+            "rag_allow_general_knowledge",
+            default=settings.rag_allow_general_knowledge
+        )
+
         # 1. Generar embedding de la pregunta
         query_embedding = self.get_embedding(question)
 
@@ -400,15 +441,27 @@ Pregunta del usuario: {question}"""
             chunks = self.search_similar_chunks(query_embedding, manual_id)
 
         # 3. Construir contexto
-        context = self.build_context(chunks)
+        context, has_manual_context = self.build_context(chunks)
 
-        # 4. Generar respuesta con Claude
-        answer = self.generate_answer(question, context)
+        # 4. Determinar si usar conocimiento general
+        use_general_knowledge = not has_manual_context and allow_general_knowledge
 
-        # 5. Extraer páginas citadas en la respuesta
-        cited_pages = self._extract_cited_pages(answer)
+        # Si no hay contexto y el fallback está desactivado, responder directamente
+        if not has_manual_context and not allow_general_knowledge:
+            return ChatResponse(
+                answer="No encontré información sobre este tema en el manual seleccionado.",
+                references=[],
+                manual_id=manual_id,
+                source_type="manual"
+            )
 
-        # 6. Preparar referencias - mostrar SOLO las páginas citadas en la respuesta
+        # 5. Generar respuesta con Claude
+        answer = self.generate_answer(question, context, has_manual_context)
+
+        # 6. Extraer páginas citadas en la respuesta (solo si hay contexto del manual)
+        cited_pages = self._extract_cited_pages(answer) if has_manual_context else set()
+
+        # 7. Preparar referencias - mostrar SOLO las páginas citadas en la respuesta
         references = []
         seen_pages = set()  # Evitar duplicados
 
@@ -448,10 +501,14 @@ Pregunta del usuario: {question}"""
         # Ordenar referencias por número de página
         references.sort(key=lambda r: r.page_number)
 
+        # Determinar source_type
+        source_type = "manual" if has_manual_context else "general_knowledge"
+
         return ChatResponse(
             answer=answer,
             references=references,
-            manual_id=manual_id
+            manual_id=manual_id,
+            source_type=source_type
         )
 
 

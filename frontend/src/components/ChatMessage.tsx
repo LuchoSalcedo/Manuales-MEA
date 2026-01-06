@@ -51,6 +51,20 @@ export default function ChatMessage({ message, manualId }: ChatMessageProps) {
               <p className="whitespace-pre-wrap text-sm sm:text-base">{message.content}</p>
             ) : (
               <div className="p-3 sm:p-4">
+              {/* Banner de advertencia para conocimiento general */}
+              {message.source_type === 'general_knowledge' && (
+                <div className="mb-3 px-3 py-2 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+                  <div className="flex items-center gap-2 text-yellow-700 dark:text-yellow-400">
+                    <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <span className="text-xs sm:text-sm font-medium">
+                      Respuesta basada en conocimiento general (no del manual)
+                    </span>
+                  </div>
+                </div>
+              )}
               {/* Contenido con Markdown */}
               <div className="markdown-content">
                 <ReactMarkdown

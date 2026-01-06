@@ -37,6 +37,7 @@ class Settings(BaseSettings):
     rag_similarity_threshold: float = 0.40  # Umbral mínimo de score combinado
     rag_semantic_weight: float = 0.6  # Peso semántico (0.6 = 60% semántico, 40% keywords)
     rag_use_hybrid_search: bool = True  # Usar búsqueda híbrida (semántica + keywords)
+    rag_allow_general_knowledge: bool = True  # Permitir fallback a conocimiento general del modelo
 
     class Config:
         env_file = str(env_path)

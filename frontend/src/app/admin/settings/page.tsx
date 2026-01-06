@@ -224,6 +224,66 @@ export default function SettingsPage() {
                 </div>
               </div>
 
+              {/* Conocimiento General */}
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+                <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200 dark:border-gray-700">
+                  <h3 className="text-base sm:text-lg font-medium text-gray-900 dark:text-white">Respuestas con Conocimiento General</h3>
+                  <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                    Permite que el modelo responda usando su conocimiento de entrenamiento cuando no encuentra informacion en el manual
+                  </p>
+                </div>
+                <div className="p-4 sm:p-6">
+                  <label className={`flex items-center justify-between p-3 sm:p-4 border rounded-lg transition-colors ${
+                    canEdit ? 'cursor-pointer' : 'cursor-not-allowed opacity-75'
+                  } ${
+                    settings.rag_allow_general_knowledge
+                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30'
+                      : 'border-gray-200 dark:border-gray-700'
+                  }`}>
+                    <div className="flex-1">
+                      <span className="font-medium text-sm sm:text-base text-gray-900 dark:text-white">
+                        Permitir respuestas con conocimiento general
+                      </span>
+                      <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">
+                        Cuando esta activado, si no hay informacion en el manual, el modelo puede responder basandose en su conocimiento general. Las respuestas mostraran un banner de advertencia.
+                      </p>
+                    </div>
+                    <div className="ml-4 flex items-center">
+                      {saving === 'general_knowledge' ? (
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-600"></div>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            if (!canEdit) return
+                            setSaving('general_knowledge')
+                            setMessage(null)
+                            const success = await updateSetting('rag_allow_general_knowledge', !settings.rag_allow_general_knowledge)
+                            if (success) {
+                              setMessage({ type: 'success', text: 'Configuracion actualizada correctamente' })
+                            } else {
+                              setMessage({ type: 'error', text: 'Error al actualizar la configuracion' })
+                            }
+                            setSaving(null)
+                            setTimeout(() => setMessage(null), 3000)
+                          }}
+                          disabled={!canEdit}
+                          className={`relative inline-flex h-6 w-11 flex-shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                            settings.rag_allow_general_knowledge ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-600'
+                          }`}
+                        >
+                          <span
+                            className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                              settings.rag_allow_general_knowledge ? 'translate-x-5' : 'translate-x-0'
+                            }`}
+                          />
+                        </button>
+                      )}
+                    </div>
+                  </label>
+                </div>
+              </div>
+
               {/* Limite de Upload */}
               <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
                 <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200 dark:border-gray-700">

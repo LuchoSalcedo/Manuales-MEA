@@ -21,6 +21,7 @@ export interface ChatResponse {
   answer: string
   references: ChunkReference[]
   manual_id: string
+  source_type: 'manual' | 'general_knowledge'
 }
 
 export async function getManuals(): Promise<Manual[]> {

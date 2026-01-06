@@ -10,6 +10,7 @@ interface AppSettings {
   max_upload_size_mb: number
   page_zoom_web: number
   page_zoom_mobile: number
+  rag_allow_general_knowledge: boolean
 }
 
 interface SettingsContextType {
@@ -23,7 +24,8 @@ const defaultSettings: AppSettings = {
   anthropic_model: 'claude-sonnet-4-20250514',
   max_upload_size_mb: 50,
   page_zoom_web: 50,
-  page_zoom_mobile: 100
+  page_zoom_mobile: 100,
+  rag_allow_general_knowledge: true
 }
 
 const SettingsContext = createContext<SettingsContextType>({
@@ -69,6 +71,8 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
             newSettings.page_zoom_web = item.value
           } else if (item.key === 'page_zoom_mobile') {
             newSettings.page_zoom_mobile = item.value
+          } else if (item.key === 'rag_allow_general_knowledge') {
+            newSettings.rag_allow_general_knowledge = item.value
           }
         }
 

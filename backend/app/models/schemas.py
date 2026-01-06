@@ -102,6 +102,7 @@ class ChatResponse(BaseModel):
     answer: str
     references: list[ChunkReference]
     manual_id: UUID
+    source_type: str = "manual"  # "manual" | "general_knowledge"
 
 
 class ManualInfo(BaseModel):

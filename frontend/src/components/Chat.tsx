@@ -49,6 +49,7 @@ export default function Chat() {
           similarity: ref.similarity,
         })),
         timestamp: new Date(),
+        source_type: response.source_type,
       }
 
       addMessage(assistantMessage)

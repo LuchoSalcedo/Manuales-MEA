@@ -63,6 +63,7 @@ export interface Message {
     similarity: number
   }[]
   timestamp: Date
+  source_type?: 'manual' | 'general_knowledge'
 }
 
 // =====================================================
