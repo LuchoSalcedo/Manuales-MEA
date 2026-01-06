@@ -114,10 +114,11 @@ async def create_user(
 
     try:
         # Create auth user with Supabase Admin API
+        # email_confirm: True = usuario activo inmediatamente sin confirmar correo
         auth_response = supabase.auth.admin.create_user({
             "email": user_data.email,
             "password": user_data.password,
-            "email_confirm": False,  # Require email confirmation
+            "email_confirm": True,
             "user_metadata": {
                 "name": user_data.name,
                 "surname": user_data.surname,
@@ -150,17 +151,7 @@ async def create_user(
                 **profile_data
             }).execute()
 
-        # Send invite email through Supabase
-        try:
-            supabase.auth.admin.invite_user_by_email(
-                user_data.email,
-                options={
-                    "redirect_to": f"{settings.frontend_url}/auth/callback?next=/change-password"
-                }
-            )
-        except Exception as email_error:
-            print(f"Warning: Could not send invite email: {email_error}")
-
+        # Usuario activo inmediatamente - el admin debe comunicar las credenciales
         return UserResponse(**profile_response.data[0])
 
     except HTTPException:
