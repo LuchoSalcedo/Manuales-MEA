@@ -71,7 +71,7 @@ export default function ManualSelector({
 
         {/* Lista de opciones - siempre hacia abajo */}
         {isOpen && (
-          <ul className="absolute z-50 w-full mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-60 overflow-auto">
+          <ul className="absolute z-50 w-full mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-80 overflow-y-auto">
             {manuals.length === 0 ? (
               <li className="px-3 py-2 text-sm text-gray-500 dark:text-gray-400">
                 No hay manuales disponibles
