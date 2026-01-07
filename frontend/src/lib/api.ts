@@ -36,22 +36,37 @@ export async function sendMessage(
   question: string,
   manualId: string
 ): Promise<ChatResponse> {
-  const response = await fetch(`${API_URL}/api/chat/`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      question,
-      manual_id: manualId,
-    }),
-  })
+  // Timeout de 120 segundos para dar tiempo al RAG
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), 120000)
 
-  if (!response.ok) {
-    throw new Error('Error al enviar mensaje')
+  try {
+    const response = await fetch(`${API_URL}/api/chat/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        question,
+        manual_id: manualId,
+      }),
+      signal: controller.signal,
+    })
+
+    clearTimeout(timeoutId)
+
+    if (!response.ok) {
+      throw new Error('Error al enviar mensaje')
+    }
+
+    return response.json()
+  } catch (error) {
+    clearTimeout(timeoutId)
+    if (error instanceof Error && error.name === 'AbortError') {
+      throw new Error('La consulta tardó demasiado. Intenta con una pregunta más específica.')
+    }
+    throw error
   }
-
-  return response.json()
 }
 
 // =====================================================
