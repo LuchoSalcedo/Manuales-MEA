@@ -54,10 +54,12 @@ export default function Chat() {
 
       addMessage(assistantMessage)
     } catch (error) {
+      console.error('Chat error:', error)
+      const errorText = error instanceof Error ? error.message : 'Error desconocido'
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: 'Error al procesar tu pregunta. Por favor intenta de nuevo.',
+        content: `Error al procesar tu pregunta: ${errorText}. Por favor intenta de nuevo.`,
         timestamp: new Date(),
       }
       addMessage(errorMessage)
