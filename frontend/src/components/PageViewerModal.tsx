@@ -25,8 +25,10 @@ export default function PageViewerModal({
   const [error, setError] = useState<string | null>(null)
   const [isMobile, setIsMobile] = useState(false)
   const [zoom, setZoom] = useState(50)
+  const [retryCount, setRetryCount] = useState(0)
 
-  const imageUrl = `${API_URL}/api/pages/${manualId}/${pageNumber}`
+  // Agregar timestamp para forzar recarga en retry
+  const imageUrl = `${API_URL}/api/pages/${manualId}/${pageNumber}${retryCount > 0 ? `?retry=${retryCount}` : ''}`
 
   // Detect mobile on mount
   useEffect(() => {
@@ -43,6 +45,7 @@ export default function PageViewerModal({
     if (isOpen) {
       setLoading(true)
       setError(null)
+      setRetryCount(0)
       const defaultZoom = isMobile ? settings.page_zoom_mobile : settings.page_zoom_web
       setZoom(defaultZoom)
     }
@@ -141,6 +144,7 @@ export default function PageViewerModal({
                     onClick={() => {
                       setLoading(true)
                       setError(null)
+                      setRetryCount(c => c + 1)
                     }}
                     className="text-blue-600 hover:underline text-sm sm:text-base"
                   >
