@@ -64,10 +64,15 @@ export default function PageViewerModal({
         onClick={onClose}
       />
 
-      {/* Modal */}
-      <div className="absolute inset-2 sm:inset-4 md:inset-8 lg:inset-12 bg-white dark:bg-gray-800 rounded-xl shadow-2xl flex flex-col overflow-hidden">
+      {/* Modal - con safe area para notch/Dynamic Island */}
+      <div
+        className="absolute inset-x-2 bottom-2 sm:inset-4 md:inset-8 lg:inset-12 bg-white dark:bg-gray-800 rounded-xl shadow-2xl flex flex-col overflow-hidden"
+        style={{
+          top: 'max(env(safe-area-inset-top, 8px), 8px)',
+        }}
+      >
         {/* Header */}
-        <div className="flex items-center justify-between px-3 sm:px-6 py-2 sm:py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+        <div className="flex items-center justify-between px-3 sm:px-6 py-3 sm:py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
           <div className="min-w-0 flex-1">
             <h2 className="text-sm sm:text-lg font-semibold text-gray-900 dark:text-white truncate">
               Página {pageNumber}
