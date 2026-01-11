@@ -251,22 +251,22 @@ export default function AdminPage() {
         <main className="max-w-7xl mx-auto px-3 py-4 sm:px-4 sm:py-6 lg:px-8">
           {/* Tabs */}
           <div className="mb-4 sm:mb-6 border-b border-gray-200 dark:border-gray-700 overflow-x-auto">
-            <nav className="-mb-px flex space-x-4 sm:space-x-8 min-w-max">
+            <nav className="-mb-px flex space-x-2 sm:space-x-6 min-w-max">
               <Link
                 href="/admin"
-                className="border-b-2 border-blue-500 py-2 px-1 text-xs sm:text-sm font-medium text-blue-600 whitespace-nowrap"
+                className="border-b-2 border-blue-500 py-3 px-2 min-h-[44px] flex items-center text-sm font-medium text-blue-600 whitespace-nowrap"
               >
                 Manuales
               </Link>
               <Link
                 href="/admin/users"
-                className="border-b-2 border-transparent py-2 px-1 text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 whitespace-nowrap"
+                className="border-b-2 border-transparent py-3 px-2 min-h-[44px] flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 whitespace-nowrap"
               >
                 Usuarios
               </Link>
               <Link
                 href="/admin/settings"
-                className="border-b-2 border-transparent py-2 px-1 text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 whitespace-nowrap"
+                className="border-b-2 border-transparent py-3 px-2 min-h-[44px] flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 whitespace-nowrap"
               >
                 Configuracion
               </Link>
@@ -366,9 +366,9 @@ export default function AdminPage() {
                       {processingJob.status.status === 'paused' ? (
                         <button
                           onClick={() => handleResumeJob(processingJob.jobId)}
-                          className="px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center gap-1"
+                          className="px-3 py-2 min-h-[40px] text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center gap-1"
                         >
-                          <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
                           </svg>
                           <span className="hidden sm:inline">Reanudar</span>
@@ -376,9 +376,9 @@ export default function AdminPage() {
                       ) : (
                         <button
                           onClick={() => handlePauseJob(processingJob.jobId)}
-                          className="px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 flex items-center gap-1"
+                          className="px-3 py-2 min-h-[40px] text-sm bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 flex items-center gap-1"
                         >
-                          <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
                           </svg>
                           <span className="hidden sm:inline">Pausar</span>
@@ -386,9 +386,9 @@ export default function AdminPage() {
                       )}
                       <button
                         onClick={() => handleCancelJob(processingJob.jobId)}
-                        className="px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 flex items-center gap-1"
+                        className="px-3 py-2 min-h-[40px] text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 flex items-center gap-1"
                       >
-                        <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                         </svg>
                         <span className="hidden sm:inline">Cancelar</span>
@@ -448,18 +448,18 @@ export default function AdminPage() {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => handleResumeJob(job.id)}
-                          className="px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center gap-1"
+                          className="px-3 py-2 min-h-[40px] text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center gap-1"
                         >
-                          <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
                           </svg>
                           <span className="hidden sm:inline">Reanudar</span>
                         </button>
                         <button
                           onClick={() => handleCancelJob(job.id)}
-                          className="px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 flex items-center gap-1"
+                          className="px-3 py-2 min-h-[40px] text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 flex items-center gap-1"
                         >
-                          <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                           </svg>
                           <span className="hidden sm:inline">Cancelar</span>
@@ -641,13 +641,13 @@ export default function AdminPage() {
                           <>
                             <button
                               onClick={() => handleEditManual(manual)}
-                              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 text-xs sm:text-sm"
+                              className="px-3 py-2 min-h-[40px] text-blue-600 hover:text-blue-800 hover:bg-blue-50 dark:text-blue-400 dark:hover:text-blue-300 dark:hover:bg-blue-900/30 rounded-lg text-sm transition-colors"
                             >
                               Editar
                             </button>
                             <button
                               onClick={() => handleDeleteManual(manual.id, manual.name)}
-                              className="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 text-xs sm:text-sm"
+                              className="px-3 py-2 min-h-[40px] text-red-600 hover:text-red-800 hover:bg-red-50 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-900/30 rounded-lg text-sm transition-colors"
                             >
                               Eliminar
                             </button>

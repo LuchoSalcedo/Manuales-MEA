@@ -31,12 +31,13 @@ export default function ChatInput({
         onChange={(e) => setInput(e.target.value)}
         placeholder={placeholder}
         disabled={disabled}
-        className="flex-1 px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 dark:disabled:bg-gray-700 disabled:cursor-not-allowed text-gray-900 dark:text-white bg-white dark:bg-gray-800"
+        className="flex-1 px-4 py-3 min-h-[48px] text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 dark:disabled:bg-gray-700 disabled:cursor-not-allowed text-gray-900 dark:text-white bg-white dark:bg-gray-800"
       />
       <button
         type="submit"
         disabled={disabled || !input.trim()}
-        className="px-4 sm:px-6 py-2 sm:py-3 bg-blue-600 text-white rounded-lg font-medium text-sm sm:text-base hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
+        aria-label="Enviar mensaje"
+        className="px-4 sm:px-6 py-3 min-w-[48px] min-h-[48px] bg-blue-600 text-white rounded-lg font-medium text-base hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors whitespace-nowrap flex items-center justify-center"
       >
         <span className="hidden sm:inline">Enviar</span>
         <svg className="w-5 h-5 sm:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">

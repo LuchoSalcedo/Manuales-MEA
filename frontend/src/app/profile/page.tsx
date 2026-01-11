@@ -95,9 +95,9 @@ export default function ProfilePage() {
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
       <Header />
 
-      <main className="max-w-2xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+      <main className="max-w-2xl mx-auto px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 sm:p-6">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-6">
             Mi Perfil
           </h1>
 
@@ -155,7 +155,7 @@ export default function ProfilePage() {
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 w-full px-4 py-3 min-h-[48px] border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Tu nombre"
               />
             </div>
@@ -169,7 +169,7 @@ export default function ProfilePage() {
                 type="text"
                 value={formData.surname}
                 onChange={(e) => setFormData({ ...formData, surname: e.target.value })}
-                className="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 w-full px-4 py-3 min-h-[48px] border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Tu apellido"
               />
             </div>
@@ -183,24 +183,24 @@ export default function ProfilePage() {
                 type="text"
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                className="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 w-full px-4 py-3 min-h-[48px] border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Ej: Oficina Central, Hangar 3..."
               />
             </div>
 
             {/* Actions */}
-            <div className="flex justify-between items-center pt-4">
+            <div className="flex justify-between items-center pt-4 gap-4">
               <button
                 type="button"
                 onClick={() => router.push('/')}
-                className="px-4 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                className="px-5 py-3 min-h-[48px] text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
               >
                 Volver
               </button>
               <button
                 type="submit"
                 disabled={saving}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+                className="px-6 py-3 min-h-[48px] bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
               >
                 {saving ? 'Guardando...' : 'Guardar Cambios'}
               </button>

@@ -123,8 +123,9 @@ export default function HelpModal({ isOpen, onClose }: HelpModalProps) {
             {messages.length > 0 && (
               <button
                 onClick={handleClear}
-                className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                className="p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-white/10 rounded-lg transition-colors"
                 title="Limpiar conversacion"
+                aria-label="Limpiar conversación"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -133,8 +134,9 @@ export default function HelpModal({ isOpen, onClose }: HelpModalProps) {
             )}
             <button
               onClick={onClose}
-              className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+              className="p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-white/10 rounded-lg transition-colors"
               title="Cerrar"
+              aria-label="Cerrar modal de ayuda"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -163,7 +165,7 @@ export default function HelpModal({ isOpen, onClose }: HelpModalProps) {
                   <button
                     key={suggestion}
                     onClick={() => setInput(suggestion)}
-                    className="px-4 py-2 text-sm bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full border border-gray-200 dark:border-gray-600 hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    className="px-4 py-2.5 min-h-[44px] text-sm bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full border border-gray-200 dark:border-gray-600 hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                   >
                     {suggestion}
                   </button>
@@ -239,7 +241,7 @@ export default function HelpModal({ isOpen, onClose }: HelpModalProps) {
                         key={idx}
                         onClick={() => handleSectionClick(section)}
                         disabled={loadingSection}
-                        className="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full border border-blue-200 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-900/50 hover:border-blue-400 transition-colors cursor-pointer"
+                        className="inline-flex items-center px-3 py-2 min-h-[40px] text-xs font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full border border-blue-200 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-900/50 hover:border-blue-400 transition-colors cursor-pointer"
                       >
                         {section}
                         <svg className="w-3 h-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -322,7 +324,8 @@ export default function HelpModal({ isOpen, onClose }: HelpModalProps) {
               </div>
               <button
                 onClick={() => setSelectedSection(null)}
-                className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                className="p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                aria-label="Cerrar sección"
               >
                 <svg className="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

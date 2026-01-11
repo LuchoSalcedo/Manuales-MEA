@@ -88,7 +88,8 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700"
+                  className="absolute inset-y-0 right-0 flex items-center justify-center w-12 min-h-[44px] text-gray-500 hover:text-gray-700"
+                  aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
                 >
                   {showPassword ? (
                     <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -108,7 +109,7 @@ export default function LoginPage() {
           <div className="text-right">
             <a
               href="/reset-password"
-              className="text-sm text-blue-600 hover:text-blue-500"
+              className="inline-block py-2 text-sm text-blue-600 hover:text-blue-500"
             >
               ¿Olvidaste tu contraseña?
             </a>
@@ -124,7 +125,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+              className="group relative w-full flex justify-center items-center py-3 px-4 min-h-[48px] border border-transparent text-base font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
             >
               {loading ? 'Cargando...' : 'Iniciar sesión'}
             </button>

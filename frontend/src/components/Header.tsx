@@ -90,8 +90,9 @@ export default function Header() {
                 {/* Help Button */}
                 <button
                   onClick={() => setIsHelpOpen(true)}
-                  className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+                  className="p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
                   title="Ayuda"
+                  aria-label="Abrir ayuda"
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -100,8 +101,9 @@ export default function Header() {
                 {/* Theme Toggle */}
                 <button
                   onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-                  className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+                  className="p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
                   title={theme === 'light' ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro'}
+                  aria-label={theme === 'light' ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro'}
                 >
                   {theme === 'light' ? (
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -127,7 +129,7 @@ export default function Header() {
                 </Link>
                 <button
                   onClick={signOut}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors"
+                  className="px-4 py-2.5 min-h-[44px] text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors"
                 >
                   Cerrar sesion
                 </button>
@@ -141,8 +143,9 @@ export default function Header() {
             {!loading && user && (
               <button
                 onClick={() => setIsHelpOpen(true)}
-                className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+                className="p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors rounded-lg"
                 title="Ayuda"
+                aria-label="Abrir ayuda"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -153,7 +156,8 @@ export default function Header() {
             {!loading && user && (
               <button
                 onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-                className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+                className="p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors rounded-lg"
+                aria-label={theme === 'light' ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro'}
               >
                 {theme === 'light' ? (
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -168,7 +172,8 @@ export default function Header() {
             )}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+              className="p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg"
+              aria-label={mobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
             >
               {mobileMenuOpen ? (
                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -186,11 +191,11 @@ export default function Header() {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-700 pt-4">
-            <nav className="flex flex-col gap-3">
+            <nav className="flex flex-col gap-2">
               <Link
                 href="/"
                 onClick={() => setMobileMenuOpen(false)}
-                className={`text-base font-medium px-3 py-2 rounded-lg ${
+                className={`text-base font-medium px-4 py-3 min-h-[48px] flex items-center rounded-lg ${
                   pathname === '/'
                     ? 'text-blue-600 bg-blue-50 dark:bg-blue-900/20'
                     : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
@@ -202,7 +207,7 @@ export default function Header() {
                 <Link
                   href="/admin"
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`text-base font-medium px-3 py-2 rounded-lg ${
+                  className={`text-base font-medium px-4 py-3 min-h-[48px] flex items-center rounded-lg ${
                     pathname.startsWith('/admin')
                       ? 'text-blue-600 bg-blue-50 dark:bg-blue-900/20'
                       : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
@@ -218,10 +223,10 @@ export default function Header() {
                 <Link
                   href="/profile"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="flex items-center justify-between px-4 py-3 min-h-[48px] rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{displayName}</p>
+                    <p className="text-base font-medium text-gray-900 dark:text-gray-100">{displayName}</p>
                     {profile && (
                       <span
                         className={`inline-block px-2 py-0.5 text-xs rounded-full mt-1 ${
@@ -241,7 +246,7 @@ export default function Header() {
                     setMobileMenuOpen(false)
                     signOut()
                   }}
-                  className="w-full mt-3 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors text-center"
+                  className="w-full mt-3 px-4 py-3 min-h-[48px] text-base font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors text-center"
                 >
                   Cerrar sesion
                 </button>

@@ -68,7 +68,7 @@ export default function Home() {
 
             {/* Main - Chat */}
             <div className="lg:col-span-3 flex-1">
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow h-[calc(100vh-180px)] sm:h-[calc(100vh-200px)] min-h-[400px] sm:min-h-[500px]">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow h-[calc(100dvh-180px)] sm:h-[calc(100dvh-200px)] min-h-[300px] sm:min-h-[500px]">
                 {selectedManual ? (
                   <Chat />
                 ) : (

@@ -79,23 +79,25 @@ export default function PageViewerModal({
 
           <div className="flex items-center gap-1 sm:gap-4 flex-shrink-0 ml-2">
             {/* Zoom controls */}
-            <div className="flex items-center gap-1 sm:gap-2 bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 px-1 sm:px-2 py-0.5 sm:py-1">
+            <div className="flex items-center gap-1 sm:gap-2 bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 px-1 sm:px-2 py-1">
               <button
                 onClick={handleZoomOut}
-                className="p-1 hover:bg-gray-100 dark:hover:bg-gray-600 rounded"
+                className="p-2 min-w-[40px] min-h-[40px] flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg"
                 title="Reducir"
+                aria-label="Reducir zoom"
               >
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
                 </svg>
               </button>
-              <span className="text-xs sm:text-sm font-medium w-8 sm:w-12 text-center text-gray-700 dark:text-gray-300">{zoom}%</span>
+              <span className="text-sm font-medium w-12 text-center text-gray-700 dark:text-gray-300">{zoom}%</span>
               <button
                 onClick={handleZoomIn}
-                className="p-1 hover:bg-gray-100 dark:hover:bg-gray-600 rounded"
+                className="p-2 min-w-[40px] min-h-[40px] flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg"
                 title="Ampliar"
+                aria-label="Ampliar zoom"
               >
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
               </button>
@@ -106,10 +108,11 @@ export default function PageViewerModal({
               href={imageUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-1.5 sm:p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors hidden sm:block"
+              className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
               title="Abrir en nueva pestaña"
+              aria-label="Abrir en nueva pestaña"
             >
-              <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
             </a>
@@ -117,10 +120,11 @@ export default function PageViewerModal({
             {/* Close button */}
             <button
               onClick={onClose}
-              className="p-1.5 sm:p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
               title="Cerrar"
+              aria-label="Cerrar modal"
             >
-              <svg className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-6 h-6 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>

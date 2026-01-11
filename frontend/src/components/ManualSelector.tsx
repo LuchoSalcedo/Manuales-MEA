@@ -52,7 +52,7 @@ export default function ManualSelector({
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="relative w-full px-3 sm:px-4 py-2 sm:py-3 text-left text-sm sm:text-base bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
+          className="relative w-full px-4 py-3 min-h-[48px] text-left text-base bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
         >
           <span className={`block truncate ${selectedManual ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}>
             {selectedManual?.name || '-- Selecciona un manual --'}
@@ -84,7 +84,7 @@ export default function ManualSelector({
                     onSelect(manual)
                     setIsOpen(false)
                   }}
-                  className={`relative px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base cursor-pointer select-none
+                  className={`relative px-4 py-3 min-h-[48px] flex items-center text-base cursor-pointer select-none
                     ${selectedManual?.id === manual.id
                       ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
                       : 'text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600'

@@ -23,7 +23,7 @@ export default function ChatMessage({ message, manualId }: ChatMessageProps) {
       <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-3 sm:mb-4`}>
         <div className={`flex gap-2 sm:gap-3 max-w-[95%] sm:max-w-[88%] ${isUser ? 'flex-row-reverse' : ''}`}>
           {/* Avatar */}
-          <div className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center ${
+          <div className={`flex-shrink-0 w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center ${
             isUser
               ? 'bg-blue-600 text-white'
               : 'bg-gradient-to-br from-blue-500 to-indigo-600 text-white'
@@ -80,7 +80,7 @@ export default function ChatMessage({ message, manualId }: ChatMessageProps) {
                       <h3 className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white mt-2 mb-0.5">{children}</h3>
                     ),
                     p: ({ children }) => (
-                      <p className="text-gray-700 dark:text-gray-300 mb-1.5 leading-snug text-xs sm:text-sm">{children}</p>
+                      <p className="text-gray-700 dark:text-gray-300 mb-2 leading-relaxed text-sm sm:text-base">{children}</p>
                     ),
                     strong: ({ children }) => (
                       <strong className="font-semibold text-gray-900 dark:text-white">{children}</strong>
@@ -89,10 +89,10 @@ export default function ChatMessage({ message, manualId }: ChatMessageProps) {
                       <em className="italic text-gray-700 dark:text-gray-300">{children}</em>
                     ),
                     ul: ({ children }) => (
-                      <ul className="list-disc ml-4 mb-1.5 space-y-0.5 text-gray-700 dark:text-gray-300 text-xs sm:text-sm">{children}</ul>
+                      <ul className="list-disc ml-4 mb-2 space-y-1 text-gray-700 dark:text-gray-300 text-sm sm:text-base">{children}</ul>
                     ),
                     ol: ({ children }) => (
-                      <ol className="list-decimal ml-4 mb-1.5 space-y-0.5 text-gray-700 dark:text-gray-300 text-xs sm:text-sm">{children}</ol>
+                      <ol className="list-decimal ml-4 mb-2 space-y-1 text-gray-700 dark:text-gray-300 text-sm sm:text-base">{children}</ol>
                     ),
                     li: ({ children }) => (
                       <li className="leading-snug">{children}</li>
@@ -171,10 +171,10 @@ export default function ChatMessage({ message, manualId }: ChatMessageProps) {
                           pageNumber: ref.page_number,
                           section: ref.section,
                         })}
-                        className="w-full text-left flex items-center gap-2 px-2 sm:px-2.5 py-1.5 rounded-md bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 border border-blue-100 dark:border-blue-800 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-sm transition-all group"
+                        className="w-full text-left flex items-center gap-3 px-3 py-2.5 min-h-[48px] rounded-lg bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 border border-blue-100 dark:border-blue-800 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-sm transition-all group"
                       >
                         {/* Número de página */}
-                        <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-600 text-white text-xs font-bold group-hover:bg-blue-700 transition-colors">
+                        <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-blue-600 text-white text-sm font-bold group-hover:bg-blue-700 transition-colors">
                           {ref.page_number}
                         </span>
 

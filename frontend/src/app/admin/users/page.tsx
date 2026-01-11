@@ -227,22 +227,22 @@ export default function UsersPage() {
         <main className="max-w-7xl mx-auto px-3 py-4 sm:px-4 sm:py-6 lg:px-8">
           {/* Tabs */}
           <div className="mb-4 sm:mb-6 border-b border-gray-200 dark:border-gray-700 overflow-x-auto">
-            <nav className="-mb-px flex space-x-4 sm:space-x-8 min-w-max">
+            <nav className="-mb-px flex space-x-2 sm:space-x-6 min-w-max">
               <Link
                 href="/admin"
-                className="border-b-2 border-transparent py-2 px-1 text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 whitespace-nowrap"
+                className="border-b-2 border-transparent py-3 px-2 min-h-[44px] flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 whitespace-nowrap"
               >
                 Manuales
               </Link>
               <Link
                 href="/admin/users"
-                className="border-b-2 border-blue-500 py-2 px-1 text-xs sm:text-sm font-medium text-blue-600 whitespace-nowrap"
+                className="border-b-2 border-blue-500 py-3 px-2 min-h-[44px] flex items-center text-sm font-medium text-blue-600 whitespace-nowrap"
               >
                 Usuarios
               </Link>
               <Link
                 href="/admin/settings"
-                className="border-b-2 border-transparent py-2 px-1 text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 whitespace-nowrap"
+                className="border-b-2 border-transparent py-3 px-2 min-h-[44px] flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 whitespace-nowrap"
               >
                 Configuracion
               </Link>
@@ -257,7 +257,7 @@ export default function UsersPage() {
             </div>
             <button
               onClick={() => setShowCreateModal(true)}
-              className="bg-blue-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2 text-sm sm:text-base w-full sm:w-auto"
+              className="bg-blue-600 text-white px-4 py-3 min-h-[48px] rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2 text-base w-full sm:w-auto"
             >
               <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -406,13 +406,13 @@ export default function UsersPage() {
                         <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">{user.location}</p>
                       )}
                       {canManageUser(user.role) && user.id !== profile?.id && (
-                        <div className="flex gap-3 pt-2 border-t border-gray-100 dark:border-gray-700">
+                        <div className="flex gap-2 pt-2 border-t border-gray-100 dark:border-gray-700">
                           {isMasterAdmin && user.role === 'administrador' && user.is_active && (
                             <button
                               onClick={() =>
                                 handleDelegateMaster(user.id, `${user.name} ${user.surname}`)
                               }
-                              className="text-purple-600 hover:text-purple-800 dark:text-purple-400 text-xs"
+                              className="px-3 py-2 min-h-[40px] text-purple-600 hover:text-purple-800 hover:bg-purple-50 dark:text-purple-400 dark:hover:bg-purple-900/30 rounded-lg text-sm transition-colors"
                               disabled={saving}
                             >
                               Delegar
@@ -420,7 +420,7 @@ export default function UsersPage() {
                           )}
                           <button
                             onClick={() => openEditModal(user)}
-                            className="text-blue-600 hover:text-blue-800 dark:text-blue-400 text-xs"
+                            className="px-3 py-2 min-h-[40px] text-blue-600 hover:text-blue-800 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-900/30 rounded-lg text-sm transition-colors"
                           >
                             Editar
                           </button>
@@ -428,7 +428,7 @@ export default function UsersPage() {
                             onClick={() =>
                               handleDeleteUser(user.id, `${user.name} ${user.surname}`)
                             }
-                            className="text-red-600 hover:text-red-800 dark:text-red-400 text-xs"
+                            className="px-3 py-2 min-h-[40px] text-red-600 hover:text-red-800 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/30 rounded-lg text-sm transition-colors"
                           >
                             Eliminar
                           </button>
