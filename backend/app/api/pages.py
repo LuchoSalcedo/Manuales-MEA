@@ -11,7 +11,7 @@ from app.services.supabase_client import get_supabase_client
 
 router = APIRouter(prefix="/pages", tags=["pages"])
 
-UPLOAD_DIR = Path(__file__).parent.parent.parent.parent / "uploads"
+UPLOAD_DIR = Path(__file__).parent.parent.parent / "uploads"
 UPLOAD_DIR.mkdir(exist_ok=True)
 
 
